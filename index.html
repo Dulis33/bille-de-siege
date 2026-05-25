@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bille de Siège — Table de Billard</title>
+  <!-- BILLE_DE_SIEGE_MARKET_RANDOM_SFX -->
+  <meta name="theme-color" content="#0b3b25" />
+  <meta name="application-name" content="Bille de Siège" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="Bille de Siège" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" type="image/png" sizes="192x192" href="logo-bds-192.png" />
+  <link rel="apple-touch-icon" sizes="512x512" href="logo-bds-512.png" />
+  <link rel="stylesheet" href="style.css?v=forest-no-table-final-20260510-1" />
+  <style>
+    #bdsBootClean{position:fixed;inset:0;z-index:2147483000;display:flex;align-items:center;justify-content:center;background:#3b1f0c;color:#f5ead8;font:700 18px Arial,sans-serif;text-align:center;padding:24px}
+    #bdsBootClean .box{max-width:520px;border:2px solid #e8c96a;border-radius:18px;background:rgba(0,0,0,.35);padding:18px;box-shadow:0 10px 40px rgba(0,0,0,.45)}
+    #bdsBootClean small{display:block;margin-top:10px;color:#e8c96a;font-size:13px;font-weight:500}
+  </style>
+</head>
+<body>
+  <div id="bdsBootClean"><div class="box"><img src="logo-bds-192.png" alt="BDS" style="width:86px;height:86px;border-radius:22px;display:block;margin:0 auto 14px;box-shadow:0 10px 30px rgba(0,0,0,.45)">Chargement de Bille de Siège…<small>Préparation du jeu.</small></div></div>
+
+  <canvas id="game"></canvas>
+
+  <header id="hud">
+    <div class="player-card" id="p1Card">
+      <span class="medal red">I</span>
+      <div><b>Joueur I</b><small id="p1State">Chargement</small></div>
+    </div>
+    <div class="title">
+      <h1>Bille de Siège</h1>
+      <p id="roundTitle">Menu principal</p>
+    </div>
+    <div class="player-card" id="p2Card">
+      <span class="medal blue">II</span>
+      <div><b>Joueur II</b><small id="p2State">Chargement</small></div>
+    </div>
+  </header>
+
+  <section id="turnTimer" class="hidden" aria-live="polite"><span>⏱</span><b id="timerValue">60</b><small>s</small></section>
+  <button id="btnPause" class="pause-btn" type="button">⏸ Pause</button>
+
+  <section id="resources">
+    <span>🪨 <b id="stone">8</b> Pierres</span>
+    <span>🪵 <b id="wood">4</b> Bois</span>
+    <span>🪙 <b id="gold">0</b> Or</span>
+    <span>🏺 <b id="relic">0</b> Reliques</span>
+  </section>
+
+  <button class="castle-pill left"  id="castlePill1">J1 Château</button>
+  <button class="castle-pill right" id="castlePill2">J2 Château</button>
+
+  <div id="toast"></div>
+  <div id="impactFlash"></div>
+
+  <div id="castleModal">
+    <div class="modal-box">
+      <button id="modalClose">✕</button>
+      <h2 id="modalTitle">Château</h2>
+      <div id="castleDetails"></div>
+    </div>
+  </div>
+
+  <footer id="controls">
+    <div class="buttons">
+      <button id="btnAttack">🎯 Attaque</button>
+      <button id="btnDefense">🛡 Défense</button>
+      <button id="btnMarket">⚖️ Marché</button>
+      <button id="btnPlaceTower">🗼 Tours / construction</button>
+      <button id="btnCastleBuild">🏰 Château / construction</button>
+      <button id="btnRandomRepair">🔧 Réparation +40 PV</button>
+      <button id="btnRepairKit" title="Ouvrir les kits récupérés sur le plateau">🧰 Kits</button>
+      <button id="btnBuildKit" title="Ancien bouton masqué : les kits passent maintenant par le bouton Kits">🏗️ Kit construction</button>
+      <button id="btnClearDebris" title="Déblayer les décombres du couloir d’attaque">🧹 Déblayer couloir</button>
+      <button id="btnSideRamp" title="Rampes latérales libres">🪵 Rampes latérales</button>
+      <button id="btnRamp" title="Accessoire de siège">🪵 Rampes château</button>
+    </div>
+    <div id="launchRail"><div id="powerFill"></div></div>
+    <p id="info">Chargement du jeu...</p>
+  </footer>
+
+  <script>
+    (function(){
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function(){
+          navigator.serviceWorker.register('./sw.js?v=forest-no-table-final-20260510-1').catch(function(){});
+        });
+      }
+      function setBoot(msg){
+        var el=document.querySelector('#bdsBootClean .box');
+        if(el) el.innerHTML=msg;
+      }
+      function loadScript(src, ok, fail){
+        var s=document.createElement('script');
+        var done=false;
+        s.src=src;
+        s.async=true;
+        s.onload=function(){ if(done) return; done=true; ok&&ok(); };
+        s.onerror=function(){ if(done) return; done=true; fail&&fail(); };
+        document.body.appendChild(s);
+        setTimeout(function(){ if(!done){ done=true; fail&&fail(); } }, 9000);
+      }
+      function loadGame(){
+        setBoot('Chargement terminé. Lancement du jeu…<small>Encore un instant.</small>');
+        loadScript('game.js?v=forest-no-table-final-20260510-1', null, function(){
+          setBoot('Erreur : game.js introuvable.<small>Vérifie que index.html, style.css et game.js sont dans le même dossier.</small>');
+        });
+      }
+      if (window.THREE) { loadGame(); return; }
+      setBoot('Chargement du moteur 3D…<small>Connexion nécessaire au premier lancement.</small>');
+      loadScript('https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js', function(){
+        if (window.THREE) loadGame();
+        else tryFallback();
+      }, tryFallback);
+      function tryFallback(){
+        setBoot('Deuxième tentative de chargement du moteur 3D…<small>Merci de patienter.</small>');
+        loadScript('https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.0/three.min.js', function(){
+          if (window.THREE) loadGame();
+          else showThreeError();
+        }, showThreeError);
+      }
+      function showThreeError(){
+        setBoot('Three.js ne charge pas.<small>Le jeu 3D a besoin d’internet au premier lancement. Vérifie la connexion, puis recharge la page.</small>');
+      }
+    })();
+  </script>
+</body>
+</html>
