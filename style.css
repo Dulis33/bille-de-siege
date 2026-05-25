@@ -5252,145 +5252,134 @@ button {
 }
 .battle-notice.second strong { color: #dbe8ff !important; }
 
-
-/* ── Plateaux de jeu débloquables ── */
-.board-section-title { margin-top: 18px; }
-.board-card .skin-info em {
-  display: block;
-  margin-top: 4px;
-  color: var(--ivory-dim);
-  font-family: 'IM Fell English', serif;
-  font-style: italic;
-  font-size: 12px;
-  line-height: 1.15;
-}
-.board-preview {
-  --skin-glow: var(--board-glow);
-  background:
-    radial-gradient(circle at 50% 115%, var(--board-glow), transparent 54%),
-    linear-gradient(180deg, var(--board-a), #08170d);
-}
-.board-preview-ground {
-  position: absolute;
-  inset: 8px 12px;
-  border-radius: 14px;
-  background:
-    radial-gradient(circle at 15% 20%, rgba(255,255,255,.10), transparent 22%),
-    repeating-linear-gradient(90deg, rgba(255,255,255,.045) 0 1px, transparent 1px 9px),
-    linear-gradient(180deg, var(--board-a), #102616);
-  box-shadow: inset 0 0 0 2px rgba(0,0,0,.32), 0 9px 18px rgba(0,0,0,.34);
-}
-.board-preview-lane {
-  position: absolute;
-  top: 14px;
-  bottom: 14px;
-  width: 18px;
-  border-radius: 9px;
-  background: linear-gradient(180deg, rgba(255,255,255,.12), transparent 20%), var(--board-a);
-  border: 2px solid var(--board-b);
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,.08), 0 0 13px var(--board-glow);
-}
-.board-preview-lane-left { left: calc(50% - 25px); }
-.board-preview-lane-right { right: calc(50% - 25px); }
-.board-preview-tree {
-  position: absolute;
-  width: 0;
-  height: 0;
-  border-left: 12px solid transparent;
-  border-right: 12px solid transparent;
-  border-bottom: 30px solid var(--board-c);
-  filter: drop-shadow(0 4px 5px rgba(0,0,0,.45));
-}
-.board-preview-tree::after {
-  content: '';
-  position: absolute;
-  left: -3px;
-  top: 24px;
-  width: 6px;
-  height: 10px;
-  border-radius: 2px;
-  background: var(--board-b);
-}
-.board-preview-tree.tree-a { left: 17px; bottom: 14px; transform: scale(.82); }
-.board-preview-tree.tree-b { right: 17px; top: 13px; transform: scale(.72); }
-.board-preview-dot {
-  position: absolute;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--board-c);
-  box-shadow: 0 0 13px var(--board-glow), 0 0 22px var(--board-glow);
-}
-.board-preview-dot.dot-a { left: 32px; top: 19px; }
-.board-preview-dot.dot-b { right: 35px; bottom: 20px; }
-.board-preview-billiard .board-preview-tree,
-.board-preview-billiard .board-preview-dot { display: none; }
-.board-preview-billiard .board-preview-ground {
-  background:
-    repeating-linear-gradient(90deg, rgba(255,230,130,.045) 0 1px, transparent 1px 9px),
-    linear-gradient(180deg, #185738, #0a2419);
-}
-.board-preview-billiard .board-preview-lane { border-color: #5b2a10; }
-.board-preview-forest .board-preview-ground {
-  background:
-    radial-gradient(circle at 22% 24%, rgba(255,255,255,.20), transparent 15%),
-    radial-gradient(circle at 78% 76%, rgba(80,130,50,.22), transparent 20%),
-    repeating-linear-gradient(92deg, rgba(210,255,150,.16) 0 3px, rgba(45,120,45,.10) 3px 8px),
-    linear-gradient(180deg, #8ccc66, #4f9638);
-}
-.board-preview-forest .board-preview-ground::before {
-  content: '';
-  position: absolute;
-  left: 50%;
-  top: 8px;
-  bottom: 8px;
-  width: 26px;
-  transform: translateX(-50%);
-  border-radius: 15px;
-  background:
-    radial-gradient(circle at 38% 16%, rgba(255,238,180,.35), transparent 16%),
-    linear-gradient(90deg, #91602e, #d6aa68 22%, #e6bf7d 50%, #c99653 78%, #87552a);
-  box-shadow: inset 0 0 0 1px rgba(70,42,16,.25), 0 0 0 1px rgba(255,255,255,.10);
-}
-.board-preview-forest .board-preview-lane {
-  background:
-    linear-gradient(90deg, rgba(95,155,62,.95) 0 28%, #d7aa66 28% 72%, rgba(92,150,58,.95) 72%),
-    #67ad4c;
-  border-color: #8fbf6a;
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,.18), 0 0 12px rgba(150,220,90,.25);
-}
-.board-preview-forest .board-preview-lane::after {
-  content: '';
-  position: absolute;
-  left: 4px;
-  right: 4px;
-  top: 15%;
-  height: 9px;
-  border-radius: 8px;
-  background: #70796b;
-  box-shadow: 0 26px 0 #838b7d, 0 52px 0 #6d7569;
-  opacity: .75;
+/* ─────────────────────────────────────────────
+   PATCH 2026-05-25 — CHRONO + PAUSE TOUT EN BAS
+   Objectif : libérer les côtés de la zone de tir.
+   Le chrono et le bouton Pause ne flottent plus sur le plateau.
+───────────────────────────────────────────── */
+:root {
+  --ui-bottom-h: 166px !important;
+  --bds-low-bar-h: 48px !important;
 }
 
-.effect-preview-comet::after,
-.effect-preview-flame::after,
-.effect-preview-frost::after,
-.effect-preview-shadow::after,
-.effect-preview-leaves::after {
-  content: '';
-  position: absolute;
-  left: 18%;
-  top: 50%;
-  width: 74px;
-  height: 18px;
-  transform: translateY(-50%);
-  border-radius: 999px;
-  background: radial-gradient(ellipse at right, var(--skin-glow), transparent 72%);
-  box-shadow: 0 0 24px var(--skin-glow);
-  opacity: .72;
-  pointer-events: none;
+#game {
+  height: calc(100vh - var(--ui-bottom-h)) !important;
 }
-.effect-preview-flame::after { height: 24px; filter: saturate(1.5); }
-.effect-preview-frost::after { opacity: .50; }
-.effect-preview-shadow::after { opacity: .44; }
-.effect-preview-leaves::after { opacity: .58; }
+
+#controls {
+  height: var(--ui-bottom-h) !important;
+  padding: 10px 10px calc(58px + env(safe-area-inset-bottom)) !important;
+  gap: 6px !important;
+  justify-content: flex-start !important;
+  overflow: visible !important;
+}
+
+#turnTimer,
+.pause-btn {
+  position: fixed !important;
+  top: auto !important;
+  bottom: calc(6px + env(safe-area-inset-bottom)) !important;
+  transform: none !important;
+  z-index: 120 !important;
+}
+
+#turnTimer {
+  left: max(10px, env(safe-area-inset-left)) !important;
+  right: auto !important;
+  min-width: 82px !important;
+  height: 38px !important;
+  padding: 5px 10px !important;
+  gap: 5px !important;
+  border-radius: 999px !important;
+}
+
+#turnTimer span {
+  font-size: 13px !important;
+}
+
+#turnTimer b {
+  font-size: 22px !important;
+  min-width: 30px !important;
+  line-height: 1 !important;
+}
+
+#turnTimer small {
+  font-size: 9px !important;
+}
+
+.pause-btn {
+  left: auto !important;
+  right: max(10px, env(safe-area-inset-right)) !important;
+  min-height: 38px !important;
+  padding: 7px 12px !important;
+  font-size: 10px !important;
+  letter-spacing: 1.1px !important;
+  border-radius: 999px !important;
+}
+
+#eventBanner {
+  bottom: calc(56px + env(safe-area-inset-bottom)) !important;
+  left: 50% !important;
+  right: auto !important;
+  transform: translateX(-50%) !important;
+  width: min(54vw, 360px) !important;
+  max-width: calc(100vw - 26px) !important;
+  z-index: 118 !important;
+}
+
+#cameraControls {
+  bottom: calc(var(--ui-bottom-h) + 10px + env(safe-area-inset-bottom)) !important;
+}
+
+@media (max-width: 520px) {
+  :root {
+    --ui-bottom-h: 158px !important;
+    --bds-low-bar-h: 46px !important;
+  }
+
+  #controls {
+    padding: 9px 7px calc(54px + env(safe-area-inset-bottom)) !important;
+    gap: 5px !important;
+  }
+
+  #turnTimer {
+    left: 7px !important;
+    bottom: calc(6px + env(safe-area-inset-bottom)) !important;
+    min-width: 74px !important;
+    height: 34px !important;
+    padding: 4px 8px !important;
+  }
+
+  #turnTimer span {
+    font-size: 11px !important;
+  }
+
+  #turnTimer b {
+    font-size: 19px !important;
+    min-width: 27px !important;
+  }
+
+  .pause-btn {
+    right: 7px !important;
+    bottom: calc(6px + env(safe-area-inset-bottom)) !important;
+    min-height: 34px !important;
+    padding: 6px 9px !important;
+    font-size: 9px !important;
+  }
+
+  #eventBanner {
+    bottom: calc(48px + env(safe-area-inset-bottom)) !important;
+    width: min(62vw, 260px) !important;
+    min-height: 32px !important;
+    padding: 5px 7px !important;
+  }
+
+  #eventBanner b {
+    font-size: 8.8px !important;
+    letter-spacing: .75px !important;
+  }
+
+  #cameraControls {
+    bottom: calc(var(--ui-bottom-h) + 8px + env(safe-area-inset-bottom)) !important;
+  }
+}

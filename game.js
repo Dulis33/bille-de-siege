@@ -143,8 +143,7 @@ try {
   // Aucun achat ne modifie la puissance, la vitesse, les dégâts ou la physique.
   const PROGRESS_STORAGE_KEY = 'BDS_PROGRESS_COSMETIQUE_V1';
   const BALL_SKINS = [
-    // Rendu récupéré du code fourni : bille ivoire poli, sobre, brillante, style billard.
-    { id: 'ivory',   name: 'Ivoire billard poli', icon: '⚪', color: 0xf5ead8, cost: 0,   roughness: 0.08, metalness: 0.12, accent: 0xfff8e8, glow: 'rgba(255,248,232,.28)' },
+    { id: 'ivory',   name: 'Ivoire nacré',       icon: '⚪', color: 0xf5ead8, cost: 0,   roughness: 0.07, metalness: 0.14, accent: 0xffffff, glow: 'rgba(255,246,224,.28)' },
     { id: 'ruby',    name: 'Rubis incandescent', icon: '🔴', color: 0xd91f35, cost: 30,  roughness: 0.14, metalness: 0.24, accent: 0xff8a5c, emissive: 0x3a0508, emissiveIntensity: 0.08, glow: 'rgba(255,54,78,.34)' },
     { id: 'sapphire',name: 'Saphir électrique', icon: '🔵', color: 0x2466ff, cost: 30,  roughness: 0.13, metalness: 0.26, accent: 0x72e2ff, emissive: 0x06143a, emissiveIntensity: 0.07, glow: 'rgba(71,143,255,.34)' },
     { id: 'emerald', name: 'Émeraude mystique',  icon: '🟢', color: 0x12b56f, cost: 45,  roughness: 0.12, metalness: 0.24, accent: 0x7affb6, emissive: 0x052b19, emissiveIntensity: 0.06, glow: 'rgba(48,255,158,.30)' },
@@ -156,18 +155,8 @@ try {
     { id: 'neon',    name: 'Néon cyan',         icon: '✨', color: 0x00f0ff, cost: 165, roughness: 0.09, metalness: 0.34, accent: 0xffffff, emissive: 0x003a40, emissiveIntensity: 0.16, glow: 'rgba(0,240,255,.42)' },
     { id: 'metal',   name: 'Bille en fer',      icon: '⚙️', color: 0x5f666b, light: 0xa3aaae, dark: 0x22272b, cost: 190, roughness: 0.42, metalness: 0.88, accent: 0xb3bcc2, emissive: 0x050607, emissiveIntensity: 0.015, glow: 'rgba(150,160,165,.26)' },
     { id: 'chrome',  name: 'Chrome argenté',   icon: '◽', color: 0xd7e0e6, light: 0xffffff, dark: 0x6f7a82, cost: 230, roughness: 0.015, metalness: 1.00, accent: 0xffffff, emissive: 0x111820, emissiveIntensity: 0.035, glow: 'rgba(235,248,255,.50)' },
-    // Rendu récupéré du code fourni : métal clair très brillant.
-    { id: 'billiard_metal', name: 'Métal billard poli', icon: '⚙️', color: 0xd0d8e0, light: 0xf5f9ff, dark: 0x6d747c, cost: 245, roughness: 0.12, metalness: 0.90, accent: 0xffffff, emissive: 0x090d10, emissiveIntensity: 0.02, glow: 'rgba(210,220,230,.34)' },
-    // Rendus récupérés directement des matériaux du code fourni : laiton, acajou, feutre, caoutchouc, noir mat et eau.
-    { id: 'billiard_brass',   name: 'Laiton billard poli',    icon: '🟡', color: 0xb8922a, light: 0xffd96a, dark: 0x5a3a07, cost: 260, roughness: 0.25, metalness: 0.80, accent: 0xfff0a8, emissive: 0x171000, emissiveIntensity: 0.08, glow: 'rgba(255,210,90,.36)' },
-    { id: 'billiard_mahogany',name: 'Acajou de table',        icon: '🪵', color: 0x5c2c10, light: 0x9a5426, dark: 0x2a1205, cost: 275, roughness: 0.62, metalness: 0.02, accent: 0xd99a58, glow: 'rgba(150,82,30,.26)' },
-    { id: 'billiard_felt',    name: 'Feutre vert billard',    icon: '🟢', color: 0x1e6b3e, light: 0x28885a, dark: 0x0f3d22, cost: 290, roughness: 0.92, metalness: 0.00, accent: 0x88ddaa, glow: 'rgba(70,220,135,.26)' },
-    { id: 'billiard_rubber',  name: 'Bande caoutchouc verte', icon: '🟩', color: 0x0f3d20, light: 0x247044, dark: 0x071b0e, cost: 305, roughness: 0.88, metalness: 0.00, accent: 0x65c98b, glow: 'rgba(50,180,95,.22)' },
-    { id: 'billiard_black',   name: 'Noir poche mat',         icon: '⚫', color: 0x040404, light: 0x181818, dark: 0x000000, cost: 320, roughness: 0.98, metalness: 0.00, accent: 0xb8922a, emissive: 0x010101, emissiveIntensity: 0.02, glow: 'rgba(184,146,42,.20)' },
-    { id: 'billiard_water',   name: 'Reflet eau sombre',      icon: '💧', color: 0x1a5c6e, light: 0x54a9c2, dark: 0x08242d, cost: 335, roughness: 0.20, metalness: 0.05, transparent: true, opacity: 0.72, accent: 0x8cecff, emissive: 0x062932, emissiveIntensity: 0.04, glow: 'rgba(75,180,210,.30)' },
     { id: 'galaxy',  name: 'Galaxie noire',     icon: '🌌', color: 0x21103d, cost: 260, roughness: 0.08, metalness: 0.50, accent: 0xff4fd8, emissive: 0x12002c, emissiveIntensity: 0.14, glow: 'rgba(255,79,216,.32)' }
   ];
-
 
   const BALL_EFFECTS = [
     {
@@ -178,99 +167,7 @@ try {
       color: 0xf5ead8,
       accent: 0xffffff,
       glow: 'rgba(255,246,224,.18)',
-      trail: false,
-      aura: false,
-      description: 'Bille sans effet lumineux spécial.'
-    },
-    {
-      id: 'billiard_warm',
-      name: 'Halo billard ivoire',
-      icon: '💡',
-      cost: 80,
-      color: 0xfff8e8,
-      accent: 0xf0d878,
-      glow: 'rgba(255,248,232,.34)',
-      trail: true,
-      trailLength: 14,
-      trailOpacity: 0.28,
-      sparks: false,
-      aura: 'billiard',
-      description: 'Rendu récupéré du code fourni : petite lumière chaude autour de la bille, style salle de billard.'
-    },
-    {
-      id: 'impact_sparks',
-      name: 'Étincelles dorées',
-      icon: '✦',
-      cost: 105,
-      color: 0xffdd66,
-      accent: 0xffffff,
-      glow: 'rgba(255,221,102,.44)',
-      trail: true,
-      trailLength: 18,
-      trailOpacity: 0.54,
-      sparks: true,
-      aura: 'soft',
-      description: 'Rendu récupéré du code fourni : éclats dorés inspirés des impacts.'
-    },
-    {
-      id: 'aim_gold',
-      name: 'Trait doré billard',
-      icon: '➶',
-      cost: 125,
-      color: 0xf0d878,
-      accent: 0xb87820,
-      glow: 'rgba(240,216,120,.38)',
-      trail: true,
-      trailLength: 22,
-      trailOpacity: 0.42,
-      sparks: false,
-      aura: 'billiard',
-      description: 'Rendu récupéré du code fourni : couleur de la ligne de visée et du marqueur de lancement.'
-    },
-    {
-      id: 'brass_halo',
-      name: 'Halo laiton',
-      icon: '🟡',
-      cost: 145,
-      color: 0xb8922a,
-      accent: 0xfff0a8,
-      glow: 'rgba(184,146,42,.46)',
-      trail: true,
-      trailLength: 24,
-      trailOpacity: 0.48,
-      sparks: true,
-      aura: 'soft',
-      description: 'Rendu récupéré du code fourni : chaleur métallique des poches et coins laiton.'
-    },
-    {
-      id: 'metal_reflect',
-      name: 'Reflet métal froid',
-      icon: '◽',
-      cost: 170,
-      color: 0xd0d8e0,
-      accent: 0xffffff,
-      glow: 'rgba(210,220,230,.38)',
-      trail: true,
-      trailLength: 20,
-      trailOpacity: 0.38,
-      sparks: false,
-      aura: 'billiard',
-      description: 'Rendu récupéré du code fourni : reflet clair du matériau métal poli.'
-    },
-    {
-      id: 'pocket_shadow',
-      name: 'Ombre de poche',
-      icon: '●',
-      cost: 185,
-      color: 0x040404,
-      accent: 0x3a2a08,
-      glow: 'rgba(0,0,0,.36)',
-      trail: true,
-      trailLength: 16,
-      trailOpacity: 0.30,
-      sparks: false,
-      aura: 'soft',
-      description: 'Rendu récupéré du code fourni : noir mat des poches, plus discret que les effets magiques.'
+      description: 'Bille sans aura pulsée.'
     },
     {
       id: 'pulse',
@@ -280,129 +177,24 @@ try {
       color: 0x00f0ff,
       accent: 0xffffff,
       glow: 'rgba(0,240,255,.42)',
-      trail: true,
-      trailLength: 18,
-      trailOpacity: 0.42,
-      aura: 'pulse',
       description: 'Aura lumineuse qui respire comme un battement de cœur.'
-    },
-    {
-      id: 'comet',
-      name: 'Comète dorée',
-      icon: '☄️',
-      cost: 190,
-      color: 0xffd45a,
-      accent: 0xffffff,
-      glow: 'rgba(255,210,90,.46)',
-      trail: true,
-      trailLength: 34,
-      trailOpacity: 0.74,
-      sparks: true,
-      aura: 'soft',
-      description: 'Long sillage doré derrière la bille.'
-    },
-    {
-      id: 'flame',
-      name: 'Flammes de siège',
-      icon: '🔥',
-      cost: 230,
-      color: 0xff5a1f,
-      accent: 0xffd36a,
-      glow: 'rgba(255,92,30,.48)',
-      trail: true,
-      trailLength: 26,
-      trailOpacity: 0.82,
-      sparks: true,
-      aura: 'flicker',
-      description: 'Traînée chaude avec éclats orangés.'
-    },
-    {
-      id: 'frost',
-      name: 'Givre arcanique',
-      icon: '❄️',
-      cost: 250,
-      color: 0xaaf7ff,
-      accent: 0xffffff,
-      glow: 'rgba(160,245,255,.42)',
-      trail: true,
-      trailLength: 30,
-      trailOpacity: 0.58,
-      sparks: false,
-      aura: 'soft',
-      description: 'Brume froide bleutée autour de la bille.'
-    },
-    {
-      id: 'shadow',
-      name: 'Ombre violette',
-      icon: '🌑',
-      cost: 280,
-      color: 0x7a45ff,
-      accent: 0xff6bdf,
-      glow: 'rgba(122,69,255,.38)',
-      trail: true,
-      trailLength: 28,
-      trailOpacity: 0.48,
-      sparks: false,
-      aura: 'soft',
-      description: 'Sillage sombre et magique, discret mais visible.'
-    },
-    {
-      id: 'leaves',
-      name: 'Feuilles sylvestres',
-      icon: '🍃',
-      cost: 320,
-      color: 0x57d86b,
-      accent: 0xd7ff9a,
-      glow: 'rgba(92,220,105,.38)',
-      trail: true,
-      trailLength: 24,
-      trailOpacity: 0.62,
-      sparks: true,
-      aura: 'soft',
-      description: 'Effet vert naturel assorti au plateau forêt.'
     }
   ];
 
   const CASTLE_SKINS = [
     {
-      // Rendu récupéré du code fourni : pierre claire, dégâts brun-gris, toits rouge/bleu et laiton.
-      id: 'classic', name: 'Château billard classique', cost: 0,
-      wall: 0xb0a898, light: 0xd2c9b7, dark: 0x6d6252, damaged: 0x7a6a52, destroyed: 0x4a3c2a, trim: 0xb8922a,
+      id: 'classic', name: 'Château classique', cost: 0,
+      wall: 0xb0a898, light: 0xd2c9b7, dark: 0x6d6252, damaged: 0x7a6a52, trim: 0xd7bd62,
       roofP1: 0x8b1c18, roofP2: 0x1c2e8b, bannerP1: 0xb51d18, bannerP2: 0x2245b8,
-      glow: 'rgba(184,146,42,.26)'
+      glow: 'rgba(232,201,106,.22)'
     },
-    { id: 'billiard_stone', name: 'Pierre billard pure', cost: 65, wall: 0xb0a898, light: 0xd8d2c6, dark: 0x706553, damaged: 0x7a6a52, destroyed: 0x4a3c2a, roofP1: 0x8b1c18, roofP2: 0x1c2e8b, bannerP1: 0xb51d18, bannerP2: 0x2245b8, trim: 0xb8922a, glow: 'rgba(255,244,214,.22)' },
-    // Rendus récupérés directement des matériaux du code fourni : pierre, dégâts, laiton, acajou, feutre et noir mat.
-    { id: 'billiard_damaged', name: 'Pierre abîmée billard', cost: 95, wall: 0x9b8a6f, light: 0xd0c6b4, dark: 0x5f4f3c, damaged: 0x8c765b, destroyed: 0x4c3b28, roofP1: 0xa72a22, roofP2: 0x2f4fc4, bannerP1: 0xc63a31, bannerP2: 0x315bd3, trim: 0xd0a944, glow: 'rgba(190,164,120,.28)' },
-    { id: 'billiard_brass_keep', name: 'Laiton de poche', cost: 130, wall: 0xd0a63a, light: 0xffdf77, dark: 0x7d5714, damaged: 0xa77c27, destroyed: 0x5c3d0d, roofP1: 0xa92620, roofP2: 0x2742a7, bannerP1: 0x6b3b12, bannerP2: 0x2d6b45, trim: 0xfff0a8, glow: 'rgba(255,220,105,.34)' },
-    { id: 'billiard_mahogany_keep', name: 'Acajou billard', cost: 155, wall: 0x875027, light: 0xc0783d, dark: 0x4a2a12, damaged: 0x6b3b18, destroyed: 0x35200f, roofP1: 0xa7271f, roofP2: 0x2c48b5, bannerP1: 0xd0a43a, bannerP2: 0xe0e6ec, trim: 0xd0a43a, glow: 'rgba(180,100,46,.28)' },
-    { id: 'billiard_felt_keep', name: 'Fort feutre vert', cost: 180, wall: 0x2f8550, light: 0x68b879, dark: 0x245438, damaged: 0x34744a, destroyed: 0x1c3a25, roofP1: 0xa52a22, roofP2: 0x2e4fbd, bannerP1: 0xd0a43a, bannerP2: 0xe0e6ec, trim: 0xa9e5bb, glow: 'rgba(95,230,150,.28)' },
-    { id: 'billiard_black_keep', name: 'Noir mat et laiton', cost: 205, wall: 0x3b3b35, light: 0x747064, dark: 0x1d1a14, damaged: 0x333028, destroyed: 0x17140f, roofP1: 0x5a3b16, roofP2: 0x2a3f99, bannerP1: 0xd0a43a, bannerP2: 0xd0a43a, trim: 0xffd66e, glow: 'rgba(215,175,70,.30)' },
     { id: 'royal_red', name: 'Forteresse rubis', cost: 85, wall: 0xb9a48f, light: 0xe3d0b8, dark: 0x69513f, damaged: 0x80513f, roof: 0xb42024, banner: 0xe2382f, trim: 0xd9ba5a, glow: 'rgba(255,70,58,.24)' },
     { id: 'royal_blue', name: 'Forteresse saphir', cost: 85, wall: 0xa8b0c8, light: 0xd1dcf5, dark: 0x4e5774, damaged: 0x596071, roof: 0x174dc5, banner: 0x2f75ff, trim: 0xd6c178, glow: 'rgba(70,140,255,.24)' },
-    { id: 'black_gold', name: 'Noir et or', cost: 120, wall: 0x5a4c3b, light: 0xa58a5e, dark: 0x2d241b, damaged: 0x453724, roof: 0x221a10, banner: 0xe0b84a, trim: 0xffd667, glow: 'rgba(255,210,90,.30)' },
+    { id: 'black_gold', name: 'Noir et or', cost: 120, wall: 0x302a24, light: 0x76644a, dark: 0x14100d, damaged: 0x3c3024, roof: 0x0a0908, banner: 0xd6a92e, trim: 0xffd667, glow: 'rgba(255,210,90,.30)' },
     { id: 'white_gold', name: 'Blanc impérial', cost: 145, wall: 0xd8d3c4, light: 0xfff4d5, dark: 0x8b846f, damaged: 0xaaa18c, roof: 0xf2f0e8, banner: 0xd6a92e, trim: 0xffd667, glow: 'rgba(255,245,205,.28)' },
     { id: 'ancient_green', name: 'Pierre ancienne', cost: 170, wall: 0x6f9272, light: 0xacc8a3, dark: 0x394f39, damaged: 0x5c6d50, roof: 0x0f5b39, banner: 0x39b56a, trim: 0xb7c77a, glow: 'rgba(95,220,140,.22)' },
-    { id: 'volcanic', name: 'Citadelle volcanique', cost: 210, wall: 0x7a4a38, light: 0xbc7554, dark: 0x372018, damaged: 0x834631, roof: 0xc84b24, banner: 0xff7c2d, trim: 0xffc66b, glow: 'rgba(255,110,45,.28)' },
+    { id: 'volcanic', name: 'Citadelle volcanique', cost: 210, wall: 0x4a3028, light: 0x8d5842, dark: 0x1b1110, damaged: 0x5d2b20, roof: 0xb33518, banner: 0xff6b21, trim: 0xffbd58, glow: 'rgba(255,95,35,.26)' },
     { id: 'arctic', name: 'Château arctique', cost: 240, wall: 0xbfdce4, light: 0xf4ffff, dark: 0x68848d, damaged: 0x8aa1a8, roof: 0x79e4ff, banner: 0xdafcff, trim: 0xffffff, glow: 'rgba(170,240,255,.30)' }
-  ];
-
-  const BOARD_SKINS = [
-    {
-      id: 'billiard',
-      name: 'Salle de billard',
-      icon: '🎱',
-      cost: 0,
-      description: 'Plateau classique : feutre vert, rails acajou, laiton et salle éclairée.'
-    },
-    {
-      id: 'forest',
-      name: 'Forêt ancienne',
-      icon: '🌲',
-      cost: 420,
-      glow: 'rgba(92,220,105,.32)',
-      description: 'Plateau alternatif : vraie ambiance forêt, grande forêt autour et entre les deux couloirs, sol en herbe sombre, mousse, feuilles, racines et chemins de terre.'
-    }
   ];
 
   // Références de progression : les objectifs doivent demander une vraie performance,
@@ -423,7 +215,6 @@ try {
     { id: 'combos',     label: 'Combos de siège',      get: s => s.combos,                         thresholds: [[1, 2], [3, 4], [5, 8]] },
     { id: 'resources',  label: 'Ressources gagnées',   get: s => s.resources,                      thresholds: [[80, 1], [140, 2], [210, 4], [300, 6]] },
     { id: 'holes',      label: 'Trous atteints',       get: s => s.holesHit,                       thresholds: [[15, 1], [30, 2], [45, 4], [60, 6]] },
-    { id: 'holeRows',   label: 'Lignes de trous découvertes', get: s => s.holeRowsDiscovered || 0, thresholds: [[1, 1], [2, 3], [3, 5], [4, 7]] },
     { id: 'edge',       label: 'Pillages / vols',      get: s => s.edgeSteals,                     thresholds: [[5, 1], [10, 2], [15, 5]] },
     { id: 'relics',     label: 'Reliques trouvées',    get: s => s.relicsFound,                    thresholds: [[1, 2], [2, 3], [3, 4], [4, 5]] },
     { id: 'second',     label: 'Seconds lancers',      get: s => s.secondShots,                    thresholds: [[12, 1], [18, 2], [21, 4]] }
@@ -448,9 +239,7 @@ try {
       unlockedBallEffects: ['none'],
       selectedBallEffects: { '1': 'none', '2': 'none' },
       unlockedCastleSkins: ['classic'],
-      selectedCastleSkins: { '1': 'classic', '2': 'classic' },
-      unlockedBoardSkins: ['billiard'],
-      selectedBoardSkin: 'billiard'
+      selectedCastleSkins: { '1': 'classic', '2': 'classic' }
     };
   }
 
@@ -464,10 +253,6 @@ try {
 
   function findCastleSkin(id) {
     return CASTLE_SKINS.find(skin => skin.id === id) || CASTLE_SKINS[0];
-  }
-
-  function findBoardSkin(id) {
-    return BOARD_SKINS.find(skin => skin.id === id) || BOARD_SKINS[0];
   }
 
   function colorToHex(value) {
@@ -523,13 +308,6 @@ try {
     return `--castle-wall:${wall};--castle-light:${light};--castle-dark:${dark};--castle-roof:${roof};--castle-banner:${banner};--castle-trim:${trim};--skin-glow:${glow};`;
   }
 
-  function boardSkinCssVars(skin) {
-    if (skin.id === 'forest') {
-      return '--board-a:#244b2e;--board-b:#5c3d1e;--board-c:#9fd36b;--board-glow:rgba(92,220,105,.32);';
-    }
-    return '--board-a:#185738;--board-b:#3d1a08;--board-c:#d6b85f;--board-glow:rgba(255,218,80,.24);';
-  }
-
   function normalizeProgress(raw) {
     const base = defaultProgress();
     const data = raw && typeof raw === 'object' ? raw : {};
@@ -566,12 +344,6 @@ try {
       const selectedId = selectedCastle[playerKey];
       base.selectedCastleSkins[playerKey] = base.unlockedCastleSkins.includes(selectedId) ? selectedId : 'classic';
     });
-
-    const validBoardIds = new Set(BOARD_SKINS.map(skin => skin.id));
-    const unlockedBoards = Array.isArray(data.unlockedBoardSkins) ? data.unlockedBoardSkins.filter(id => validBoardIds.has(id)) : [];
-    base.unlockedBoardSkins = Array.from(new Set(['billiard', ...unlockedBoards]));
-    const selectedBoardId = data.selectedBoardSkin;
-    base.selectedBoardSkin = base.unlockedBoardSkins.includes(selectedBoardId) ? selectedBoardId : 'billiard';
     return base;
   }
 
@@ -695,6 +467,27 @@ try {
 
   let progress = getPlayerProgress(1);
 
+  // Correctif GitHub/mobile : suppression unique des points de test des profils.
+  // Les cosmétiques déjà débloqués sont conservés ; seuls les compteurs de points sont remis à zéro.
+  const POINTS_CLEANUP_STORAGE_KEY = 'BDS_POINTS_CLEANUP_20260525_1';
+
+  function cleanupVictoryPointsOnce() {
+    try {
+      if (localStorage.getItem(POINTS_CLEANUP_STORAGE_KEY) === 'done') return;
+      Object.values(profileState.profiles || {}).forEach(profile => {
+        if (!profile || !profile.progress) return;
+        profile.progress.victoryPoints = 0;
+        profile.progress.lifetimeEarned = 0;
+      });
+      progress = getPlayerProgress(1);
+      localStorage.setItem(PROFILES_STORAGE_KEY, JSON.stringify(profileState));
+      localStorage.setItem(PROGRESS_STORAGE_KEY, JSON.stringify(progress));
+      localStorage.setItem(POINTS_CLEANUP_STORAGE_KEY, 'done');
+    } catch (err) {}
+  }
+
+  cleanupVictoryPointsOnce();
+
   function saveProfiles() {
     try { localStorage.setItem(PROFILES_STORAGE_KEY, JSON.stringify(profileState)); } catch (err) {}
     progress = getPlayerProgress(1);
@@ -704,19 +497,6 @@ try {
   function saveProgress() {
     saveProfiles();
   }
-
-  // Version de test cosmétique : le profil actif du Joueur 1 garde assez de points
-  // pour acheter et vérifier tous les rendus débloquables sans tricherie gameplay.
-  function ensurePlayerOneCosmeticTestPoints() {
-    const pr = getPlayerProgress(1);
-    if (!pr) return;
-    if ((Number(pr.victoryPoints) || 0) < 99999) {
-      pr.victoryPoints = 99999;
-      pr.lifetimeEarned = Math.max(Number(pr.lifetimeEarned) || 0, 99999);
-      saveProfiles();
-    }
-  }
-  ensurePlayerOneCosmeticTestPoints();
 
   function createPlayerProfile(name, avatarId = DEFAULT_PROFILE_AVATAR) {
     const profile = createProfileObject(name, defaultProgress(), avatarId);
@@ -734,8 +514,6 @@ try {
     try { applyActiveBallSkin(active); } catch (err) {}
     try { updateBallPulseColors(active); } catch (err) {}
     try { refreshCastleSkin(player); } catch (err) {}
-    try { ensurePlayerOneCosmeticTestPoints(); } catch (err) {}
-    try { applySelectedBoardSkin(); } catch (err) {}
     renderProfiles();
     renderProgression();
     renderCustomization();
@@ -785,7 +563,7 @@ try {
     const ok = window.confirm(
       'Remettre à zéro la progression des profils actifs ?\n\n' +
       names + '\n\n' +
-      'Cela supprimera les points de victoire, les couleurs de bille, les effets de bille, les couleurs de château, les plateaux débloqués et le score à battre de ces profils.'
+      'Cela supprimera les points de victoire, les couleurs de bille, les effets de bille, les couleurs de château et le score à battre de ces profils.'
     );
     if (!ok) return;
 
@@ -802,8 +580,6 @@ try {
     try { applyActiveBallSkin(active); } catch (err) {}
     try { updateBallPulseColors(active); } catch (err) {}
     try { refreshAllCastleSkins(); } catch (err) {}
-    try { ensurePlayerOneCosmeticTestPoints(); } catch (err) {}
-    try { applySelectedBoardSkin(); } catch (err) {}
   }
 
   function getSelectedBallSkinId(player = active) {
@@ -851,11 +627,7 @@ try {
     pr.selectedBallEffect = effectId;
     pr.selectedBallEffects[String(player)] = effectId;
     saveProgress();
-    if (player === active) {
-      updateBallPulseColors(player);
-      updateBallTrailColors(player);
-      clearBallTrail();
-    }
+    if (player === active) updateBallPulseColors(player);
     renderCustomization();
     updateMainMenuProgress();
   }
@@ -898,35 +670,6 @@ try {
     if (pr.victoryPoints < skin.cost) return;
     pr.victoryPoints -= skin.cost;
     pr.unlockedCastleSkins.push(skin.id);
-    saveProgress();
-    renderCustomization();
-    updateMainMenuProgress();
-  }
-
-  function getSelectedBoardSkinId() {
-    const pr = getPlayerProgress(1);
-    const id = pr.selectedBoardSkin || 'billiard';
-    return pr.unlockedBoardSkins.includes(id) ? id : 'billiard';
-  }
-
-  function setSelectedBoardSkin(skinId) {
-    const skin = findBoardSkin(skinId);
-    const pr = getPlayerProgress(1);
-    if (!skin || !pr.unlockedBoardSkins.includes(skin.id)) return;
-    pr.selectedBoardSkin = skin.id;
-    saveProgress();
-    try { applySelectedBoardSkin(); } catch (err) {}
-    renderCustomization();
-    updateMainMenuProgress();
-  }
-
-  function unlockBoardSkin(skinId) {
-    const skin = findBoardSkin(skinId);
-    const pr = getPlayerProgress(1);
-    if (!skin || pr.unlockedBoardSkins.includes(skin.id)) return;
-    if (pr.victoryPoints < skin.cost) return;
-    pr.victoryPoints -= skin.cost;
-    pr.unlockedBoardSkins.push(skin.id);
     saveProgress();
     renderCustomization();
     updateMainMenuProgress();
@@ -1520,7 +1263,7 @@ try {
       const actions = shopActions('effect', effect.id, effect.cost, pr => pr.unlockedBallEffects.includes(effect.id), player => getSelectedBallEffectId(player) === effect.id);
       return `
         <div class="skin-card effect-card ${(unlockedP1 || unlockedP2) ? 'unlocked' : 'locked'} ${(selectedP1 || selectedP2) ? 'active' : ''}" style="${effectVars}">
-          <div class="skin-card-preview effect-preview effect-preview-${effect.id} ${effect.id === 'pulse' ? 'effect-preview-pulse' : ''}"><span class="skin-preview-ball ${effect.id === 'pulse' ? 'effect-pulse-ball' : ''}"></span></div>
+          <div class="skin-card-preview effect-preview ${effect.id === 'pulse' ? 'effect-preview-pulse' : ''}"><span class="skin-preview-ball ${effect.id === 'pulse' ? 'effect-pulse-ball' : ''}"></span></div>
           <div class="skin-info">
             <b>${effect.name}</b>
             <small>${selectedTags || (effect.cost === 0 ? 'Gratuit' : effect.cost + ' points de victoire')}</small>
@@ -1561,36 +1304,6 @@ try {
         </div>`;
     }).join('');
 
-    const boardCards = BOARD_SKINS.map(skin => {
-      const pr = getPlayerProgress(1);
-      const unlocked = pr.unlockedBoardSkins.includes(skin.id);
-      const selected = getSelectedBoardSkinId() === skin.id;
-      const vars = boardSkinCssVars(skin);
-      const previewClass = skin.id === 'forest' ? 'board-preview-forest' : 'board-preview-billiard';
-      const action = unlocked
-        ? `<button class="custom-select ${selected ? 'selected' : ''}" data-select-board="${skin.id}">Plateau ${selected ? 'sélectionné ✓' : 'sélectionner'}</button>`
-        : `<button class="custom-unlock" data-unlock-board="${skin.id}" ${pr.victoryPoints >= skin.cost ? '' : 'disabled'}>Débloquer — ${skin.cost} pts J1</button>`;
-      return `
-        <div class="skin-card board-card ${unlocked ? 'unlocked' : 'locked'} ${selected ? 'active' : ''}" style="${vars}">
-          <div class="skin-card-preview board-preview ${previewClass}">
-            <span class="board-preview-ground"></span>
-            <span class="board-preview-lane board-preview-lane-left"></span>
-            <span class="board-preview-lane board-preview-lane-right"></span>
-            <span class="board-preview-tree tree-a"></span>
-            <span class="board-preview-tree tree-b"></span>
-            <span class="board-preview-dot dot-a"></span>
-            <span class="board-preview-dot dot-b"></span>
-          </div>
-          <div class="skin-info">
-            <b>${skin.icon} ${skin.name}</b>
-            <small>${selected ? 'Plateau actif' : (skin.cost === 0 ? 'Gratuit' : skin.cost + ' points de victoire')}</small>
-            <em>${skin.description || ''}</em>
-          </div>
-          <div class="skin-actions">${action}</div>
-        </div>`;
-    }).join('');
-
-
     customizationContent.innerHTML = `
       <div class="profile-wallet-grid">${playerWallets}</div>
       <div class="scoreboard-panel">
@@ -1599,7 +1312,7 @@ try {
         <div class="scoreboard-row"><span>J2 ${getProfileName(2)}</span><b>${Math.max(SCORE_TO_BEAT_DEFAULT, getPlayerProgress(2).bestScoreToBeat || SCORE_TO_BEAT_DEFAULT)} pts</b></div>
         <small>Le bonus record est ajouté aux points gagnés du profil concerné, mais il ne compte pas dans le nouveau score à battre.</small>
       </div>
-      <div class="custom-note">Les personnalisations sont propres à chaque profil. Elles changent uniquement l’apparence : couleurs, châteaux, effets visuels et plateau. Même vitesse, même puissance, même physique.</div>
+      <div class="custom-note">Les personnalisations sont propres à chaque profil. Elles changent uniquement l’apparence : couleurs, châteaux et effets visuels. Même vitesse, même puissance, même physique.</div>
       <div class="skin-table-title">
         <b>Couleurs de bille</b>
         <small>Chaque profil débloque ses propres couleurs.</small>
@@ -1614,12 +1327,7 @@ try {
         <b>Couleurs de château</b>
         <small>Modifie les murs, toits, fanions et tours de défense.</small>
       </div>
-      <div class="skin-grid castle-grid">${castleCards}</div>
-      <div class="skin-table-title board-section-title">
-        <b>Plateaux de jeu</b>
-        <small>Plateau cosmétique global de la partie. Déblocage avec les points du Joueur 1.</small>
-      </div>
-      <div class="skin-grid board-grid">${boardCards}</div>`;
+      <div class="skin-grid castle-grid">${castleCards}</div>`;
 
     customizationContent.querySelectorAll('[data-unlock]').forEach(btn => {
       btn.onclick = () => unlockBallSkin(btn.dataset.unlock, Number(btn.dataset.unlockPlayer || active));
@@ -1638,12 +1346,6 @@ try {
     });
     customizationContent.querySelectorAll('[data-select-castle-player]').forEach(btn => {
       btn.onclick = () => setSelectedCastleSkin(Number(btn.dataset.selectCastlePlayer), btn.dataset.castleSkin);
-    });
-    customizationContent.querySelectorAll('[data-unlock-board]').forEach(btn => {
-      btn.onclick = () => unlockBoardSkin(btn.dataset.unlockBoard);
-    });
-    customizationContent.querySelectorAll('[data-select-board]').forEach(btn => {
-      btn.onclick = () => setSelectedBoardSkin(btn.dataset.selectBoard);
     });
   }
 
@@ -1684,7 +1386,6 @@ try {
     if (objective.id === 'combos') return threshold + (threshold > 1 ? ' combos' : ' combo');
     if (objective.id === 'resources') return threshold + ' ressources gagnées';
     if (objective.id === 'holes') return threshold + (threshold > 1 ? ' trous atteints' : ' trou atteint');
-    if (objective.id === 'holeRows') return threshold + (threshold > 1 ? ' lignes complètes découvertes' : ' ligne complète découverte');
     if (objective.id === 'edge') return threshold + (threshold > 1 ? ' pillages / vols' : ' pillage / vol');
     if (objective.id === 'relics') return threshold + (threshold > 1 ? ' reliques trouvées' : ' relique trouvée');
     if (objective.id === 'second') return threshold + (threshold > 1 ? ' seconds lancers' : ' second lancer');
@@ -1714,7 +1415,7 @@ try {
     progressionContent.innerHTML = `
       <div class="profile-wallet-grid">${progressionWallets}</div>
       <div class="progression-rule">
-        Les points sont calculés à la fin de la partie avec les statistiques du récapitulatif. Dans chaque catégorie, seul le meilleur palier atteint rapporte des points : les anciens paliers ne se cumulent pas. La victoire rapide récompense uniquement le vainqueur si la partie se termine en peu de manches. Pour les structures, seules les tours et pièces de château comptent ; les rampes détruites par usure sont exclues. Une ligne de trous est validée uniquement quand tous les trous de cette rangée ont été visités/révélés. Ces points servent uniquement à acheter des cosmétiques.
+        Les points sont calculés à la fin de la partie avec les statistiques du récapitulatif. Dans chaque catégorie, seul le meilleur palier atteint rapporte des points : les anciens paliers ne se cumulent pas. La victoire rapide récompense uniquement le vainqueur si la partie se termine en peu de manches. Pour les structures, seules les tours et pièces de château comptent ; les rampes détruites par usure sont exclues. Ces points servent uniquement à acheter des cosmétiques.
       </div>
       <div class="progression-reset-panel">
         <span>Remise à zéro pour les tests : points, cosmétiques et score à battre des profils actifs J1/J2.</span>
@@ -2991,71 +2692,64 @@ try {
 
   /* ── Scene ── */
   const scene = new THREE.Scene();
-  scene.background = new THREE.Color(0x314734); // billard lumineux : vert/brun plus net, sans voile flou
-  scene.fog = new THREE.FogExp2(0x244a32, 0.00055);
+  scene.background = new THREE.Color(0x090f0b); // salle plus moderne, sombre et lisible
+  scene.fog = new THREE.FogExp2(0x07150e, 0.0027);
 
   const camera = new THREE.PerspectiveCamera(54, innerWidth / (innerHeight - VIEW_BOTTOM_RESERVED), 0.1, 900);
-  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, powerPreference: 'high-performance' });
-  // Image plus nette sur tablette/téléphone : l'ancienne limite basse rendait le plateau mou/flou.
-  const getRenderPixelRatio = () => Math.min(window.devicePixelRatio || 1, 1.9);
-  renderer.setPixelRatio(getRenderPixelRatio());
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: false, powerPreference: 'high-performance' });
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 1.15));
   renderer.setSize(innerWidth, innerHeight - VIEW_BOTTOM_RESERVED);
   // Optimisation mobile : les ombres dynamiques coûtaient trop cher et provoquaient du lag.
   renderer.shadowMap.enabled = false;
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.32;
+  renderer.toneMappingExposure = 1.38;
 
   window.addEventListener('resize', () => {
-    renderer.setPixelRatio(getRenderPixelRatio());
     renderer.setSize(innerWidth, innerHeight - VIEW_BOTTOM_RESERVED);
     camera.aspect = innerWidth / (innerHeight - VIEW_BOTTOM_RESERVED);
     camera.updateProjectionMatrix();
   });
 
   /* ── Éclairage style salle de billard ── */
-  // Ambiance claire : style billard conservé, mais plateau franchement lisible.
-  scene.add(new THREE.AmbientLight(0xfff1dc, 1.55));
+  // Ambiance renforcée : on garde l'atmosphère billard, mais le plateau reste lisible.
+  scene.add(new THREE.AmbientLight(0xfff0dc, 1.42));
 
-  const keyLight = new THREE.DirectionalLight(0xffecd0, 1.72);
-  keyLight.position.set(-18, 66, 48);
+  const keyLight = new THREE.DirectionalLight(0xffe7c0, 1.72);
+  keyLight.position.set(-14, 58, 38);
   keyLight.castShadow = false;
   scene.add(keyLight);
 
-  // Suspension au-dessus de chaque couloir : on reprend l'esprit du rendu fourni,
-  // mais sans ombres dynamiques pour éviter le lag sur tablette.
-  const billiardLamps = [];
-  function addTableLamp(x, z, idx = 0) {
-    const lamp = new THREE.PointLight(0xfff2d4, 3.18, 92, 1.30);
-    lamp.position.set(x, 31, z);
+  // Suspension au-dessus de chaque couloir (lampes pendantes style billard)
+  function addTableLamp(x, z) {
+    const lamp = new THREE.PointLight(0xffe8b8, 3.05, 98, 1.35);
+    lamp.position.set(x, 32, z);
     lamp.castShadow = false;
     scene.add(lamp);
 
-    // Halo visible, couleur crème comme une vraie suspension de billard.
-    const haloGeo = new THREE.SphereGeometry(0.88, 12, 8);
-    const haloMat = new THREE.MeshBasicMaterial({ color: 0xfff8e0, transparent: true, opacity: 0.28, depthWrite: false });
+    // Halo visible
+    const haloGeo = new THREE.SphereGeometry(0.75, 8, 6);
+    const haloMat = new THREE.MeshBasicMaterial({ color: 0xffe8b8, transparent: true, opacity: 0.58 });
     const halo = new THREE.Mesh(haloGeo, haloMat);
     halo.position.copy(lamp.position);
     scene.add(halo);
 
-    // Abat-jour sombre avec reflet laiton discret.
-    const coneGeo = new THREE.ConeGeometry(0.62, 1.45, 20, 1, true);
+    // Cône de lumière vers le bas (abat-jour)
+    const coneGeo = new THREE.ConeGeometry(0.55, 1.25, 14, 1, true);
     const coneMat = new THREE.MeshBasicMaterial({ color: 0x3a2a08, side: THREE.BackSide });
     const cone = new THREE.Mesh(coneGeo, coneMat);
     cone.position.copy(lamp.position);
-    cone.position.y -= 0.82;
+    cone.position.y -= 0.8;
     scene.add(cone);
-
-    billiardLamps.push({ lamp, halo, base: lamp.intensity, phase: idx * 0.73 + x * 0.025 + z * 0.011 });
   }
 
-  // 4 suspensions par couloir, comme dans le rendu de référence.
-  [-16.5, 16.5].forEach((x, xi) => {
-    [-80, -20, 40, 100].forEach((z, zi) => addTableLamp(x, z, xi * 4 + zi));
+  // Lampes sur chaque couloir, plusieurs positions
+  [-16.5, 16.5].forEach(x => {
+    [-45, 65].forEach(z => addTableLamp(x, z));
   });
 
   // Remplissage doux pour déboucher les ombres sans tuer le style billard.
-  const fillLight = new THREE.HemisphereLight(0xffedcc, 0x27583a, 0.98);
+  const fillLight = new THREE.HemisphereLight(0xffdfb0, 0x12311d, 0.82);
   scene.add(fillLight);
 
 
@@ -3077,7 +2771,6 @@ try {
     texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
     texture.repeat.set(repeatX, repeatY);
     texture.colorSpace = THREE.SRGBColorSpace;
-    texture.anisotropy = Math.min(8, renderer.capabilities.getMaxAnisotropy ? renderer.capabilities.getMaxAnisotropy() : 1);
     texture.needsUpdate = true;
     return texture;
   }
@@ -3162,277 +2855,28 @@ try {
   function makeDarkFloorTexture(seed) {
     const rnd = seededRandom(seed);
     return makeCanvasTexture(160, (ctx, size) => {
-      ctx.fillStyle = '#322011';
+      ctx.fillStyle = '#140904';
       ctx.fillRect(0, 0, size, size);
       for (let y = 0; y < size; y += 16) {
-        ctx.fillStyle = y % 32 === 0 ? 'rgba(255,190,105,.055)' : 'rgba(0,0,0,.055)';
+        ctx.fillStyle = y % 32 === 0 ? 'rgba(255,160,70,.035)' : 'rgba(0,0,0,.10)';
         ctx.fillRect(0, y, size, 1);
       }
       for (let i = 0; i < 150; i++) {
-        ctx.fillStyle = rnd() > .5 ? 'rgba(255,220,135,.045)' : 'rgba(0,0,0,.045)';
+        ctx.fillStyle = rnd() > .5 ? 'rgba(255,210,120,.025)' : 'rgba(0,0,0,.08)';
         ctx.fillRect(rnd()*size, rnd()*size, 1 + rnd()*2, 1);
       }
     }, 12, 16);
   }
 
-  function makeForestFloorTexture(seed) {
-    const rnd = seededRandom(seed);
-    return makeCanvasTexture(180, (ctx, size) => {
-      ctx.fillStyle = '#26351d';
-      ctx.fillRect(0, 0, size, size);
-      for (let i = 0; i < 620; i++) {
-        const green = 44 + Math.floor(rnd() * 70);
-        const brown = 28 + Math.floor(rnd() * 54);
-        ctx.fillStyle = rnd() > 0.42
-          ? `rgba(${green},${78 + Math.floor(rnd()*58)},${32 + Math.floor(rnd()*38)},${0.055 + rnd()*0.10})`
-          : `rgba(${86 + brown},${50 + brown*.45},${20 + brown*.25},${0.05 + rnd()*0.10})`;
-        ctx.beginPath();
-        ctx.ellipse(rnd()*size, rnd()*size, 1 + rnd()*7, .6 + rnd()*2.2, rnd()*Math.PI, 0, Math.PI*2);
-        ctx.fill();
-      }
-      for (let i = 0; i < 32; i++) {
-        ctx.strokeStyle = 'rgba(24,14,6,.18)';
-        ctx.lineWidth = 1 + rnd()*2;
-        ctx.beginPath();
-        const x = rnd()*size, y = rnd()*size, len = 24 + rnd()*48;
-        ctx.moveTo(x, y);
-        ctx.bezierCurveTo(x + rnd()*16 - 8, y + len*.3, x + rnd()*20 - 10, y + len*.7, x + rnd()*18 - 9, y + len);
-        ctx.stroke();
-      }
-    }, 12, 16);
-  }
-
-  function makeForestMossLeafTexture(seed, repeatX = 7, repeatY = 26) {
-    const rnd = seededRandom(seed);
-    return makeCanvasTexture(192, (ctx, size) => {
-      const grad = ctx.createLinearGradient(0, 0, size, size);
-      grad.addColorStop(0, '#2f5f2d');
-      grad.addColorStop(.42, '#4f7f35');
-      grad.addColorStop(1, '#203d20');
-      ctx.fillStyle = grad;
-      ctx.fillRect(0, 0, size, size);
-
-      // Mousse : petites touches vertes non régulières.
-      for (let i = 0; i < 1200; i++) {
-        const g = 82 + Math.floor(rnd() * 96);
-        const r = 32 + Math.floor(rnd() * 46);
-        const b = 26 + Math.floor(rnd() * 36);
-        ctx.fillStyle = `rgba(${r},${g},${b},${0.035 + rnd()*0.13})`;
-        ctx.beginPath();
-        ctx.ellipse(rnd()*size, rnd()*size, .4 + rnd()*2.8, .4 + rnd()*2.0, rnd()*Math.PI, 0, Math.PI*2);
-        ctx.fill();
-      }
-
-      // Feuilles mortes : formes ovales brun/orange posées sur la mousse.
-      const leafColors = [
-        'rgba(143,91,36,.18)', 'rgba(178,122,42,.15)', 'rgba(91,61,27,.18)',
-        'rgba(207,158,74,.12)', 'rgba(110,78,34,.16)'
-      ];
-      for (let i = 0; i < 300; i++) {
-        ctx.fillStyle = leafColors[Math.floor(rnd()*leafColors.length)];
-        ctx.save();
-        ctx.translate(rnd()*size, rnd()*size);
-        ctx.rotate(rnd()*Math.PI);
-        ctx.beginPath();
-        ctx.ellipse(0, 0, 1.0 + rnd()*4.2, .35 + rnd()*1.2, 0, 0, Math.PI*2);
-        ctx.fill();
-        ctx.restore();
-      }
-
-      // Petites racines sombres intégrées au sol.
-      for (let i = 0; i < 46; i++) {
-        const x = rnd()*size, y = rnd()*size;
-        ctx.strokeStyle = 'rgba(38,22,9,.20)';
-        ctx.lineWidth = .8 + rnd()*1.8;
-        ctx.beginPath();
-        ctx.moveTo(x, y);
-        ctx.bezierCurveTo(x + rnd()*18 - 9, y + rnd()*10, x + rnd()*26 - 13, y + rnd()*26, x + rnd()*34 - 17, y + rnd()*42 - 10);
-        ctx.stroke();
-      }
-
-      // Léger voile vert pour lier l'ensemble.
-      ctx.fillStyle = 'rgba(65,115,50,.10)';
-      ctx.fillRect(0, 0, size, size);
-    }, repeatX, repeatY);
-  }
-
-  function makeLeafLitterTexture(seed, repeatX = 5, repeatY = 22) {
-    const rnd = seededRandom(seed);
-    return makeCanvasTexture(192, (ctx, size) => {
-      ctx.fillStyle = '#5c3a17';
-      ctx.fillRect(0, 0, size, size);
-      const colors = ['#8a5a24', '#a46b2b', '#6b421c', '#c18b3b', '#3d2b15'];
-      for (let i = 0; i < 850; i++) {
-        ctx.fillStyle = colors[Math.floor(rnd()*colors.length)];
-        ctx.globalAlpha = .10 + rnd()*.23;
-        ctx.save();
-        ctx.translate(rnd()*size, rnd()*size);
-        ctx.rotate(rnd()*Math.PI);
-        ctx.beginPath();
-        ctx.ellipse(0, 0, 1 + rnd()*5, .35 + rnd()*1.6, 0, 0, Math.PI*2);
-        ctx.fill();
-        ctx.restore();
-      }
-      ctx.globalAlpha = 1;
-      for (let i = 0; i < 90; i++) {
-        ctx.strokeStyle = 'rgba(34,18,8,.23)';
-        ctx.lineWidth = .8 + rnd()*1.6;
-        ctx.beginPath();
-        const x = rnd()*size, y = rnd()*size;
-        ctx.moveTo(x, y);
-        ctx.lineTo(x + rnd()*36 - 18, y + rnd()*18 - 9);
-        ctx.stroke();
-      }
-    }, repeatX, repeatY);
-  }
-
-  function makeSunnyGrassTexture(seed, repeatX = 8, repeatY = 26) {
-    const rnd = seededRandom(seed);
-    return makeCanvasTexture(180, (ctx, size) => {
-      const grad = ctx.createLinearGradient(0, 0, 0, size);
-      grad.addColorStop(0, '#82c65f');
-      grad.addColorStop(.45, '#6fb853');
-      grad.addColorStop(1, '#4f943a');
-      ctx.fillStyle = grad;
-      ctx.fillRect(0, 0, size, size);
-      for (let i = 0; i < 900; i++) {
-        const g = 110 + Math.floor(rnd() * 92);
-        ctx.fillStyle = `rgba(${38 + Math.floor(rnd()*50)},${g},${34 + Math.floor(rnd()*42)},${0.045 + rnd()*0.12})`;
-        ctx.fillRect(rnd()*size, rnd()*size, .6 + rnd()*1.8, 1 + rnd()*5);
-      }
-      for (let y = 0; y < size; y += 18) {
-        ctx.strokeStyle = 'rgba(255,255,255,.055)';
-        ctx.lineWidth = 1;
-        ctx.beginPath();
-        ctx.moveTo(0, y + rnd()*2);
-        ctx.lineTo(size, y + rnd()*2);
-        ctx.stroke();
-      }
-    }, repeatX, repeatY);
-  }
-
-  function makeFieldRowsTexture(seed, repeatX = 6, repeatY = 24) {
-    const rnd = seededRandom(seed);
-    return makeCanvasTexture(180, (ctx, size) => {
-      ctx.fillStyle = '#5fa744';
-      ctx.fillRect(0, 0, size, size);
-      for (let x = -size; x < size * 2; x += 14) {
-        const light = rnd() > .5;
-        ctx.fillStyle = light ? 'rgba(180,235,120,.18)' : 'rgba(35,90,35,.18)';
-        ctx.save();
-        ctx.translate(x, size / 2);
-        ctx.rotate(-0.18);
-        ctx.fillRect(-3, -size, 6, size * 2);
-        ctx.restore();
-      }
-      for (let i = 0; i < 420; i++) {
-        ctx.fillStyle = rnd() > .55 ? 'rgba(255,245,160,.05)' : 'rgba(15,65,20,.07)';
-        ctx.fillRect(rnd()*size, rnd()*size, 1 + rnd()*3, 1 + rnd()*2);
-      }
-    }, repeatX, repeatY);
-  }
-
-  function makeDirtPathTexture(seed, repeatX = 3, repeatY = 24) {
-    const rnd = seededRandom(seed);
-    return makeCanvasTexture(180, (ctx, size) => {
-      const grad = ctx.createLinearGradient(0, 0, size, 0);
-      grad.addColorStop(0, '#9b6b33');
-      grad.addColorStop(.18, '#c99a5a');
-      grad.addColorStop(.5, '#deb777');
-      grad.addColorStop(.82, '#c99a5a');
-      grad.addColorStop(1, '#91612e');
-      ctx.fillStyle = grad;
-      ctx.fillRect(0, 0, size, size);
-      for (let i = 0; i < 760; i++) {
-        const r = 105 + Math.floor(rnd()*95);
-        const g = 60 + Math.floor(rnd()*75);
-        const b = 25 + Math.floor(rnd()*36);
-        ctx.fillStyle = `rgba(${r},${g},${b},${0.04 + rnd()*0.12})`;
-        ctx.beginPath();
-        ctx.ellipse(rnd()*size, rnd()*size, 1 + rnd()*4, .5 + rnd()*2.2, rnd()*Math.PI, 0, Math.PI*2);
-        ctx.fill();
-      }
-      for (let y = 0; y < size; y += 16) {
-        ctx.strokeStyle = 'rgba(80,48,20,.11)';
-        ctx.lineWidth = 1;
-        ctx.beginPath();
-        ctx.moveTo(0, y + rnd()*4);
-        ctx.bezierCurveTo(size*.25, y + rnd()*7 - 3, size*.7, y + rnd()*7 - 3, size, y + rnd()*4);
-        ctx.stroke();
-      }
-    }, repeatX, repeatY);
-  }
-
-  function makeGardenStoneTexture(seed, repeatX = 3.2, repeatY = 9) {
-    const rnd = seededRandom(seed);
-    return makeCanvasTexture(160, (ctx, size) => {
-      ctx.fillStyle = '#8d9487';
-      ctx.fillRect(0, 0, size, size);
-      for (let i = 0; i < 620; i++) {
-        const v = 112 + Math.floor(rnd()*76);
-        ctx.fillStyle = `rgba(${v},${v+3},${v-8},${0.045 + rnd()*.10})`;
-        ctx.fillRect(rnd()*size, rnd()*size, 1 + rnd()*3, 1 + rnd()*3);
-      }
-      ctx.strokeStyle = 'rgba(44,52,38,.18)';
-      ctx.lineWidth = 1;
-      for (let y = 0; y < size; y += 28) {
-        ctx.beginPath();
-        ctx.moveTo(0, y + rnd()*8);
-        ctx.lineTo(size, y + rnd()*8);
-        ctx.stroke();
-      }
-      for (let x = 0; x < size; x += 36) {
-        ctx.beginPath();
-        ctx.moveTo(x + rnd()*8, 0);
-        ctx.lineTo(x + rnd()*8, size);
-        ctx.stroke();
-      }
-    }, repeatX, repeatY);
-  }
-
-  function makeBarkTexture(seed, repeatX = 1.2, repeatY = 14) {
-    const rnd = seededRandom(seed);
-    return makeCanvasTexture(160, (ctx, size) => {
-      ctx.fillStyle = '#4a2d16';
-      ctx.fillRect(0, 0, size, size);
-      for (let x = -8; x < size + 8; x += 7 + rnd()*8) {
-        ctx.strokeStyle = rnd() > .5 ? 'rgba(20,9,3,.30)' : 'rgba(148,95,43,.16)';
-        ctx.lineWidth = 2 + rnd()*4;
-        ctx.beginPath();
-        for (let y = -8; y <= size + 8; y += 10) {
-          const xx = x + Math.sin((y + rnd()*20) * .09) * (2 + rnd()*4);
-          if (y <= -8) ctx.moveTo(xx, y); else ctx.lineTo(xx, y);
-        }
-        ctx.stroke();
-      }
-      for (let i = 0; i < 55; i++) {
-        ctx.fillStyle = 'rgba(190,125,58,.10)';
-        ctx.fillRect(rnd()*size, rnd()*size, 1 + rnd()*8, 1 + rnd()*2);
-      }
-    }, repeatX, repeatY);
-  }
-
   const gfxTex = {
-    felt: makeFeltTexture('#1e6b3e', 7123, 5.6, 30),
-    feltAlt: makeFeltTexture('#1a5e36', 8129, 5.6, 30),
-    butte: makeFeltTexture('#28885a', 9021, 2.2, 2.2),
+    felt: makeFeltTexture('#17633d', 7123, 5.6, 30),
+    feltAlt: makeFeltTexture('#155a37', 8129, 5.6, 30),
+    butte: makeFeltTexture('#238453', 9021, 2.2, 2.2),
     rail: makeWoodTexture(4401, 1.2, 14),
     wood: makeWoodTexture(4402, 1.5, 8),
     floor: makeDarkFloorTexture(2209),
     stone: makeStoneTexture(7107, 2.4, 2.4),
-    stoneDark: makeStoneTexture(7108, 2.0, 2.0),
-    forestFloor: makeForestFloorTexture(9301),
-    forestMossLeaves: makeForestMossLeafTexture(9501, 7.2, 26),
-    forestLeafLitter: makeLeafLitterTexture(9502, 4.2, 18),
-    forestLane: makeFeltTexture('#335f35', 9302, 5.6, 30),
-    forestLaneAlt: makeFeltTexture('#2d5730', 9303, 5.6, 30),
-    forestButte: makeFeltTexture('#477a3a', 9304, 2.2, 2.2),
-    forestGrassBright: makeSunnyGrassTexture(9401, 8, 28),
-    forestFieldRows: makeFieldRowsTexture(9402, 6, 26),
-    forestDirtRoad: makeDirtPathTexture(9403, 2.3, 28),
-    forestPaver: makeGardenStoneTexture(9404, 3.4, 12),
-    bark: makeBarkTexture(9305, 1.2, 14),
-    barkWide: makeBarkTexture(9306, 2.0, 8)
+    stoneDark: makeStoneTexture(7108, 2.0, 2.0)
   };
 
   /* ── Matériaux Billard ── */
@@ -3451,7 +2895,7 @@ try {
     floor: new THREE.MeshStandardMaterial({ color: 0xffffff, map: gfxTex.floor, roughness: 0.86, metalness: 0.0 }),
 
     // Caoutchouc des bandes
-    rubber: new THREE.MeshStandardMaterial({ color: 0x176039, roughness: 0.86, metalness: 0.0 }),
+    rubber: new THREE.MeshStandardMaterial({ color: 0x0c2f1d, roughness: 0.91, metalness: 0.0 }),
 
     // Pierre (châteaux)
     stone:    new THREE.MeshStandardMaterial({ color: 0xffffff, map: gfxTex.stone, roughness: 0.86, metalness: 0.03 }),
@@ -3471,11 +2915,11 @@ try {
     bannerB:new THREE.MeshStandardMaterial({ color: 0x2245b8, roughness: 0.72, metalness: 0.0 }),
 
     // Laiton (poches, coins)
-    brass:  new THREE.MeshStandardMaterial({ color: 0xb8922a, metalness: 0.80, roughness: 0.25, emissive: 0x171000, emissiveIntensity: 0.14 }),
+    brass:  new THREE.MeshStandardMaterial({ color: 0xd5ac3e, metalness: 0.78, roughness: 0.18, emissive: 0x171000, emissiveIntensity: 0.18 }),
 
     // Bille en ivoire poli
-    ivory:  new THREE.MeshStandardMaterial({ color: 0xf5ead8, roughness: 0.08, metalness: 0.12,
-                                              envMapIntensity: 1.20 }),
+    ivory:  new THREE.MeshStandardMaterial({ color: 0xfff4df, roughness: 0.055, metalness: 0.16,
+                                              emissive: 0x100804, emissiveIntensity: 0.08, envMapIntensity: 1.35 }),
 
     // Intérieur poche (noir mat)
     pocket: new THREE.MeshStandardMaterial({ color: 0x040404, roughness: 0.98 }),
@@ -3492,18 +2936,18 @@ try {
     slopeTop:new THREE.MeshStandardMaterial({ color: 0xffffff, map: gfxTex.butte, roughness: 0.90 }),
 
     // Anneau de poche de trou (selon type ressource)
-    holeRing: new THREE.MeshStandardMaterial({ color: 0xd4a030, metalness: 0.75, roughness: 0.22, emissive: 0x1c1200, emissiveIntensity: 0.16 }),
+    holeRing: new THREE.MeshStandardMaterial({ color: 0xe0b23d, metalness: 0.72, roughness: 0.18, emissive: 0x1c1200, emissiveIntensity: 0.18 }),
     holeInner:new THREE.MeshStandardMaterial({ color: 0x040404, roughness: 0.98 }),
     water:  new THREE.MeshStandardMaterial({ color: 0x1a5c6e, transparent: true, opacity: .5, roughness: .2 }),
 
     // Drap latéral (vert plus sombre autour des couloirs)
-    cloth: new THREE.MeshStandardMaterial({ color: 0x175635, map: gfxTex.feltAlt, roughness: 0.96 }),
+    cloth: new THREE.MeshStandardMaterial({ color: 0x0d3420, map: gfxTex.feltAlt, roughness: 0.97 }),
 
     // Décor autour des tables
-    wall: new THREE.MeshStandardMaterial({ color: 0x4a2410, map: gfxTex.wood, roughness: 0.86, metalness: 0.0 }),
+    wall: new THREE.MeshStandardMaterial({ color: 0x160d08, map: gfxTex.wood, roughness: 0.90, metalness: 0.0 }),
     beam: new THREE.MeshStandardMaterial({ color: 0xffffff, map: gfxTex.rail, roughness: 0.70, metalness: 0.02 }),
-    carpet: new THREE.MeshStandardMaterial({ color: 0x43220f, roughness: 0.86, metalness: 0.0 }),
-    foliage: new THREE.MeshStandardMaterial({ color: 0x245e37, roughness: 0.94, metalness: 0.0 }),
+    carpet: new THREE.MeshStandardMaterial({ color: 0x361307, roughness: 0.88, metalness: 0.0 }),
+    foliage: new THREE.MeshStandardMaterial({ color: 0x14331d, roughness: 0.96, metalness: 0.0 }),
 
     // Lignes décoratives très légères : MeshBasicMaterial = aucun coût lumière.
     accentGold: new THREE.MeshBasicMaterial({ color: 0xffd66e, transparent: true, opacity: 0.72 }),
@@ -3519,11 +2963,8 @@ try {
     build: new THREE.MeshStandardMaterial({ color: 0xd6a83a, roughness: 0.55, metalness: 0.12 }),
     dark: new THREE.MeshStandardMaterial({ color: 0x2a1708, roughness: 0.80, metalness: 0.0 })
   };
-  // Boue : grosses taches marron irrégulières, pas des cercles parfaits.
-  // MeshBasicMaterial = très léger pour tablette, et la transparence laisse voir le tapis dessous.
-  const mudMat = new THREE.MeshBasicMaterial({ color: 0x2a1608, transparent: true, opacity: 0.50, side: THREE.DoubleSide, depthWrite: false });
-  const mudEdgeMat = new THREE.MeshBasicMaterial({ color: 0x6a3a16, transparent: true, opacity: 0.54, side: THREE.DoubleSide, depthWrite: false });
-  const mudWetMat = new THREE.MeshBasicMaterial({ color: 0x8a5424, transparent: true, opacity: 0.24, side: THREE.DoubleSide, depthWrite: false });
+  const mudMat = new THREE.MeshBasicMaterial({ color: 0x2a1608, transparent: true, opacity: 0.46, side: THREE.DoubleSide });
+  const mudEdgeMat = new THREE.MeshBasicMaterial({ color: 0x5b3515, transparent: true, opacity: 0.62, side: THREE.DoubleSide });
 
   const castleSkinMaterials = {};
 
@@ -3657,153 +3098,6 @@ function shadeHexColor(color, amount) {
   addLaneAccents(CFG.leftX, mat.accentRed);
   addLaneAccents(CFG.rightX, mat.accentBlue);
 
-
-  function addForestBoardLayer() {
-    const g = new THREE.Group();
-    g.name = 'BDS_Forest_No_Table_Borders';
-    scene.add(g);
-
-    // Nouvelle direction : ne plus voir une table de billard.
-    // Les anciennes bandes restent utiles visuellement en mode billard, mais en mode forêt
-    // elles sont recouvertes par des talus, bosquets et rochers. La physique ne change pas.
-    const rnd = seededRandom(202605105);
-    const mossMat = new THREE.MeshStandardMaterial({ color: 0x4f8b3d, map: gfxTex.forestMossLeaves, roughness: 0.99, metalness: 0.0 });
-    const deepMossMat = new THREE.MeshStandardMaterial({ color: 0x224c24, map: gfxTex.forestMossLeaves, roughness: 1.0, metalness: 0.0 });
-    const leafFloorMat = new THREE.MeshStandardMaterial({ color: 0x5c7040, map: gfxTex.forestLeafLitter, roughness: 1.0, metalness: 0.0 });
-    const dirtMat = new THREE.MeshStandardMaterial({ color: 0x8b6435, map: gfxTex.forestDirtRoad, roughness: 0.99, metalness: 0.0 });
-    const darkDirtMat = new THREE.MeshStandardMaterial({ color: 0x4a2c17, map: gfxTex.forestDirtRoad, roughness: 1.0, metalness: 0.0 });
-    const barkMat = new THREE.MeshStandardMaterial({ color: 0x463019, map: gfxTex.barkWide, roughness: 0.98, metalness: 0.0 });
-    const rootMat = new THREE.MeshBasicMaterial({ color: 0x2b190c, transparent: true, opacity: 0.48, depthWrite: false });
-    const dryLeafMat = new THREE.MeshBasicMaterial({ color: 0x9a5a24, transparent: true, opacity: 0.36, depthWrite: false, side: THREE.DoubleSide });
-    const paleLeafMat = new THREE.MeshBasicMaterial({ color: 0xbdab62, transparent: true, opacity: 0.30, depthWrite: false, side: THREE.DoubleSide });
-    const rockMat = new THREE.MeshStandardMaterial({ color: 0x6d7265, roughness: 1.0, metalness: 0.0 });
-    const mossRockMat = new THREE.MeshStandardMaterial({ color: 0x3d6330, roughness: 1.0, metalness: 0.0 });
-
-    const hw = CFG.laneW / 2;
-    const hl = laneL / 2;
-
-    function addOrganicPatch(x, z, rx, rz, material, y = 0.335, seg = 18) {
-      const o = addCyl(1, 0.030, x, y, z, material, g, seg);
-      o.scale.set(rx, 1, rz);
-      o.rotation.y = rnd() * Math.PI;
-      return o;
-    }
-
-    function addFlatLeaf(x, z, material, scale = 1, y = 0.385) {
-      const leaf = addBox(0.32 * scale, 0.014, 0.12 * scale, x, y, z, material, g);
-      leaf.rotation.y = rnd() * Math.PI;
-      return leaf;
-    }
-
-    function addRoot(x, z, length, angle, y = 0.382) {
-      const root = addBox(0.12 + rnd()*0.08, 0.018, length, x, y, z, rootMat, g);
-      root.rotation.y = angle;
-      return root;
-    }
-
-    function addRock(x, z, s = 1, y = 0.75) {
-      const rock = new THREE.Mesh(new THREE.SphereGeometry(1.0, 12, 8), rnd() > .35 ? rockMat : mossRockMat);
-      rock.position.set(x, y, z);
-      rock.scale.set(1.25*s*(0.75+rnd()*0.55), 0.42*s*(0.75+rnd()*0.55), 0.95*s*(0.75+rnd()*0.55));
-      rock.rotation.y = rnd()*Math.PI;
-      rock.castShadow = rock.receiveShadow = false;
-      g.add(rock);
-      return rock;
-    }
-
-    function addBushBlob(x, z, s = 1, y = 1.15) {
-      const matPick = rnd() > .5 ? mossMat : deepMossMat;
-      const b = new THREE.Mesh(new THREE.SphereGeometry(1.0, 12, 8), matPick);
-      b.position.set(x, y, z);
-      b.scale.set(1.75*s*(0.8+rnd()*0.45), 0.62*s*(0.75+rnd()*0.35), 1.18*s*(0.8+rnd()*0.45));
-      b.rotation.y = rnd()*Math.PI;
-      b.castShadow = b.receiveShadow = false;
-      g.add(b);
-      return b;
-    }
-
-    function addNaturalBankZ(x, z1, z2, side = 1) {
-      // Talus continu : il masque le rail droit de la table.
-      const len = Math.abs(z2 - z1);
-      const mid = (z1 + z2) / 2;
-      const earth = addBox(3.15, 2.25, len + 3.0, x, 1.08, mid, darkDirtMat, g);
-      earth.rotation.y = (rnd() - .5) * 0.025;
-      // Couverture irrégulière : gros volumes, pas une rangée de petits points.
-      for (let z = z1; z <= z2; z += 4.2) {
-        const zz = z + (rnd()-.5)*2.2;
-        const xx = x + (rnd()-.5)*0.75;
-        addBushBlob(xx, zz, 1.15 + rnd()*0.55, 2.10 + rnd()*0.25);
-        if (rnd() > .56) addRock(xx + side*(1.0+rnd()*0.75), zz + (rnd()-.5)*1.5, .65 + rnd()*.45, 1.55 + rnd()*.22);
-      }
-    }
-
-    function addNaturalBankX(x1, x2, z, sign = 1) {
-      const len = Math.abs(x2 - x1);
-      const mid = (x1 + x2) / 2;
-      const earth = addBox(len + 3.0, 2.15, 3.20, mid, 1.08, z, darkDirtMat, g);
-      earth.rotation.y = (rnd() - .5) * 0.025;
-      for (let x = x1; x <= x2; x += 4.0) {
-        const xx = x + (rnd()-.5)*2.1;
-        const zz = z + (rnd()-.5)*0.75;
-        addBushBlob(xx, zz, 1.10 + rnd()*0.50, 2.08 + rnd()*0.25);
-        if (rnd() > .60) addRock(xx + (rnd()-.5)*1.5, zz + sign*(0.8+rnd()*0.8), .60 + rnd()*.45, 1.52 + rnd()*.22);
-      }
-    }
-
-    function addForestLane(x) {
-      // Base du couloir : mousse et sous-bois, mais trajectoire très lisible.
-      addBox(CFG.laneW + 1.5, 0.080, laneL + 1.5, x, 0.205, 0, mossMat, g);
-      addBox(6.7, 0.095, laneL - 13.5, x, 0.300, 0, dirtMat, g);
-      // Bords du chemin plus naturels.
-      for (let z = -hl + 8; z <= hl - 8; z += 8.0) {
-        addOrganicPatch(x - 4.4 + (rnd()-.5)*0.45, z + (rnd()-.5)*1.2, .95 + rnd()*.75, .24 + rnd()*.22, leafFloorMat, 0.356, 12);
-        addOrganicPatch(x + 4.4 + (rnd()-.5)*0.45, z + (rnd()-.5)*1.2, .95 + rnd()*.75, .24 + rnd()*.22, leafFloorMat, 0.356, 12);
-      }
-      // Feuilles limitées aux bords, jamais en tapis sur toute la piste.
-      for (let i = 0; i < 28; i++) {
-        const side = rnd() > .5 ? -1 : 1;
-        addFlatLeaf(x + side*(5.8 + rnd()*3.6), -hl + 8 + rnd()*(laneL-16), rnd() > .55 ? dryLeafMat : paleLeafMat, .70 + rnd()*.9, 0.392);
-      }
-      // Quelques racines fines sur les côtés, pas au centre.
-      for (let i = 0; i < 7; i++) {
-        const side = rnd() > .5 ? -1 : 1;
-        addRoot(x + side*(6.0 + rnd()*3.2), -hl + 12 + rnd()*(laneL-24), 2.8 + rnd()*2.8, side*(0.45 + rnd()*0.65), 0.392);
-      }
-      // Bordures : remplace visuellement les bandes de billard par du naturel massif.
-      addNaturalBankZ(x - hw - 1.05, -hl - 2.0, hl + 2.0, -1);
-      addNaturalBankZ(x + hw + 1.05, -hl - 2.0, hl + 2.0,  1);
-      addNaturalBankX(x - hw - 1.6, x + hw + 1.6, -hl - 2.25, -1);
-      addNaturalBankX(x - hw - 1.6, x + hw + 1.6,  hl + 2.25,  1);
-      // Coins plus naturels, pour casser la forme rectangle/table.
-      [[-1,-1],[1,-1],[-1,1],[1,1]].forEach(([sx, sz]) => {
-        addRock(x + sx*(hw + 2.2), sz*(hl + 2.8), 1.25 + rnd()*0.55, 1.75);
-        addBushBlob(x + sx*(hw + 2.8), sz*(hl + 3.1), 1.40 + rnd()*0.50, 2.15);
-      });
-    }
-
-    // Grand sol forêt : il recouvre l'impression de salle/table autour des pistes.
-    addBox(CFG.laneW * 2 + CFG.gap + 34, 0.070, laneL + 58, 0, 0.115, 0, leafFloorMat, g);
-
-    // Bande centrale : sous-bois avec quelques gros rochers et troncs, pas une barrière droite.
-    addBox(CFG.gap + 7.0, 0.088, laneL + 38, 0, 0.235, 0, leafFloorMat, g);
-    for (let z = -hl + 12; z <= hl - 12; z += 14) {
-      addOrganicPatch((rnd()-.5)*5.8, z + (rnd()-.5)*2.5, 1.5+rnd()*1.1, .55+rnd()*.45, rnd()>.5 ? mossMat : deepMossMat, 0.355, 16);
-      if (rnd() > .48) addRock((rnd()-.5)*5.2, z + (rnd()-.5)*3.2, .55+rnd()*.45, .92);
-      if (rnd() > .54) addRoot((rnd()-.5)*4.8, z + (rnd()-.5)*3.0, 3.2+rnd()*3.0, (rnd()-.5)*1.4, 0.392);
-    }
-
-    addForestLane(CFG.leftX);
-    addForestLane(CFG.rightX);
-
-    // Bordure extérieure très large : bosquet continu pour faire disparaître la lecture "table".
-    [-45.5, 45.5].forEach(x => addNaturalBankZ(x, -hl-12, hl+12, Math.sign(x)||1));
-    [-128, 128].forEach(z => addNaturalBankX(-48, 48, z, Math.sign(z)||1));
-
-    g.visible = false;
-    return g;
-  }
-  const forestBoardGroup = addForestBoardLayer();
-
   function addDecorativeRoom() {
     // Parquet sombre avec lignes de planches : donne de la profondeur sans coûter cher.
     for (let x = -170; x <= 170; x += 18) addBox(0.16, 0.045, 470, x, -1.15, 0, mat.beam);
@@ -3849,198 +3143,6 @@ function shadeHexColor(color, amount) {
   }
 
   addDecorativeRoom();
-
-  function addForestDecorativeLayer() {
-    const g = new THREE.Group();
-    g.name = 'BDS_Forest_Decor_Broadleaf';
-    scene.add(g);
-
-    const rnd = seededRandom(202605106);
-    const trunkMat = new THREE.MeshStandardMaterial({ color: 0x3f2412, roughness: 0.96, metalness: 0.0, map: gfxTex.bark });
-    const trunkDarkMat = new THREE.MeshStandardMaterial({ color: 0x26150a, roughness: 0.98, metalness: 0.0, map: gfxTex.bark });
-    const leafDark = new THREE.MeshStandardMaterial({ color: 0x17391d, roughness: 1.0, metalness: 0.0 });
-    const leafMid  = new THREE.MeshStandardMaterial({ color: 0x2f6b33, roughness: 1.0, metalness: 0.0 });
-    const leafLight= new THREE.MeshStandardMaterial({ color: 0x5b8d3f, roughness: 1.0, metalness: 0.0 });
-    const fernMat = new THREE.MeshBasicMaterial({ color: 0x4f8f37, transparent: true, opacity: 0.42, depthWrite: false });
-    const stoneMat = new THREE.MeshStandardMaterial({ color: 0x5f6655, roughness: 1.0, metalness: 0.0 });
-    const mossMat = new THREE.MeshStandardMaterial({ color: 0x587637, roughness: 1.0, metalness: 0.0 });
-    const mushroomStem = new THREE.MeshStandardMaterial({ color: 0xe6d5b5, roughness: 0.78, metalness: 0.0 });
-    const mushroomCap = new THREE.MeshStandardMaterial({ color: 0xb13b25, roughness: 0.72, metalness: 0.0 });
-    const fireflyMat = new THREE.MeshBasicMaterial({ color: 0xbaff7a, transparent: true, opacity: 0.58, depthWrite: false });
-
-    function addCanopyBlob(x, y, z, sx, sy, sz, mat) {
-      const blob = new THREE.Mesh(new THREE.SphereGeometry(1, 12, 8), mat);
-      blob.position.set(x, y, z);
-      blob.scale.set(sx, sy, sz);
-      blob.rotation.y = rnd()*Math.PI;
-      blob.castShadow = blob.receiveShadow = false;
-      g.add(blob);
-      return blob;
-    }
-
-    function addBroadTree(x, z, s = 1) {
-      // Arbre moins "sapin jouet" : tronc haut + couronne en volumes arrondis.
-      addCyl(0.70*s, 10.5*s, x, 3.8*s, z, trunkMat, g, 10);
-      if (rnd() > .38) {
-        const branch = addCyl(0.23*s, 5.8*s, x + 1.0*s, 7.3*s, z - .65*s, trunkDarkMat, g, 8);
-        branch.rotation.z = 0.50;
-        branch.rotation.x = -0.20;
-      }
-      addCanopyBlob(x, 11.0*s, z, 4.7*s, 2.25*s, 3.9*s, leafDark);
-      addCanopyBlob(x - 2.2*s, 9.7*s, z + 1.1*s, 3.4*s, 1.75*s, 2.8*s, leafMid);
-      addCanopyBlob(x + 2.0*s, 10.2*s, z - 1.0*s, 3.2*s, 1.65*s, 2.7*s, leafMid);
-      addCanopyBlob(x + .25*s, 13.1*s, z + .25*s, 3.6*s, 1.9*s, 3.2*s, leafLight);
-      addCyl(2.7*s, .16*s, x, .05, z, mossMat, g, 14);
-    }
-
-    function addPineSilhouette(x, z, s = 1) {
-      // Quelques grands conifères en arrière-plan seulement, pas sur les pistes.
-      addCyl(0.55*s, 9.4*s, x, 3.2*s, z, trunkDarkMat, g, 10);
-      addCone(4.4*s, 9.6*s, x, 10.1*s, z, leafDark, g, 12);
-      addCone(3.4*s, 7.6*s, x, 14.0*s, z, leafMid, g, 12);
-    }
-
-    function addShrub(x, z, s = 1) {
-      addCanopyBlob(x, .80*s, z, 1.8*s, .48*s, 1.25*s, rnd() > .45 ? leafMid : leafLight);
-      if (rnd() > .55) addCanopyBlob(x + .9*s, .62*s, z - .5*s, 1.2*s, .36*s, .95*s, leafDark);
-      for (let i = 0; i < 2; i++) {
-        const fern = addBox(.10*s, .016, 1.8*s, x + (rnd()-.5)*2.2*s, .18, z + (rnd()-.5)*1.8*s, fernMat, g);
-        fern.rotation.y = rnd()*Math.PI;
-      }
-    }
-
-    // Forêt extérieure : grands arbres sur les côtés, loin des couloirs.
-    [-92, -76, 76, 92].forEach(x => {
-      for (let z = -210; z <= 210; z += 32) {
-        const scale = 1.15 + rnd()*0.55 + (Math.abs(x) > 86 ? .35 : 0);
-        (rnd() > .42 ? addBroadTree : addPineSilhouette)(x + (rnd()-.5)*8, z + (rnd()-.5)*11, scale);
-        if (rnd() > .50) addShrub(x + (rnd()-.5)*9, z + (rnd()-.5)*9, .80 + rnd()*.55);
-      }
-    });
-
-    // Fond et avant : arbres hauts en silhouette pour la profondeur.
-    [-1, 1].forEach(sign => {
-      for (let x = -76; x <= 76; x += 26) {
-        (rnd() > .35 ? addBroadTree : addPineSilhouette)(x + (rnd()-.5)*9, sign*(150 + rnd()*42), 1.05 + rnd()*0.55);
-        if (rnd() > .42) addShrub(x + (rnd()-.5)*10, sign*(130 + rnd()*34), .75 + rnd()*.50);
-      }
-    });
-
-    // Bande centrale : très peu d'arbres, mais plus beaux et plus gros.
-    [
-      { x: -1.8, z: -86, s: .95 },
-      { x: 1.5, z: -28, s: 1.05 },
-      { x: -1.2, z: 38, s: 1.02 },
-      { x: 1.7, z: 92, s: .95 }
-    ].forEach(t => addBroadTree(t.x, t.z, t.s));
-
-    for (let z = -100; z <= 100; z += 24) {
-      addShrub(-5.7, z + (rnd()-.5)*4, .62 + rnd()*.28);
-      addShrub( 5.7, z + (rnd()-.5)*4, .62 + rnd()*.28);
-    }
-
-    // Rochers/champignons hors trajectoire.
-    [[-52,-136],[52,-136],[-52,136],[52,136],[-88,0],[88,0],[-10,-80],[10,80]].forEach(([x,z]) => {
-      const r = new THREE.Mesh(new THREE.SphereGeometry(1, 12, 8), stoneMat);
-      r.position.set(x, .05, z);
-      r.scale.set(2.2, .55, 1.35);
-      r.rotation.y = rnd()*Math.PI;
-      g.add(r);
-      addCyl(2.9, .16, x - 1.1, -0.60, z - .8, mossMat, g, 14);
-    });
-
-    for (let i = 0; i < 12; i++) {
-      const side = i % 2 ? -1 : 1;
-      const x = side * (54 + rnd()*34);
-      const z = -180 + rnd()*360;
-      addCyl(.28, .95, x, -0.28, z, mushroomStem, g, 8);
-      addCone(.68, .56, x, 0.34, z, mushroomCap, g, 12);
-    }
-
-    for (let i = 0; i < 34; i++) {
-      const central = i < 7;
-      const x = central ? (rnd()-.5)*9 : (rnd() > .5 ? 1 : -1) * (56 + rnd()*40);
-      const z = -205 + rnd() * 410;
-      const f = new THREE.Mesh(new THREE.SphereGeometry(0.12 + rnd()*0.08, 8, 6), fireflyMat.clone());
-      f.position.set(x, 3.0 + rnd() * 12.0, z);
-      f.userData.phase = rnd() * Math.PI * 2;
-      g.add(f);
-    }
-
-    g.visible = false;
-    return g;
-  }
-  const forestDecorGroup = addForestDecorativeLayer();
-
-  let isForestBoardActive = false;
-
-  function setMaterialMap(material, map, color) {
-    if (!material) return;
-    material.map = map || null;
-    if (color !== undefined && material.color) material.color.setHex(color);
-    material.needsUpdate = true;
-  }
-
-  function applyBoardSkin(themeId = 'billiard') {
-    const id = findBoardSkin(themeId).id;
-    const forest = id === 'forest';
-
-    isForestBoardActive = forest;
-    scene.background.setHex(forest ? 0x7fb2db : 0x314734);
-    if (scene.fog) {
-      scene.fog.color.setHex(forest ? 0x9fc7dc : 0x244a32);
-      scene.fog.density = forest ? 0.00068 : 0.00055;
-    }
-
-    setMaterialMap(mat.felt, forest ? gfxTex.forestMossLeaves : gfxTex.felt, forest ? 0xffffff : 0xffffff);
-    setMaterialMap(mat.feltAlt, forest ? gfxTex.forestMossLeaves : gfxTex.feltAlt, forest ? 0xffffff : 0xffffff);
-    setMaterialMap(mat.butte, forest ? gfxTex.forestMossLeaves : gfxTex.butte, forest ? 0xffffff : 0xffffff);
-    setMaterialMap(mat.cloth, forest ? gfxTex.forestLeafLitter : gfxTex.feltAlt, forest ? 0xffffff : 0x175635);
-    setMaterialMap(mat.floor, forest ? gfxTex.forestMossLeaves : gfxTex.floor, 0xffffff);
-    setMaterialMap(mat.rail, forest ? gfxTex.bark : gfxTex.rail, forest ? 0x2d2617 : 0xffffff);
-    setMaterialMap(mat.wood, forest ? gfxTex.barkWide : gfxTex.wood, forest ? 0x3b2816 : 0xffffff);
-    setMaterialMap(mat.ramp, forest ? gfxTex.barkWide : gfxTex.wood, forest ? 0x7b5632 : 0xffffff);
-    setMaterialMap(mat.wall, forest ? gfxTex.barkWide : gfxTex.wood, forest ? 0x6c4a25 : 0x4a2410);
-    setMaterialMap(mat.beam, forest ? gfxTex.bark : gfxTex.rail, forest ? 0xecd0a3 : 0xffffff);
-
-    if (mat.rubber.color) mat.rubber.color.setHex(forest ? 0x182615 : 0x176039);
-    if (mat.carpet.color) mat.carpet.color.setHex(forest ? 0x385d28 : 0x43220f);
-    if (mat.foliage.color) mat.foliage.color.setHex(forest ? 0x245f2d : 0x245e37);
-    if (mat.holeRing.color) mat.holeRing.color.setHex(forest ? 0x7d8874 : 0xd4a030);
-    mat.holeRing.metalness = forest ? 0.08 : 0.75;
-    mat.holeRing.roughness = forest ? 0.92 : 0.22;
-    mat.holeRing.emissiveIntensity = forest ? 0.00 : 0.16;
-    mat.holeRing.needsUpdate = true;
-    if (mat.brass.color) mat.brass.color.setHex(forest ? 0xaeb69a : 0xb8922a);
-    mat.brass.metalness = forest ? 0.10 : 0.80;
-    mat.brass.roughness = forest ? 0.82 : 0.25;
-    mat.brass.emissiveIntensity = forest ? 0.00 : 0.14;
-    mat.brass.needsUpdate = true;
-    if (mat.accentGold.color) mat.accentGold.color.setHex(forest ? 0x8fcf60 : 0xffd66e);
-    if (mat.accentEmerald.color) mat.accentEmerald.color.setHex(forest ? 0xc6ff7a : 0x42ffb0);
-    if (mat.accentRed.color) mat.accentRed.color.setHex(forest ? 0x9ec96f : 0xff5a48);
-    if (mat.accentBlue.color) mat.accentBlue.color.setHex(forest ? 0x86b85a : 0x5d8dff);
-    mat.accentGold.opacity = forest ? 0.00 : 0.72;
-    mat.accentEmerald.opacity = forest ? 0.00 : 0.18;
-    mat.accentRed.opacity = forest ? 0.00 : 0.24;
-    mat.accentBlue.opacity = forest ? 0.00 : 0.24;
-
-    keyLight.color.setHex(forest ? 0xfff6d9 : 0xffecd0);
-    keyLight.intensity = forest ? 2.10 : 1.72;
-    fillLight.color.setHex(forest ? 0xdaf6ff : 0xffedcc);
-    fillLight.groundColor.setHex(forest ? 0x5faa4d : 0x27583a);
-    fillLight.intensity = forest ? 1.34 : 0.98;
-
-    if (forestBoardGroup) forestBoardGroup.visible = forest;
-    if (forestDecorGroup) forestDecorGroup.visible = forest;
-  }
-
-  function applySelectedBoardSkin() {
-    applyBoardSkin(getSelectedBoardSkinId());
-  }
-
-  applySelectedBoardSkin();
-
 
   /* ── Poches (6 par couloir, style billard anglais) ── */
   function addBilliardPocket(x, z) {
@@ -4102,33 +3204,7 @@ function shadeHexColor(color, amount) {
     trapMarker.add(trapBarA, trapBarB);
     scene.add(trapMarker);
 
-    // Marqueur persistant pour les trous déjà visités.
-    // Contrairement aux pièges, pas de croix : un double anneau cyan discret indique
-    // seulement que la bille est déjà tombée dans ce trou pendant cette partie.
-    const usedMarker = new THREE.Group();
-    usedMarker.visible = false;
-    usedMarker.position.set(x, 0.55, z);
-    const usedRingMat = new THREE.MeshBasicMaterial({
-      color: 0x66e6ff,
-      transparent: true,
-      opacity: 0.88,
-      depthWrite: false,
-      side: THREE.DoubleSide
-    });
-    const usedRing = new THREE.Mesh(new THREE.TorusGeometry(HOLE_R * 1.08, 0.045, 10, 54), usedRingMat);
-    usedRing.rotation.x = Math.PI / 2;
-    const usedOuterRing = new THREE.Mesh(new THREE.TorusGeometry(HOLE_R * 1.45, 0.035, 10, 58), usedRingMat.clone());
-    usedOuterRing.material.opacity = 0.48;
-    usedOuterRing.rotation.x = Math.PI / 2;
-    const usedDot = new THREE.Mesh(
-      new THREE.CylinderGeometry(0.13, 0.13, 0.055, 18),
-      new THREE.MeshBasicMaterial({ color: 0xeaffff, transparent: true, opacity: 0.9, depthWrite: false })
-    );
-    usedDot.position.set(HOLE_R * 1.55, 0.02, 0);
-    usedMarker.add(usedOuterRing, usedRing, usedDot);
-    scene.add(usedMarker);
-
-    return { x, z, ring, inner, pocket, shadow, holeGlow, trapMarker, usedMarker };
+    return { x, z, ring, inner, pocket, shadow, holeGlow, trapMarker };
   }
 
   function bonusHoleZ(attacker) {
@@ -4295,8 +3371,6 @@ function shadeHexColor(color, amount) {
       return columns.map((relX, colIndex) => ({
         relX,
         dz,
-        rowIndex,
-        colIndex,
         trap: colIndex === trapIndex
       }));
     });
@@ -4387,8 +3461,8 @@ function shadeHexColor(color, amount) {
   }
 
   const matchStats = [
-    { turns: 0, resources: 0, damage: 0, partsDestroyed: 0, towersDestroyed: 0, holesHit: 0, holeRowsDiscovered: 0, combos: 0, edgeSteals: 0, secondShots: 0, relicsFound: 0 },
-    { turns: 0, resources: 0, damage: 0, partsDestroyed: 0, towersDestroyed: 0, holesHit: 0, holeRowsDiscovered: 0, combos: 0, edgeSteals: 0, secondShots: 0, relicsFound: 0 }
+    { turns: 0, resources: 0, damage: 0, partsDestroyed: 0, towersDestroyed: 0, holesHit: 0, combos: 0, edgeSteals: 0, secondShots: 0, relicsFound: 0 },
+    { turns: 0, resources: 0, damage: 0, partsDestroyed: 0, towersDestroyed: 0, holesHit: 0, combos: 0, edgeSteals: 0, secondShots: 0, relicsFound: 0 }
   ];
   let matchTurns = 0; // Numéro de manche : J1 + J2 jouent tous les deux le même tour.
   let activeTurnEvent = null;
@@ -4447,46 +3521,13 @@ function shadeHexColor(color, amount) {
     }
   }
 
-  function getDiscoveredHoleRowCount(player) {
-    const groups = new Map();
-    holes.filter(h => h.player === player).forEach(h => {
-      const rowIndex = Number(h.rowIndex);
-      if (!Number.isFinite(rowIndex)) return;
-      if (!groups.has(rowIndex)) groups.set(rowIndex, []);
-      groups.get(rowIndex).push(h);
-    });
-    let discovered = 0;
-    groups.forEach(items => {
-      if (items.length && items.every(h => !!h.visited)) discovered++;
-    });
-    return discovered;
-  }
-
-  function refreshHoleRowDiscoveryForPlayer(player) {
-    if (!player) return 0;
-    const count = getDiscoveredHoleRowCount(player);
-    const stats = statForPlayer(player);
-    if (stats) stats.holeRowsDiscovered = Math.max(0, count);
-    return count;
-  }
-
   function updateHoleTrapVisual(h) {
     if (!h) return;
     const revealed = !!(h.baseTrap && h.trap && h.trapKnown);
-    const visited = !!h.visited && !revealed;
     if (h.trapMarker) h.trapMarker.visible = revealed;
-    if (h.usedMarker) h.usedMarker.visible = visited;
     if (h.holeGlow && h.holeGlow.material && h.holeGlow.material.color) {
-      h.holeGlow.material.color.setHex(revealed ? 0xff3030 : (visited ? 0x66e6ff : 0xfff06a));
-      h.holeGlow.material.opacity = revealed ? 0.44 : (visited ? 0.40 : 0.28);
+      h.holeGlow.material.color.setHex(revealed ? 0xff3030 : 0xfff06a);
     }
-  }
-
-  function markHoleVisited(h) {
-    if (!h) return;
-    h.visited = true;
-    updateHoleTrapVisual(h);
-    refreshHoleRowDiscoveryForPlayer(h.player);
   }
 
   function resetRelicHolesForMatch() {
@@ -4495,12 +3536,9 @@ function shadeHexColor(color, amount) {
       h.relicFound = false;
       h.relicKnown = false;
       h.trapKnown = false;
-      h.visited = false;
       h.trap = !!h.baseTrap;
       updateHoleTrapVisual(h);
     });
-    refreshHoleRowDiscoveryForPlayer(1);
-    refreshHoleRowDiscoveryForPlayer(2);
 
     // Les reliques sont tirées une seule fois au début de la partie.
     // Il y en a 4 dans chaque couloir d'attaque, avec un tirage aléatoire indépendant.
@@ -5494,83 +4532,11 @@ function shadeHexColor(color, amount) {
     return true;
   }
 
-  function mudRandom(seed = 1) {
-    let t = Math.floor(seed) >>> 0;
-    return function() {
-      t += 0x6D2B79F5;
-      let v = t;
-      v = Math.imul(v ^ (v >>> 15), v | 1);
-      v ^= v + Math.imul(v ^ (v >>> 7), v | 61);
-      return ((v ^ (v >>> 14)) >>> 0) / 4294967296;
-    };
-  }
-
-  function makeMudBlobGeometry(rx, rz, points = 18, rand = Math.random) {
-    const shape = new THREE.Shape();
-    for (let i = 0; i < points; i++) {
-      const a = (i / points) * Math.PI * 2;
-      // Bord volontairement irrégulier : grosses bosses, pas de cercle propre.
-      const wobble = 0.62 + rand() * 0.58;
-      const x = Math.cos(a) * rx * wobble;
-      const y = Math.sin(a) * rz * (0.72 + rand() * 0.50);
-      if (i === 0) shape.moveTo(x, y);
-      else shape.lineTo(x, y);
-    }
-    shape.closePath();
-    return new THREE.ShapeGeometry(shape);
-  }
-
-  function addMudBlob(parent, rand, rx, rz, ox, oz, material, y = 0, rot = 0) {
-    const geo = makeMudBlobGeometry(rx, rz, 14 + Math.floor(rand() * 8), rand);
-    const mesh = new THREE.Mesh(geo, material.clone());
-    mesh.rotation.x = -Math.PI / 2;
-    mesh.rotation.z = rot;
-    mesh.position.set(ox, y, oz);
-    mesh.renderOrder = 3;
-    parent.add(mesh);
-    return mesh;
-  }
-
   function createMudZone(player, x, z, r = MUD_RADIUS) {
-    const g = new THREE.Group();
-    g.position.set(x, 0.395, z);
-
-    // Graine stable par position pour éviter un rendu qui change à chaque refresh inutile.
-    const rand = mudRandom((x * 92821 + z * 68917 + player * 131) * 1000);
-
-    // Grande tache principale, très irrégulière et allongée.
-    addMudBlob(g, rand, r * 1.05, r * 0.72, 0, 0, mudMat, 0, rand() * Math.PI);
-
-    // Grosses éclaboussures secondaires marron autour : donne un aspect boueux naturel.
-    const blobCount = 5 + Math.floor(rand() * 3);
-    for (let i = 0; i < blobCount; i++) {
-      const a = rand() * Math.PI * 2;
-      const d = r * (0.18 + rand() * 0.48);
-      const bx = Math.cos(a) * d;
-      const bz = Math.sin(a) * d * 0.82;
-      const brx = r * (0.22 + rand() * 0.34);
-      const brz = r * (0.13 + rand() * 0.28);
-      addMudBlob(g, rand, brx, brz, bx, bz, rand() < 0.45 ? mudEdgeMat : mudMat, 0.006 + i * 0.002, rand() * Math.PI);
-    }
-
-    // Petites zones plus claires façon boue humide, discrètes pour éviter l'effet flaque parfaite.
-    for (let i = 0; i < 3; i++) {
-      const a = rand() * Math.PI * 2;
-      const d = r * (0.08 + rand() * 0.34);
-      addMudBlob(
-        g, rand,
-        r * (0.13 + rand() * 0.16),
-        r * (0.055 + rand() * 0.10),
-        Math.cos(a) * d,
-        Math.sin(a) * d,
-        mudWetMat,
-        0.025 + i * 0.002,
-        rand() * Math.PI
-      );
-    }
-
-    scene.add(g);
-    return { player, x, z, r, mesh: g, hitCooldown: 0 };
+    const g = new THREE.Group(); g.position.set(x, 0.39, z);
+    const puddle = new THREE.Mesh(new THREE.CircleGeometry(r, 34), mudMat.clone()); puddle.rotation.x = -Math.PI / 2; puddle.rotation.z = Math.random() * Math.PI; g.add(puddle);
+    const edge = new THREE.Mesh(new THREE.TorusGeometry(r * 0.72, 0.055, 8, 42), mudEdgeMat.clone()); edge.rotation.x = Math.PI / 2; edge.scale.x = 1.24; edge.scale.y = 0.72; edge.position.y = 0.015; g.add(edge);
+    scene.add(g); return { player, x, z, r, mesh: g, hitCooldown: 0 };
   }
   function removeMudZone(zone) { if (zone && zone.mesh && zone.mesh.parent) zone.mesh.parent.remove(zone.mesh); if (zone) zone.mesh = null; }
   function clearMudZones() { activeMudZones.forEach(removeMudZone); activeMudZones.length = 0; }
@@ -5702,9 +4668,6 @@ function shadeHexColor(color, amount) {
     holes.push({
       player,
       x, z,
-      rowIndex: Number.isFinite(spec.rowIndex) ? spec.rowIndex : null,
-      colIndex: Number.isFinite(spec.colIndex) ? spec.colIndex : null,
-      dz: spec.dz,
       baseTrap: !!spec.trap,
       trap: !!spec.trap,
       trapKnown: false,
@@ -5716,8 +4679,6 @@ function shadeHexColor(color, amount) {
       shadow: h.shadow,
       holeGlow: h.holeGlow,
       trapMarker: h.trapMarker,
-      usedMarker: h.usedMarker,
-      visited: false,
       last: false
     });
   }
@@ -6612,60 +5573,30 @@ function addDamagedRoofDetails(parent, p, x, y, z, radius, central = false, crit
   ballPulseAura.visible = false;
   ball.add(ballPulseAura);
 
-  function selectedBallEffect(player = active) {
-    return findBallEffect(getSelectedBallEffectId(player));
-  }
-
-  function ballEffectColor(effect, player = active) {
-    if (effect && effect.id !== 'none' && effect.color !== undefined) return effect.color;
-    const skin = findBallSkin(getSelectedBallSkinId(player));
-    return skin.accent !== undefined ? skin.accent : skin.color;
-  }
-
   function updateBallPulseColors(player = active) {
     if (!ballPulseAura) return;
-    const effect = selectedBallEffect(player);
-    ballPulseAura.material.color.setHex(ballEffectColor(effect, player));
+    const skin = findBallSkin(getSelectedBallSkinId(player));
+    const color = skin.accent !== undefined ? skin.accent : skin.color;
+    ballPulseAura.material.color.setHex(color);
   }
 
   function updateBallPulseEffect() {
-    const effect = selectedBallEffect(active);
-    const activeEffect = gameStarted && !gamePaused && effect && effect.aura && effect.id !== 'none';
-    if (!activeEffect) {
-      const skin = findBallSkin(getSelectedBallSkinId(active));
+    const effectId = getSelectedBallEffectId(active);
+    const pulseActive = gameStarted && !gamePaused && effectId === 'pulse';
+    if (!pulseActive) {
       ballPulseAura.visible = false;
       ballPulseAura.material.opacity = 0;
-      ballLight.color.setHex(skin.color);
       ballLight.intensity = 0.5;
       return;
     }
 
-    const rawBeat = (Math.sin(_t * (effect.aura === 'flicker' ? 10.5 : 6.2)) + 1) * 0.5;
-    const softBeat = effect.aura === 'pulse' ? Math.pow(rawBeat, 2.2) : Math.pow(rawBeat, 1.4);
-    const flicker = effect.aura === 'flicker' ? (0.72 + Math.random() * 0.42) : 1;
-    const color = ballEffectColor(effect, active);
-    ballPulseAura.material.color.setHex(color);
-    ballLight.color.setHex(color);
+    const beat = (Math.sin(_t * 6.2) + 1) * 0.5;
+    const softBeat = Math.pow(beat, 2.2);
+    const size = 1.02 + softBeat * 0.34;
     ballPulseAura.visible = true;
-
-    if (effect.aura === 'billiard') {
-      // Rendu récupéré du code fourni : lumière chaude fixe, sobre, sans effet magique agressif.
-      const size = 1.06 + softBeat * 0.10;
-      ballPulseAura.scale.setScalar(size);
-      ballPulseAura.material.opacity = 0.055 + softBeat * 0.085;
-      ballLight.color.setHex(0xfff8e8);
-      ballLight.intensity = 0.46 + softBeat * 0.22;
-    } else if (effect.aura === 'pulse') {
-      const size = 1.02 + softBeat * 0.34;
-      ballPulseAura.scale.setScalar(size);
-      ballPulseAura.material.opacity = 0.10 + softBeat * 0.24;
-      ballLight.intensity = 0.55 + softBeat * 0.55;
-    } else {
-      const size = 1.12 + softBeat * 0.18;
-      ballPulseAura.scale.setScalar(size);
-      ballPulseAura.material.opacity = (0.08 + softBeat * 0.14) * flicker;
-      ballLight.intensity = (0.55 + softBeat * 0.28) * flicker;
-    }
+    ballPulseAura.scale.setScalar(size);
+    ballPulseAura.material.opacity = 0.10 + softBeat * 0.24;
+    ballLight.intensity = 0.55 + softBeat * 0.55;
   }
 
   // Traînée cosmétique de bille : purement visuelle, aucun effet sur la physique.
@@ -6710,8 +5641,6 @@ function addDamagedRoofDetails(parent, p, x, y, z, radius, central = false, crit
   applyActiveBallSkin(active);
 
   function getBallTrailColor(player = active) {
-    const effect = selectedBallEffect(player);
-    if (effect && effect.id !== 'none' && effect.color !== undefined) return effect.color;
     const skin = findBallSkin(getSelectedBallSkinId(player));
     return skin.accent !== undefined ? skin.accent : skin.color;
   }
@@ -6817,14 +5746,7 @@ function addDamagedRoofDetails(parent, p, x, y, z, radius, central = false, crit
 
   function updateBallTrail() {
     const speed = velocity.length();
-    const effect = selectedBallEffect(active);
-    const trailEnabled = !!(effect && effect.trail && effect.id !== 'none');
-    const moving = trailEnabled && gameStarted && !gamePaused && phase === 'attack' && shotStarted && !canShoot && !ballInHole && !turnLocked && speed > BALL_TRAIL_MIN_SPEED;
-
-    if (!trailEnabled) {
-      clearBallTrail();
-      return;
-    }
+    const moving = gameStarted && !gamePaused && phase === 'attack' && shotStarted && !canShoot && !ballInHole && !turnLocked && speed > BALL_TRAIL_MIN_SPEED;
 
     if (moving) {
       const last = ballTrailSamples[0];
@@ -6845,14 +5767,11 @@ function addDamagedRoofDetails(parent, p, x, y, z, radius, central = false, crit
     const baseCol  = new THREE.Color(getBallTrailColor(active));
     const brightCol = baseCol.clone().lerp(new THREE.Color(0xffffff), sFull * 0.28);
     const sparkCol  = baseCol.clone().lerp(new THREE.Color(0xffffff), 0.45 + sFull * 0.15);
-    const trailLength = Math.max(8, Math.min(BALL_TRAIL_COUNT - 1, Number(effect.trailLength) || 22));
-    const trailOpacity = Math.max(0.15, Math.min(1.25, Number(effect.trailOpacity) || 0.55));
-    const showSparks = effect.sparks !== false;
 
-    const maxVisible = trailLength;
+    const maxVisible = BALL_TRAIL_COUNT - 1;
 
     for (let i = 0; i < ballTrail.length; i++) {
-      const sample = i <= trailLength ? ballTrailSamples[i + 1] : null;
+      const sample = ballTrailSamples[i + 1];
       const layers = Array.isArray(ballTrail[i]) ? ballTrail[i] : [ballTrail[i]];
 
       if (!sample) {
@@ -6877,7 +5796,7 @@ function addDamagedRoofDetails(parent, p, x, y, z, radius, central = false, crit
           p.position.set(bx, by, bz);
           p.scale.set(sz * 1.12, sz, 1);
           p.material.color.copy(brightCol);
-          p.material.opacity = 0.58 * decay * (0.58 + spd_i * 0.42) * trailOpacity;
+          p.material.opacity = 0.58 * decay * (0.58 + spd_i * 0.42);
           p.visible = true;
 
         } else if (p.userData.isHalo) {
@@ -6885,7 +5804,7 @@ function addDamagedRoofDetails(parent, p, x, y, z, radius, central = false, crit
           p.position.set(bx, by, bz);
           p.scale.set(sz, sz * 0.80, 1);
           p.material.color.copy(brightCol);
-          p.material.opacity = 0.18 * decay * spd_i * trailOpacity;
+          p.material.opacity = 0.18 * decay * spd_i;
           p.visible = decay > 0.09 && spd_i > 0.25;
 
         } else if (p.userData.isSpark) {
@@ -6899,8 +5818,8 @@ function addDamagedRoofDetails(parent, p, x, y, z, radius, central = false, crit
           );
           p.scale.set(sz, sz, 1);
           p.material.color.copy(sparkCol);
-          p.material.opacity = 0.72 * decay * spd_i * (0.45 + Math.random() * 0.55) * trailOpacity;
-          p.visible = showSparks && spd_i > 0.40 && decay > 0.30;
+          p.material.opacity = 0.72 * decay * spd_i * (0.45 + Math.random() * 0.55);
+          p.visible = spd_i > 0.40 && decay > 0.30;
         }
       });
     }
@@ -8751,7 +7670,6 @@ function addDamagedRoofDetails(parent, p, x, y, z, radius, central = false, crit
         <div><b>${s.damage}</b><span>PV retirés</span></div>
         <div><b>${destroyedTotal}</b><span>éléments détruits</span></div>
         <div><b>${s.holesHit}</b><span>trous atteints</span></div>
-        <div><b>${s.holeRowsDiscovered || 0}</b><span>lignes de trous découvertes</span></div>
         <div><b>${s.combos}</b><span>combos de siège</span></div>
         <div><b>${s.edgeSteals}</b><span>pillages / vols</span></div>
         <div><b>${s.relicsFound || 0}</b><span>reliques trouvées</span></div>
@@ -9979,7 +8897,6 @@ function spawnVictoryCelebration(report) {
         if (speed < 0.62) {
           holeResolved = true; ballInHole = true;
           ball.position.set(h.x, .55, h.z); velocity.set(0, 0, 0);
-          markHoleVisited(h);
           impact(ball.position, h.trap ? 0xff3333 : 0xffdd66);
           statForPlayer().holesHit++;
           if (h.relic && !h.relicFound) {
@@ -10360,17 +9277,7 @@ function spawnVictoryCelebration(report) {
   /* ── Nuages de particules animés (lampes oscillantes) ── */
   let _t = 0;
   function animateLamps() {
-    billiardLamps.forEach(item => {
-      const pulse = Math.sin(_t * 0.75 + item.phase);
-      if (isForestBoardActive) {
-        item.lamp.intensity = 0.0;
-        item.halo.visible = false;
-        return;
-      }
-      item.halo.visible = true;
-      item.lamp.intensity = item.base + pulse * 0.12;
-      item.halo.material.opacity = 0.46 + (pulse + 1) * 0.045;
-    });
+    // Optimisation mobile : lampes fixes, pas de parcours de scène à chaque frame.
   }
 
   function animateHoleGlow() {
@@ -10403,13 +9310,6 @@ function spawnVictoryCelebration(report) {
     updateBallPulseEffect();
     updateBonusHoles(1);
     cameraUpdate(); animateLamps(); animateHoleGlow(); updateKitAnimations();
-    if (forestDecorGroup && forestDecorGroup.visible) {
-      forestDecorGroup.children.forEach(o => {
-        if (o.material && o.material.transparent && o.userData && o.userData.phase !== undefined) {
-          o.material.opacity = 0.36 + Math.sin(_t * 2.2 + o.userData.phase) * 0.22;
-        }
-      });
-    }
     if (!gamePaused && dragging && canShoot) {
       const dx = dragNow.x - dragStart.x, dy = dragNow.y - dragStart.y;
       const vx = -dx * .014, vz = dir(active) * Math.abs(dy) * .024;

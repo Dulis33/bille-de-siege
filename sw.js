@@ -1,8 +1,8 @@
-const BDS_CACHE = 'bds-forest-no-table-final-20260510-1';
+const BDS_CACHE = 'bds-bottom-pause-timer-zero-points-20260525-1';
 const BDS_FILES = [
   './index.html',
-  './style.css?v=forest-no-table-final-20260510-1',
-  './game.js?v=forest-no-table-final-20260510-1',
+  './style.css?v=bottom-pause-timer-zero-points-20260525-1',
+  './game.js?v=bottom-pause-timer-zero-points-20260525-1',
   './style.css',
   './game.js',
   './manifest.webmanifest',
@@ -33,17 +33,7 @@ const BDS_FILES = [
   './bruitages/destroy.mp3',
   './bruitages/build.mp3',
   './bruitages/repair.mp3',
-  './bruitages/victory.mp3',
-  './bruitages/victory-1.mp3',
-  './bruitages/victory-2.mp3',
-  './bruitages/victory-3.mp3',
-  './bruitages/build-1.mp3',
-  './bruitages/build-2.mp3',
-  './bruitages/build-3.mp3',
-  './bruitages/repair-1.mp3',
-  './bruitages/repair-2.mp3',
-  './bruitages/repair-3.mp3',
-  './bruitages/clear-debris.mp3'
+  './bruitages/victory.mp3'
 ];
 self.addEventListener('install', (event) => {
   self.skipWaiting();
