@@ -1,8 +1,8 @@
-const BDS_CACHE = 'bds-no-action-zoom-victory-audio-20260525-1';
+const BDS_CACHE = 'bds-ui-centree-boutons-fun-colors-20260525-1';
 const BDS_FILES = [
   './index.html',
-  './style.css?v=no-action-zoom-victory-audio-20260525-1',
-  './game.js?v=no-action-zoom-victory-audio-20260525-1',
+  './style.css?v=ui-centree-boutons-fun-colors-20260525-1',
+  './game.js?v=ui-centree-boutons-fun-colors-20260525-1',
   './style.css',
   './game.js',
   './manifest.webmanifest',

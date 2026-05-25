@@ -5422,3 +5422,259 @@ button[data-lock-reason][disabled] {
   .shot-recap-row { font-size: 13px; padding: 8px 10px; }
   .victory-stats.compact { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
+
+
+/* ─────────────────────────────────────────────
+   Correctif 2026-05-25 : UI centrée, boutons vivants,
+   rendu plus coloré et plus fun.
+   ───────────────────────────────────────────── */
+:root {
+  --fun-gold: #ffd84f;
+  --fun-gold-2: #fff2a8;
+  --fun-green: #3cff9a;
+  --fun-cyan: #62f7ff;
+  --fun-red: #ff5f54;
+  --fun-violet: #b77cff;
+}
+
+html, body, canvas, button, a, input, select, textarea, [role="button"] {
+  -webkit-tap-highlight-color: transparent !important;
+}
+button, .pause-btn, .castle-pill, .custom-select, .custom-unlock, .profile-avatar-choice {
+  touch-action: manipulation !important;
+  user-select: none !important;
+}
+
+/* Le canvas est légèrement réhaussé : moins terne, plus lisible. */
+#game {
+  filter: saturate(1.22) contrast(1.055) brightness(1.055) !important;
+}
+
+/* Les panneaux de récap doivent toujours être vraiment centrés. */
+#turnOverlay {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  min-height: 100dvh !important;
+  padding: max(12px, env(safe-area-inset-top)) max(10px, env(safe-area-inset-right)) max(12px, env(safe-area-inset-bottom)) max(10px, env(safe-area-inset-left)) !important;
+  box-sizing: border-box !important;
+  align-items: center !important;
+  justify-content: center !important;
+  place-items: center !important;
+}
+#turnOverlay.show {
+  display: grid !important;
+}
+.turn-card {
+  box-sizing: border-box !important;
+  width: min(94vw, 640px) !important;
+  max-width: calc(100vw - 22px) !important;
+  min-width: 0 !important;
+  max-height: calc(100dvh - 32px) !important;
+  overflow: auto !important;
+  margin: 0 auto !important;
+  padding: clamp(18px, 4.4vw, 34px) !important;
+  transform: none !important;
+  border-radius: 30px !important;
+  background:
+    radial-gradient(circle at 18% 12%, rgba(255,216,79,.28), transparent 34%),
+    radial-gradient(circle at 82% 18%, rgba(98,247,255,.15), transparent 32%),
+    radial-gradient(circle at 50% 105%, rgba(60,255,154,.13), transparent 48%),
+    linear-gradient(145deg, rgba(25,10,6,.96), rgba(4,32,24,.97)) !important;
+  border: 1px solid rgba(255,216,79,.70) !important;
+  box-shadow:
+    0 0 55px rgba(255,216,79,.24),
+    0 0 32px rgba(98,247,255,.09),
+    0 26px 80px rgba(0,0,0,.78),
+    inset 0 1px 0 rgba(255,255,255,.16) !important;
+}
+.turn-card h2 {
+  color: var(--fun-gold-2) !important;
+  text-shadow: 0 0 24px rgba(255,216,79,.72), 0 3px 10px rgba(0,0,0,.9) !important;
+  letter-spacing: clamp(2px, 1.4vw, 7px) !important;
+}
+.turn-card p {
+  max-width: 100% !important;
+  margin: 0 auto !important;
+}
+.shot-recap-card {
+  box-sizing: border-box !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 10px auto 0 !important;
+  border-radius: 24px !important;
+  background:
+    radial-gradient(circle at 12% 0%, rgba(255,216,79,.28), transparent 42%),
+    radial-gradient(circle at 90% 10%, rgba(98,247,255,.17), transparent 36%),
+    linear-gradient(180deg, rgba(10,48,32,.96), rgba(4,18,15,.97)) !important;
+}
+.shot-recap-card.royal {
+  background:
+    radial-gradient(circle at 50% 0%, rgba(255,216,79,.35), transparent 44%),
+    radial-gradient(circle at 8% 12%, rgba(255,83,76,.16), transparent 30%),
+    radial-gradient(circle at 92% 15%, rgba(98,247,255,.20), transparent 34%),
+    linear-gradient(180deg, rgba(39,25,4,.98), rgba(4,25,19,.98)) !important;
+  border-color: rgba(255,225,92,.95) !important;
+}
+.shot-recap-head {
+  text-align: left !important;
+}
+.shot-recap-row {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.035)) !important;
+  border-color: rgba(255,255,255,.13) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.08), 0 8px 18px rgba(0,0,0,.18) !important;
+}
+
+/* Boutons : suppression du flash bleu + vrai effet d'appui. */
+button,
+.pause-btn,
+.castle-pill {
+  position: relative !important;
+  overflow: hidden !important;
+  transition:
+    transform .10s ease,
+    box-shadow .16s ease,
+    border-color .16s ease,
+    background .16s ease,
+    color .16s ease,
+    filter .16s ease !important;
+}
+button:not(:disabled),
+.pause-btn:not(:disabled),
+.castle-pill:not(:disabled) {
+  background:
+    radial-gradient(circle at 25% 0%, rgba(255,255,255,.18), transparent 44%),
+    linear-gradient(180deg, rgba(255,216,79,.16), rgba(34,111,64,.11)),
+    rgba(7, 28, 20, .78) !important;
+  border-color: rgba(255,226,117,.42) !important;
+  color: #fff4d8 !important;
+  text-shadow: 0 1px 2px rgba(0,0,0,.70) !important;
+}
+button:not(:disabled)::after,
+.pause-btn:not(:disabled)::after,
+.castle-pill:not(:disabled)::after {
+  content: '' !important;
+  display: block !important;
+  position: absolute !important;
+  inset: 2px !important;
+  border-radius: inherit !important;
+  pointer-events: none !important;
+  background: radial-gradient(circle at 30% 10%, rgba(255,255,255,.22), transparent 35%) !important;
+  opacity: .55 !important;
+}
+button:hover:not(:disabled),
+button:focus-visible:not(:disabled),
+.pause-btn:hover:not(:disabled),
+.castle-pill:hover:not(:disabled) {
+  filter: saturate(1.18) brightness(1.08) !important;
+  border-color: rgba(255,235,139,.85) !important;
+  box-shadow:
+    0 0 22px rgba(255,216,79,.20),
+    0 0 14px rgba(60,255,154,.10),
+    0 10px 26px rgba(0,0,0,.38),
+    inset 0 1px 0 rgba(255,255,255,.16) !important;
+}
+button:active:not(:disabled),
+button.tap-pressed:not(:disabled),
+.pause-btn:active:not(:disabled),
+.pause-btn.tap-pressed:not(:disabled),
+.castle-pill:active:not(:disabled),
+.castle-pill.tap-pressed:not(:disabled) {
+  transform: translateY(2px) scale(.965) !important;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(255,255,255,.32), transparent 38%),
+    linear-gradient(180deg, rgba(255,226,92,.88), rgba(255,132,54,.72) 48%, rgba(23,160,93,.76)) !important;
+  color: #1d1105 !important;
+  border-color: rgba(255,250,190,1) !important;
+  text-shadow: 0 1px 0 rgba(255,255,255,.28) !important;
+  box-shadow:
+    0 0 34px rgba(255,220,76,.62),
+    0 0 18px rgba(98,247,255,.24),
+    inset 0 4px 12px rgba(82,35,0,.38),
+    inset 0 1px 0 rgba(255,255,255,.50) !important;
+}
+button:active:not(:disabled)::before,
+button.tap-pressed:not(:disabled)::before,
+.pause-btn:active:not(:disabled)::before,
+.pause-btn.tap-pressed:not(:disabled)::before,
+.castle-pill:active:not(:disabled)::before,
+.castle-pill.tap-pressed:not(:disabled)::before {
+  content: '' !important;
+  display: block !important;
+  position: absolute !important;
+  left: 50% !important;
+  top: 50% !important;
+  width: 16px !important;
+  height: 16px !important;
+  border-radius: 50% !important;
+  transform: translate(-50%, -50%) scale(7) !important;
+  background: radial-gradient(circle, rgba(255,255,255,.40), rgba(255,255,255,0) 62%) !important;
+  opacity: .85 !important;
+  pointer-events: none !important;
+}
+
+/* Plus coloré / plus festif pour les éléments permanents. */
+#hud {
+  background:
+    radial-gradient(circle at 18% 0%, rgba(255,80,78,.20), transparent 30%),
+    radial-gradient(circle at 84% 0%, rgba(82,143,255,.20), transparent 30%),
+    linear-gradient(180deg, rgba(12,18,14,.93), rgba(5,14,11,.72), transparent) !important;
+}
+.title h1 {
+  color: #fff0aa !important;
+  text-shadow: 0 0 18px rgba(255,216,79,.62), 0 2px 8px rgba(0,0,0,.92) !important;
+}
+#roundTitle {
+  color: #ffe68d !important;
+  text-shadow: 0 0 12px rgba(255,216,79,.48) !important;
+}
+#resources {
+  background:
+    linear-gradient(90deg, rgba(10,38,30,.88), rgba(54,33,7,.86), rgba(10,38,30,.88)) !important;
+  border-color: rgba(255,216,79,.45) !important;
+  box-shadow: 0 12px 34px rgba(0,0,0,.44), 0 0 22px rgba(255,216,79,.13), inset 0 1px 0 rgba(255,255,255,.12) !important;
+}
+#resources span:nth-child(1) { background: linear-gradient(180deg, rgba(220,230,220,.16), rgba(255,255,255,.035)) !important; }
+#resources span:nth-child(2) { background: linear-gradient(180deg, rgba(255,145,65,.18), rgba(255,255,255,.035)) !important; }
+#resources span:nth-child(3) { background: linear-gradient(180deg, rgba(255,221,68,.22), rgba(255,255,255,.045)) !important; }
+#resources span:nth-child(4) { background: linear-gradient(180deg, rgba(181,124,255,.20), rgba(255,255,255,.04)) !important; }
+#resources b { color: #fff086 !important; text-shadow: 0 0 12px rgba(255,216,79,.55) !important; }
+.player-card .medal {
+  filter: saturate(1.25) brightness(1.13) drop-shadow(0 0 10px rgba(255,216,79,.20)) !important;
+}
+.player-card:not(.dim) {
+  border-color: rgba(255,231,136,.62) !important;
+  box-shadow: 0 0 24px rgba(255,216,79,.18), 0 12px 30px rgba(0,0,0,.40) !important;
+}
+.battle-notice,
+#bigFx:not(.victory),
+#eventBanner,
+#turnTimer,
+.pause-btn {
+  filter: saturate(1.15) brightness(1.04) !important;
+}
+.fx-token {
+  filter: saturate(1.35) brightness(1.12) drop-shadow(0 0 8px rgba(255,216,79,.26)) !important;
+}
+
+@media (max-width: 520px) {
+  .turn-card {
+    width: min(95vw, 430px) !important;
+    max-width: calc(100vw - 18px) !important;
+    padding: 18px 14px !important;
+    border-radius: 24px !important;
+  }
+  .turn-card h2 {
+    font-size: clamp(22px, 8vw, 36px) !important;
+    letter-spacing: clamp(2px, 2vw, 5px) !important;
+  }
+  .turn-card p { font-size: 17px !important; }
+  .shot-recap-head {
+    grid-template-columns: 42px 1fr !important;
+    gap: 0 10px !important;
+    padding: 13px 11px 9px !important;
+  }
+  .shot-recap-body { padding: 10px 10px 12px !important; }
+  .shot-recap-row { font-size: 12.5px !important; padding: 8px 9px !important; }
+}

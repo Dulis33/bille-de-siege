@@ -2703,6 +2703,12 @@ try {
   if (mainSfx) mainSfx.addEventListener('click', toggleSfx, true);
   if (mainMusic) mainMusic.addEventListener('click', toggleBackgroundMusic, true);
   document.addEventListener('pointerdown', unlockAudio, { once: true, capture: true });
+  document.addEventListener('pointerdown', (ev) => {
+    const btn = ev.target && ev.target.closest ? ev.target.closest('button, .pause-btn, .castle-pill') : null;
+    if (!btn || btn.disabled) return;
+    btn.classList.add('tap-pressed');
+    window.setTimeout(() => btn.classList.remove('tap-pressed'), 170);
+  }, true);
   document.addEventListener('click', (ev) => {
     if (ev.target && ev.target.closest && ev.target.closest('button, .main-menu-box, .modal-box')) playSfx('click');
   }, true);
@@ -2800,8 +2806,8 @@ try {
 
   /* ── Scene ── */
   const scene = new THREE.Scene();
-  scene.background = new THREE.Color(0x090f0b); // salle plus moderne, sombre et lisible
-  scene.fog = new THREE.FogExp2(0x07150e, 0.0027);
+  scene.background = new THREE.Color(0x102015); // rendu plus vivant, moins terne
+  scene.fog = new THREE.FogExp2(0x0b2818, 0.00235);
 
   const camera = new THREE.PerspectiveCamera(54, innerWidth / (innerHeight - VIEW_BOTTOM_RESERVED), 0.1, 900);
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: false, powerPreference: 'high-performance' });
@@ -2811,7 +2817,7 @@ try {
   renderer.shadowMap.enabled = false;
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.38;
+  renderer.toneMappingExposure = 1.54;
 
   window.addEventListener('resize', () => {
     renderer.setSize(innerWidth, innerHeight - VIEW_BOTTOM_RESERVED);
@@ -2821,7 +2827,7 @@ try {
 
   /* ── Éclairage style salle de billard ── */
   // Ambiance renforcée : on garde l'atmosphère billard, mais le plateau reste lisible.
-  scene.add(new THREE.AmbientLight(0xfff0dc, 1.42));
+  scene.add(new THREE.AmbientLight(0xfff3df, 1.58));
 
   const keyLight = new THREE.DirectionalLight(0xffe7c0, 1.72);
   keyLight.position.set(-14, 58, 38);
@@ -2857,7 +2863,7 @@ try {
   });
 
   // Remplissage doux pour déboucher les ombres sans tuer le style billard.
-  const fillLight = new THREE.HemisphereLight(0xffdfb0, 0x12311d, 0.82);
+  const fillLight = new THREE.HemisphereLight(0xffe8b8, 0x164a2a, 0.98);
   scene.add(fillLight);
 
 
