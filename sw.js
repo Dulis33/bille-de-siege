@@ -1,8 +1,8 @@
-const BDS_CACHE = 'bds-fun-progress-avatars-20260525-1';
+const BDS_CACHE = 'bds-aim-camera-inverted-placement-20260525-1';
 const BDS_FILES = [
   './index.html',
-  './style.css?v=fun-progress-avatars-20260525-1',
-  './game.js?v=fun-progress-avatars-20260525-1',
+  './style.css?v=aim-camera-inverted-placement-20260525-1',
+  './game.js?v=aim-camera-inverted-placement-20260525-1',
   './style.css',
   './game.js',
   './manifest.webmanifest',
@@ -33,28 +33,7 @@ const BDS_FILES = [
   './bruitages/destroy.mp3',
   './bruitages/build.mp3',
   './bruitages/repair.mp3',
-  './bruitages/victory.mp3',
-  './bruitages/gain-bois-1.mp3',
-  './bruitages/gain-bois-2.mp3',
-  './bruitages/gain-bois-3.mp3',
-  './bruitages/gain-pierre-1.mp3',
-  './bruitages/gain-pierre-2.mp3',
-  './bruitages/gain-pierre-3.mp3',
-  './bruitages/gain-or-1.mp3',
-  './bruitages/gain-or-2.mp3',
-  './bruitages/gain-or-3.mp3',
-  './bruitages/combo-1.mp3',
-  './bruitages/combo-2.mp3',
-  './bruitages/combo-3.mp3',
-  './bruitages/event-1.mp3',
-  './bruitages/event-2.mp3',
-  './bruitages/event-3.mp3',
-  './bruitages/impact-pierre-1.mp3',
-  './bruitages/impact-pierre-2.mp3',
-  './bruitages/impact-pierre-3.mp3',
-  './bruitages/destruction-pierre-1.mp3',
-  './bruitages/destruction-pierre-2.mp3',
-  './bruitages/destruction-pierre-3.mp3'
+  './bruitages/victory.mp3'
 ];
 self.addEventListener('install', (event) => {
   self.skipWaiting();
