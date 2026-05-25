@@ -355,7 +355,27 @@ try {
     { id: 'dragon', icon: '🐉', label: 'Dragon' },
     { id: 'crown', icon: '👑', label: 'Roi' },
     { id: 'fox', icon: '🦊', label: 'Renard' },
-    { id: 'wolf', icon: '🐺', label: 'Loup' }
+    { id: 'wolf', icon: '🐺', label: 'Loup' },
+    { id: 'lion', icon: '🦁', label: 'Lion' },
+    { id: 'eagle', icon: '🦅', label: 'Aigle' },
+    { id: 'bear', icon: '🐻', label: 'Ours' },
+    { id: 'owl', icon: '🦉', label: 'Hibou' },
+    { id: 'boar', icon: '🐗', label: 'Sanglier' },
+    { id: 'unicorn', icon: '🦄', label: 'Licorne' },
+    { id: 'phoenix', icon: '🔥', label: 'Phénix' },
+    { id: 'skull', icon: '💀', label: 'Crâne' },
+    { id: 'bomb', icon: '💣', label: 'Bombardier' },
+    { id: 'castle', icon: '🏰', label: 'Château' },
+    { id: 'gem', icon: '💎', label: 'Joyau' },
+    { id: 'thunder', icon: '⚡', label: 'Foudre' },
+    { id: 'moon', icon: '🌙', label: 'Lune' },
+    { id: 'star', icon: '⭐', label: 'Étoile' },
+    { id: 'clover', icon: '🍀', label: 'Trèfle' },
+    { id: 'mushroom', icon: '🍄', label: 'Champignon' },
+    { id: 'acorn', icon: '🌰', label: 'Gland' },
+    { id: 'compass', icon: '🧭', label: 'Explorateur' },
+    { id: 'hammer', icon: '⚒️', label: 'Forgeron' },
+    { id: 'shield_star', icon: '🌟', label: 'Champion' }
   ];
   const DEFAULT_PROFILE_AVATAR = 'knight';
 
@@ -3660,6 +3680,9 @@ function shadeHexColor(color, amount) {
       return false;
     }
     pl.shotsFiredThisTurn++;
+    watchdogShotStartedAt = Date.now();
+    watchdogLastProgressAt = watchdogShotStartedAt;
+    watchdogLastBallPos.copy(ball.position);
     return true;
   }
 
@@ -5010,6 +5033,8 @@ function shadeHexColor(color, amount) {
   let turnLocked = false, turnSummary = [], shotStarted = false;
   let autoSwitchStarted = false, castleHitThisShot = false, castleAccessThisShot = false, sideRidgeAccessThisShot = false, gameOver = false;
   let finishTimer = null, secondShotReady = false;
+  let finishTimerStartedAt = 0;
+  let finishTimerReason = '';
   let randomRepairUsedThisTurn = false, marketTradeUsedThisTurn = false, kitUsedThisTurn = false;
   let shotCreatedDebris = [];
   let turnIntroCamera = null;
@@ -5026,6 +5051,18 @@ function shadeHexColor(color, amount) {
   const activeCameraPointers = new Map();
   let pinchState = null;
   const velocity = new THREE.Vector3();
+
+  // Sécurité anti-blocage : certains enchaînements mobile/PWA peuvent laisser
+  // le tour, l'IA ou la bille dans un état incohérent. Le watchdog ne change
+  // pas les règles : il relance juste l'état si plus rien ne progresse.
+  let watchdogShotStartedAt = 0;
+  let watchdogLastBallPos = new THREE.Vector3();
+  let watchdogLastProgressAt = Date.now();
+  let watchdogTurnLockedSince = 0;
+  let watchdogAiIdleSince = 0;
+  let watchdogLastNoticeAt = 0;
+  let watchdogRuntimeErrorCount = 0;
+
   const AIM_ARM_DISTANCE = 10;
   const AIM_VERTICAL_MIN = 16;
   const AIM_MIN_POWER = 20;
@@ -6300,13 +6337,116 @@ function addDamagedRoofDetails(parent, p, x, y, z, radius, central = false, crit
       amount = Number(amount) || 0;
       if (!amount) return;
       spawnResourceSplash(type, amount, fromWorldPos);
-      const tokenCount = Math.min(8, Math.max(1, Math.ceil(amount / 2)));
-      const perToken = Math.max(1, Math.round(amount / tokenCount));
+      // Plus généreux visuellement : davantage de jetons partent vers la barre.
+      const tokenCount = Math.min(12, Math.max(2, Math.ceil(amount / 1.45)));
+      const perToken = Math.max(1, Math.floor(amount / tokenCount));
       for (let i = 0; i < tokenCount; i++) {
         const value = i === tokenCount - 1 ? Math.max(1, amount - perToken * (tokenCount - 1)) : perToken;
-        setTimeout(() => flyResourceToHud(type, value, fromWorldPos, i), index * 120 + i * 68);
+        setTimeout(() => flyResourceToHud(type, value, fromWorldPos, i), index * 105 + i * 48);
       }
     });
+  }
+
+  function screenBurst(title, html = '', variant = 'gain', duration = 1700) {
+    if (!fxLayer) return;
+    const node = document.createElement('div');
+    node.className = 'screen-burst ' + variant;
+    node.innerHTML = '<strong>' + title + '</strong>' + (html ? '<span>' + html + '</span>' : '');
+    document.body.appendChild(node);
+    requestAnimationFrame(() => node.classList.add('show'));
+    setTimeout(() => {
+      node.classList.remove('show');
+      setTimeout(() => node.remove(), 320);
+    }, duration);
+  }
+
+  function spawnRewardConfetti(reward, fromWorldPos, boost = 1) {
+    const entries = Object.entries(reward || {}).filter(([, amount]) => Number(amount) > 0);
+    if (!entries.length) return;
+    const source = fromWorldPos ? worldToScreen(fromWorldPos) : { x: innerWidth / 2, y: innerHeight / 2 };
+    entries.forEach(([type, amount], entryIndex) => {
+      const count = Math.min(26, Math.max(7, Math.ceil(Number(amount) * 1.25 * boost)));
+      for (let i = 0; i < count; i++) {
+        const node = document.createElement('div');
+        node.className = 'reward-confetti ' + resourceClass(type);
+        node.textContent = resourceIcon(type);
+        node.style.left = source.x + 'px';
+        node.style.top = source.y + 'px';
+        const angle = Math.random() * Math.PI * 2;
+        const radius = 70 + Math.random() * (145 + 40 * boost);
+        node.style.setProperty('--cx', (Math.cos(angle) * radius).toFixed(1) + 'px');
+        node.style.setProperty('--cy', (Math.sin(angle) * radius - 38 - Math.random() * 80).toFixed(1) + 'px');
+        node.style.animationDelay = (entryIndex * 0.05 + i * 0.012).toFixed(3) + 's';
+        document.body.appendChild(node);
+        setTimeout(() => node.remove(), 1300);
+      }
+    });
+  }
+
+  function showGainCelebration(reward, total, fromWorldPos) {
+    const html = rewardHtml(reward);
+    const big = total >= 12;
+    const mid = total >= 8 || Object.keys(reward || {}).length >= 2;
+    spawnRewardConfetti(reward, fromWorldPos, big ? 1.55 : (mid ? 1.18 : 0.92));
+    if (big) {
+      screenBurst('GROS BUTIN !', html, 'jackpot', 2100);
+      battleNotice('PLUIE DE RESSOURCES', html.replace(/<br>/g, ' · '), 'jackpot', 2800);
+    } else if (mid) {
+      screenBurst('BELLE RÉCOLTE !', html, 'gain', 1550);
+      battleNotice('RÉCOLTE', html.replace(/<br>/g, ' · '), 'gain', 2200);
+    } else {
+      battleNotice('GAIN RÉCOLTÉ', html.replace(/<br>/g, ' · '), 'gain', 1800);
+    }
+  }
+
+  function comboShockwave(title = 'COMBO ROYAL !', subtitle = 'DÉGÂTS + BUTIN') {
+    const node = document.createElement('div');
+    node.className = 'combo-shockwave';
+    node.innerHTML = '<div><strong>' + title + '</strong><span>' + subtitle + '</span></div>';
+    document.body.appendChild(node);
+    requestAnimationFrame(() => node.classList.add('show'));
+    setTimeout(() => {
+      node.classList.remove('show');
+      setTimeout(() => node.remove(), 420);
+    }, 2550);
+  }
+
+  const PROGRESS_FUN = {
+    damage: { icon: '💥', title: 'CARNAGE', color: 'damage', line: 'Le château adverse commence à trembler.' },
+    structures: { icon: '🏚️', title: 'DÉMOLITION', color: 'damage', line: 'Une vraie percée de siège se prépare.' },
+    combos: { icon: '⚡', title: 'COMBO DE SIÈGE', color: 'combo', line: 'Dégâts, butin, chaos : c’est ça qu’on veut.' },
+    resources: { icon: '💰', title: 'BUTIN', color: 'gain', line: 'Les coffres se remplissent.' },
+    holes: { icon: '🕳️', title: 'EXPLORATION', color: 'gain', line: 'La carte des trous se révèle.' },
+    edge: { icon: '🦹', title: 'COUP BAS', color: 'combo', line: 'Le pillage met la pression.' },
+    relics: { icon: '🏺', title: 'RELIQUE', color: 'jackpot', line: 'Un vestige précieux entre dans la légende.' },
+    second: { icon: '⚪', title: 'DOUBLE LANCER', color: 'gain', line: 'Plus de billes, plus de spectacle.' }
+  };
+
+  function showFunProgressCard(objectiveId, player, value, target, pct, reachedReward = 0) {
+    const meta = PROGRESS_FUN[objectiveId] || { icon: '🏆', title: 'DÉFI', color: 'gain', line: 'La progression avance.' };
+    const node = document.createElement('div');
+    node.className = 'progress-pop ' + meta.color;
+    const reached = reachedReward > 0;
+    const title = reached ? 'PALIER ATTEINT !' : meta.title;
+    const footer = reached
+      ? '+' + reachedReward + ' pts à la fin si le score tient'
+      : 'Objectif : ' + value + ' / ' + target;
+    node.innerHTML = `
+      <div class="progress-pop-icon">${meta.icon}</div>
+      <div class="progress-pop-body">
+        <b>${title}</b>
+        <strong>J${player} · ${meta.title}</strong>
+        <span>${meta.line}</span>
+        <div class="progress-pop-bar"><i style="width:${pct}%"></i></div>
+        <small>${footer}</small>
+      </div>
+    `;
+    document.body.appendChild(node);
+    requestAnimationFrame(() => node.classList.add('show'));
+    setTimeout(() => {
+      node.classList.remove('show');
+      setTimeout(() => node.remove(), 360);
+    }, reached ? 3300 : 2500);
   }
 
   function showObjectiveProgress(objectiveId, player = active, force = false) {
@@ -6323,7 +6463,11 @@ function addDamagedRoofDetails(parent, p, x, y, z, radius, central = false, crit
     if (!force && value <= 0) return;
     progressPingLast[key] = now;
     const pct = Math.min(100, Math.round(value / Math.max(1, target) * 100));
-    battleNotice('PROGRESSION J' + player, objective.label + ' : ' + value + ' / ' + target + ' · ' + pct + '%', 'gain', 2300);
+    const reached = objective.thresholds.slice().reverse().find(([threshold]) => value >= threshold);
+    const reachedKey = key + ':reached:' + (reached ? reached[0] : 0);
+    const reachedReward = reached && !progressPingLast[reachedKey] ? reached[1] : 0;
+    if (reachedReward) progressPingLast[reachedKey] = now;
+    showFunProgressCard(objectiveId, player, value, target, pct, reachedReward);
   }
 
   function spawnAmbientJuice() {
@@ -6425,10 +6569,6 @@ function addDamagedRoofDetails(parent, p, x, y, z, radius, central = false, crit
     playSfx('jackpot', 1.35);
     floatText('RELIQUE<br>+1 🏺', ball.position.clone().add(new THREE.Vector3(0, 1.8, 0)), 'jackpot');
     bigMessage('RELIQUE TROUVÉE !', '🏺 À vendre au marché contre ' + RELIC_MARKET_GOLD_VALUE + ' or', 'jackpot', 2600);
-    if (rewardTotal(rew) > 0) {
-      currentShot.resourceGain = true;
-      maybeTriggerMixedComboFX();
-    }
     setTimeout(updateHUD, 520);
   }
 
@@ -6518,10 +6658,13 @@ function addDamagedRoofDetails(parent, p, x, y, z, radius, central = false, crit
     currentShot.mixedComboShown = true;
     statForPlayer(active).combos++;
     turnSummary.push('Combo : dégâts + gain de ressources');
-    bigMessage('COMBO ROYAL !', 'Dégâts + ressources dans le même lancer', 'combo', 2300);
-    battleNotice('COMBO ROYAL', 'Dégâts + gain de ressources', 'jackpot', 3300);
-    floatText('COMBO ROYAL<br>DÉGÂTS + BUTIN', ball.position.clone().add(new THREE.Vector3(0, 2.7, 0)), 'combo');
-    playRandomSfx('combo', 'jackpot', 1.35, true);
+    comboShockwave('COMBO ROYAL !', 'DÉGÂTS + BUTIN');
+    bigMessage('COMBO ROYAL !', 'Dégâts + ressources dans le même lancer', 'combo', 3600);
+    battleNotice('COMBO ROYAL', 'Dégâts + gain de ressources dans le même lancer', 'jackpot', 4300);
+    floatText('COMBO ROYAL<br>DÉGÂTS + BUTIN', ball.position.clone().add(new THREE.Vector3(0, 3.0, 0)), 'combo');
+    spawnRewardConfetti({ gold: 5, wood: 4, stone: 4 }, ball.position.clone().add(new THREE.Vector3(0, 1.2, 0)), 1.6);
+    triggerShake(0.42, 0.78);
+    playRandomSfx('combo', 'jackpot', 1.65, true);
     showObjectiveProgress('combos', active, true);
   }
 
@@ -6541,18 +6684,17 @@ function addDamagedRoofDetails(parent, p, x, y, z, radius, central = false, crit
     turnSummary.push(txt);
     if (eventReward.applied) turnSummary.push('Événement : ' + activeTurnEvent.short);
     impact(ball.position, resourceCount >= 3 ? 0xfff06a : 0xffdd66, total >= 12 ? 1.9 : 1.25);
+    if (currentShot) currentShot.resourceGain = true;
     playResourceGainSfx(rew, total);
     floatText(rewardHtml(rew), ball.position.clone().add(new THREE.Vector3(0, 1.2, 0)), total >= 12 ? 'jackpot' : 'gain');
+    showGainCelebration(rew, total, gainOrigin);
     showObjectiveProgress('resources', active, total >= 12);
     if (eventReward.applied) {
-      bigMessage(activeTurnEvent.icon + ' ' + activeTurnEvent.title, rewardHtml(rew), 'jackpot', 1050);
+      bigMessage(activeTurnEvent.icon + ' ' + activeTurnEvent.title, rewardHtml(rew), 'jackpot', 1500);
     } else if (total >= 12) {
-      bigMessage('GROS BUTIN !', rewardHtml(rew), 'jackpot', 2400);
-    } else if (resourceCount >= 2 || total >= 10) {
-      showToast('BONUS<br>' + txt);
-    } else {
-      showToast('GAIN<br>' + txt);
+      bigMessage('GROS BUTIN !', rewardHtml(rew), 'jackpot', 2600);
     }
+    maybeTriggerMixedComboFX();
     setTimeout(updateHUD, 520);
   }
 
@@ -7834,11 +7976,29 @@ function addDamagedRoofDetails(parent, p, x, y, z, radius, central = false, crit
   }
 
   function scheduleFinishTurn(reason, delay = 650) {
-    if (finishTimer) return;
+    const now = Date.now();
+    const safeReason = reason || finishTimerReason || 'La bille est tombée dans un trou.';
+
+    // Sécurité : après certains effets visuels de gain/progression, un ancien timer pouvait rester
+    // dans un état incohérent. On ne bloque plus la fin de lancer indéfiniment.
+    if (finishTimer) {
+      const maxWait = Math.max(1800, delay + 1800);
+      if (finishTimerStartedAt && now - finishTimerStartedAt < maxWait) return;
+      clearTimeout(finishTimer);
+      finishTimer = null;
+    }
+
+    finishTimerStartedAt = now;
+    finishTimerReason = safeReason;
     finishTimer = setTimeout(() => {
       finishTimer = null;
-      if (gamePaused) { scheduleFinishTurn(reason, 500); return; }
-      finishTurn(reason);
+      finishTimerStartedAt = 0;
+      if (gamePaused) { scheduleFinishTurn(safeReason, 500); return; }
+      try {
+        finishTurn(safeReason);
+      } catch (err) {
+        handleRuntimeGameError(err);
+      }
     }, delay);
   }
 
@@ -7851,6 +8011,9 @@ function addDamagedRoofDetails(parent, p, x, y, z, radius, central = false, crit
     shotStarted = false; autoSwitchStarted = false;
     holeResolved = false; ballInHole = false; castleHitThisShot = false; castleAccessThisShot = false; sideRidgeAccessThisShot = false;
     currentShot = createShotState();
+    watchdogShotStartedAt = 0;
+    watchdogLastProgressAt = Date.now();
+    watchdogLastBallPos.copy(ball.position);
     holes.forEach(h => h.last = false);
     bonusHoles.forEach(h => { h.last = false; });
     activeMudZones.forEach(zone => { zone.notedForShot = false; });
@@ -8162,6 +8325,8 @@ function spawnVictoryCelebration(report) {
     gameOver = true;
     clearAIActionTimers();
     if (finishTimer) { clearTimeout(finishTimer); finishTimer = null; }
+    finishTimerStartedAt = 0;
+    finishTimerReason = '';
     players.forEach(pl => { pl.extraShotsLeft = 0; pl.secondBallActiveThisTurn = false; });
     secondShotReady = false;
     activeTurnEvent = null;
@@ -8200,6 +8365,8 @@ function spawnVictoryCelebration(report) {
     clearAIActionTimers();
     clearPendingWorldAction();
     if (finishTimer) { clearTimeout(finishTimer); finishTimer = null; }
+    finishTimerStartedAt = 0;
+    finishTimerReason = '';
     stopTurnTimer(true);
     hideBigMessage();
     turnIntroCamera = null;
@@ -8324,6 +8491,8 @@ function spawnVictoryCelebration(report) {
       clearTimeout(finishTimer);
       finishTimer = null;
     }
+    finishTimerStartedAt = 0;
+    finishTimerReason = '';
     if (autoSwitchStarted) return;
 
     const pl = players[active-1];
@@ -9343,6 +9512,7 @@ function spawnVictoryCelebration(report) {
           ballInHole = true;
           ball.position.set(h.x, 0.62, h.z);
           velocity.set(0, 0, 0);
+          scheduleFinishTurn('La bille est tombée dans le trou bonus.', 1600);
           impact(ball.position, 0x62f7ff, 1.45);
           playSfx('confirm', 1.05);
           statForPlayer().holesHit++; showObjectiveProgress('holes', active, false);
@@ -9363,6 +9533,7 @@ function spawnVictoryCelebration(report) {
         if (speed < 0.62) {
           holeResolved = true; ballInHole = true;
           ball.position.set(h.x, .55, h.z); velocity.set(0, 0, 0);
+          scheduleFinishTurn('La bille est tombée dans un trou.', 1600);
           impact(ball.position, h.trap ? 0xff3333 : 0xffdd66);
           statForPlayer().holesHit++; showObjectiveProgress('holes', active, false);
           const newlyVisitedMainHole = markHoleVisited(h, true);
@@ -9394,6 +9565,7 @@ function spawnVictoryCelebration(report) {
           ballInHole = true;
           ball.position.set(h.x, BUTTE.h + 0.55, h.z);
           velocity.set(0, 0, 0);
+          scheduleFinishTurn('La bille est tombée dans le trou de vol.', 1600);
           statForPlayer().holesHit++; showObjectiveProgress('holes', active, false);
           stealRandomResourcesFromPlayer(enemy(active), 1, 3, 'Trou de vol latéral');
           scheduleFinishTurn('La bille est tombée dans le trou de vol.', 900);
@@ -9770,12 +9942,201 @@ function spawnVictoryCelebration(report) {
     });
   }
 
+  function watchdogNotice(text) {
+    const now = Date.now();
+    if (now - watchdogLastNoticeAt < 4500) return;
+    watchdogLastNoticeAt = now;
+    showToast('Sécurité anti-blocage<br>' + text);
+  }
+
+  function clearTransientBlockingUI() {
+    hideTurnEventModal();
+    hideBigMessage();
+    closeMarket();
+    closeCustomization();
+    closeProgression();
+    closeProfiles();
+    if (UI.modal) UI.modal.classList.remove('open');
+    if (turnOverlay) turnOverlay.classList.remove('show');
+    if (finishTimer) { clearTimeout(finishTimer); finishTimer = null; }
+    finishTimerStartedAt = 0;
+    finishTimerReason = '';
+    dragging = false;
+    pointerMode = 'none';
+    downData = null;
+    activeCameraPointers.clear();
+    pinchState = null;
+    setAimVisualsVisible(false);
+    resetPowerGauge();
+  }
+
+  function forceNextTurnFromWatchdog(reason = 'Tour récupéré automatiquement.') {
+    if (!gameStarted || gameOver) return;
+    clearTransientBlockingUI();
+    turnLocked = false;
+    autoSwitchStarted = false;
+    shotStarted = false;
+    holeResolved = false;
+    ballInHole = false;
+    canShoot = false;
+    velocity.set(0, 0, 0);
+    stopRollingSound(false);
+    turnSummary.push(reason);
+    active = enemy(active);
+    resetDefenseCamera();
+    startTurnChoice();
+    watchdogNotice('tour relancé');
+  }
+
+  function recoverCurrentTurnFromWatchdog(reason = 'État du tour récupéré.') {
+    if (!gameStarted || gameOver) return;
+    clearTransientBlockingUI();
+    turnLocked = false;
+    velocity.set(0, 0, 0);
+    stopRollingSound(false);
+    if (phase === 'attack') {
+      shotStarted = false;
+      holeResolved = false;
+      ballInHole = false;
+      resetBall();
+      canShoot = !isAITurn();
+      if (isAITurn()) resumeAIActionAfterPause();
+    } else if (phase === 'choice') {
+      canShoot = false;
+      if (isAITurn()) resumeAIActionAfterPause();
+    } else if (phase === 'defense' || phase === 'setup') {
+      canShoot = false;
+    }
+    updateHUD();
+    watchdogNotice(reason);
+  }
+
+  function handleRuntimeGameError(err) {
+    console.error('[BDS] erreur récupérée', err);
+    watchdogRuntimeErrorCount++;
+    clearTransientBlockingUI();
+    if (phase === 'attack' && shotStarted) {
+      velocity.set(0, 0, 0);
+      stopRollingSound(false);
+      scheduleFinishTurn('Lancer sécurisé après une erreur.', 350);
+    } else {
+      turnLocked = false;
+      if (isAITurn()) resumeAIActionAfterPause();
+      updateHUD();
+    }
+    watchdogNotice('erreur corrigée');
+  }
+
+  function runStuckWatchdog() {
+    if (!gameStarted || gameOver) return;
+    const now = Date.now();
+
+    if (turnLocked && !gamePaused) {
+      if (!watchdogTurnLockedSince) watchdogTurnLockedSince = now;
+      if (now - watchdogTurnLockedSince > 9500) {
+        if (autoSwitchStarted || (turnOverlay && turnOverlay.classList.contains('show'))) {
+          forceNextTurnFromWatchdog('Transition de tour débloquée.');
+        } else {
+          recoverCurrentTurnFromWatchdog('verrou retiré');
+        }
+        watchdogTurnLockedSince = 0;
+      }
+    } else {
+      watchdogTurnLockedSince = 0;
+    }
+
+    if (!gamePaused && phase === 'attack' && shotStarted && ballInHole && !turnLocked && !autoSwitchStarted) {
+      // Cas observé : la bille est bien tombée dans un trou, les gains sont accordés,
+      // mais une animation ou un timer ne lance pas le récap. On force la suite proprement.
+      if (!watchdogShotStartedAt) watchdogShotStartedAt = now;
+      const holeWait = now - Math.max(watchdogLastProgressAt || watchdogShotStartedAt, watchdogShotStartedAt);
+      if (!finishTimer && holeWait > 1200) {
+        scheduleFinishTurn(finishTimerReason || 'La bille est tombée dans un trou.', 220);
+        watchdogNotice('récap trou relancé');
+      } else if (finishTimer && finishTimerStartedAt && now - finishTimerStartedAt > 3600) {
+        clearTimeout(finishTimer);
+        finishTimer = null;
+        finishTimerStartedAt = 0;
+        const forcedReason = finishTimerReason || 'La bille est tombée dans un trou.';
+        finishTimerReason = '';
+        try {
+          finishTurn(forcedReason);
+        } catch (err) {
+          handleRuntimeGameError(err);
+        }
+        watchdogNotice('récap trou forcé');
+      }
+    }
+
+    if (!gamePaused && phase === 'attack' && shotStarted && !canShoot && !ballInHole && !turnLocked) {
+      const moved = ball.position.distanceTo(watchdogLastBallPos);
+      const speed = velocity.length();
+      if (moved > 0.045) {
+        watchdogLastProgressAt = now;
+        watchdogLastBallPos.copy(ball.position);
+      }
+      if (!watchdogShotStartedAt) watchdogShotStartedAt = now;
+
+      // Bille quasi immobile sans timer de fin : on termine proprement le lancer.
+      if (speed < 0.038 && !finishTimer && now - watchdogLastProgressAt > 1200) {
+        velocity.set(0, 0, 0);
+        scheduleFinishTurn('La bille s\'est arrêtée.', 250);
+      }
+
+      // Bille coincée contre un rebord / une butte : on évite le blocage infini.
+      if (!finishTimer && now - watchdogLastProgressAt > 5200) {
+        velocity.multiplyScalar(0.18);
+        if (velocity.length() < 0.055 || now - watchdogLastProgressAt > 7200) {
+          velocity.set(0, 0, 0);
+          scheduleFinishTurn('Lancer débloqué automatiquement.', 350);
+          watchdogNotice('bille débloquée');
+        }
+      }
+
+      // Sécurité dure : aucun lancer ne doit durer indéfiniment.
+      if (!finishTimer && now - watchdogShotStartedAt > 26000) {
+        velocity.set(0, 0, 0);
+        scheduleFinishTurn('Lancer terminé par sécurité.', 350);
+        watchdogNotice('lancer trop long terminé');
+      }
+    } else if (!shotStarted) {
+      watchdogShotStartedAt = 0;
+      watchdogLastProgressAt = now;
+      watchdogLastBallPos.copy(ball.position);
+    }
+
+    // IA : si un timer a sauté après pause/orientation, on reprogramme son action.
+    if (isAITurn() && !gamePaused && !turnLocked && !setupMode && !gameOver) {
+      const aiIdle = (phase === 'choice') || (phase === 'defense') || (phase === 'attack' && !shotStarted);
+      if (aiIdle) {
+        if (!watchdogAiIdleSince) watchdogAiIdleSince = now;
+        if (now - watchdogAiIdleSince > 4200 && aiActionTimers.length === 0) {
+          resumeAIActionAfterPause();
+          watchdogAiIdleSince = now;
+          watchdogNotice('IA relancée');
+        }
+      } else {
+        watchdogAiIdleSince = 0;
+      }
+    } else {
+      watchdogAiIdleSince = 0;
+    }
+  }
+
   /* ── Loop principale ── */
   function animate() {
     requestAnimationFrame(animate);
     _t += 0.016;
-    if (gameStarted && !gamePaused) physics();
-    else updateRollingSound(0, false);
+    if (gameStarted && !gamePaused) {
+      try {
+        physics();
+        runStuckWatchdog();
+      } catch (err) {
+        handleRuntimeGameError(err);
+      }
+    } else {
+      updateRollingSound(0, false);
+    }
     if (!gameStarted || gamePaused || gameOver || phase !== 'attack' || canShoot) updateRollingSound(0, false);
     updateBallTrail();
     updateBallPulseEffect();
