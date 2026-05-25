@@ -3221,7 +3221,35 @@ function shadeHexColor(color, amount) {
     trapMarker.add(trapBarA, trapBarB);
     scene.add(trapMarker);
 
-    return { x, z, ring, inner, pocket, shadow, holeGlow, trapMarker };
+    // Marqueur persistant des trous déjà découverts/visités.
+    // Cyan discret, sans croix, pour ne pas confondre avec les pièges révélés.
+    const visitedMarker = new THREE.Group();
+    visitedMarker.visible = false;
+    visitedMarker.position.set(x, 0.535, z);
+    const visitedRingMat = new THREE.MeshBasicMaterial({
+      color: 0x39f6ff,
+      transparent: true,
+      opacity: 0.82,
+      side: THREE.DoubleSide,
+      depthWrite: false
+    });
+    const visitedDotMat = new THREE.MeshBasicMaterial({
+      color: 0xbfffff,
+      transparent: true,
+      opacity: 0.95,
+      depthWrite: false
+    });
+    const visitedOuter = new THREE.Mesh(new THREE.TorusGeometry(HOLE_R * 1.50, 0.045, 10, 58), visitedRingMat);
+    const visitedInner = new THREE.Mesh(new THREE.TorusGeometry(HOLE_R * 1.12, 0.030, 8, 46), visitedRingMat.clone());
+    visitedOuter.rotation.x = Math.PI / 2;
+    visitedInner.rotation.x = Math.PI / 2;
+    visitedInner.position.y = 0.012;
+    const visitedDot = new THREE.Mesh(new THREE.SphereGeometry(0.115, 10, 8), visitedDotMat);
+    visitedDot.position.set(HOLE_R * 1.35, 0.035, -HOLE_R * 0.78);
+    visitedMarker.add(visitedOuter, visitedInner, visitedDot);
+    scene.add(visitedMarker);
+
+    return { x, z, ring, inner, pocket, shadow, holeGlow, trapMarker, visitedMarker };
   }
 
   function bonusHoleZ(attacker) {
@@ -3594,10 +3622,18 @@ function shadeHexColor(color, amount) {
   function updateHoleTrapVisual(h) {
     if (!h) return;
     const revealed = !!(h.baseTrap && h.trap && h.trapKnown);
+    const visited = !!h.visited;
     if (h.trapMarker) h.trapMarker.visible = revealed;
+    if (h.visitedMarker) h.visitedMarker.visible = visited && !revealed;
     if (h.holeGlow && h.holeGlow.material && h.holeGlow.material.color) {
-      h.holeGlow.material.color.setHex(revealed ? 0xff3030 : 0xfff06a);
+      h.holeGlow.material.color.setHex(revealed ? 0xff3030 : (visited ? 0x39f6ff : 0xfff06a));
     }
+  }
+
+  function markHoleVisited(h) {
+    if (!h) return;
+    h.visited = true;
+    updateHoleTrapVisual(h);
   }
 
   function resetRelicHolesForMatch() {
@@ -3606,6 +3642,7 @@ function shadeHexColor(color, amount) {
       h.relicFound = false;
       h.relicKnown = false;
       h.trapKnown = false;
+      h.visited = false;
       h.trap = !!h.baseTrap;
       updateHoleTrapVisual(h);
     });
@@ -4612,7 +4649,7 @@ function shadeHexColor(color, amount) {
   function clearMudZones() { activeMudZones.forEach(removeMudZone); activeMudZones.length = 0; }
   function isMudSpawnBlocked(player, x, z) { if (isOnButte(x, z) || isOnHole(x, z)) return true; if (holes.some(h => h.player === player && Math.hypot(h.x - x, h.z - z) < 4.8)) return true; if (sideTheftHoles.some(h => h.attacker === player && Math.hypot(h.x - x, h.z - z) < 4.6)) return true; if (laneDebris(player).some(d => Math.hypot(d.x - x, d.z - z) < (d.radius || DEBRIS_RADIUS) + 2.4)) return true; if (activeKits.some(k => k.player === player && Math.hypot(k.x - x, k.z - z) < 4.8)) return true; if (activeMudZones.some(m => m.player === player && Math.hypot(m.x - x, m.z - z) < m.r + MUD_RADIUS + 1.6)) return true; return false; }
   function spawnMudZonesForEvent() { clearMudZones(); [1, 2].forEach(player => { const laneX = attackX(player); let made = 0; for (let tries = 0; tries < 60 && made < MUD_ZONES_PER_PLAYER; tries++) { const x = laneX + randFloat(-CFG.laneW / 2 + 3.2, CFG.laneW / 2 - 3.2); const z = startZ(player) + dir(player) * randFloat(24, 108); if (isMudSpawnBlocked(player, x, z)) continue; activeMudZones.push(createMudZone(player, x, z, MUD_RADIUS + randFloat(-0.45, 0.55))); made++; } }); }
-  function updateMudPhysics(dt = 1) { if (!activeTurnEvent || !activeTurnEvent.mud || !activeMudZones.length) return; activeMudZones.forEach(zone => { zone.hitCooldown = Math.max(0, (zone.hitCooldown || 0) - dt); if (zone.player !== active) return; const d = Math.hypot(ball.position.x - zone.x, ball.position.z - zone.z); if (d < zone.r + CFG.ballR * 0.35) { velocity.multiplyScalar(0.948); if (zone.hitCooldown <= 0 && velocity.length() > 0.12) { zone.hitCooldown = 28; impact(ball.position, 0x5b3515, 0.55); floatText('BOUE', ball.position.clone().add(new THREE.Vector3(0, 1.0, 0)), 'trap'); if (!zone.notedForShot) { zone.notedForShot = true; turnSummary.push('Boue : bille ralentie'); } } } }); }
+  function updateMudPhysics(dt = 1) { if (!activeTurnEvent || !activeTurnEvent.mud || !activeMudZones.length) return; activeMudZones.forEach(zone => { zone.hitCooldown = Math.max(0, (zone.hitCooldown || 0) - dt); if (zone.player !== active) return; const d = Math.hypot(ball.position.x - zone.x, ball.position.z - zone.z); if (d < zone.r + CFG.ballR * 0.35) { velocity.multiplyScalar(0.900); if (zone.hitCooldown <= 0 && velocity.length() > 0.12) { zone.hitCooldown = 28; impact(ball.position, 0x5b3515, 0.55); floatText('BOUE', ball.position.clone().add(new THREE.Vector3(0, 1.0, 0)), 'trap'); if (!zone.notedForShot) { zone.notedForShot = true; turnSummary.push('Boue : bille ralentie'); } } } }); }
 
 
   function addSideTheftHoleVisual(attacker, sideIndex = 0) {
@@ -4749,6 +4786,8 @@ function shadeHexColor(color, amount) {
       shadow: h.shadow,
       holeGlow: h.holeGlow,
       trapMarker: h.trapMarker,
+      visitedMarker: h.visitedMarker,
+      visited: false,
       last: false
     });
   }
@@ -9045,6 +9084,7 @@ function spawnVictoryCelebration(report) {
           ball.position.set(h.x, .55, h.z); velocity.set(0, 0, 0);
           impact(ball.position, h.trap ? 0xff3333 : 0xffdd66);
           statForPlayer().holesHit++;
+          markHoleVisited(h);
           if (h.relic && !h.relicFound) {
             collectRelicFromHole(h);
             scheduleFinishTurn('La bille a trouvé une relique.', 900);

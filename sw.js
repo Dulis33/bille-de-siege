@@ -1,8 +1,8 @@
-const BDS_CACHE = 'bds-theft-one-bonus-castle-hp-20260525-1';
+const BDS_CACHE = 'bds-mud-stronger-hole-markers-20260525-1';
 const BDS_FILES = [
   './index.html',
-  './style.css?v=theft-one-bonus-castle-hp-20260525-1',
-  './game.js?v=theft-one-bonus-castle-hp-20260525-1',
+  './style.css?v=mud-stronger-hole-markers-20260525-1',
+  './game.js?v=mud-stronger-hole-markers-20260525-1',
   './style.css',
   './game.js',
   './manifest.webmanifest',
