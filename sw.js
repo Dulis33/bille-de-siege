@@ -1,8 +1,8 @@
-const BDS_CACHE = 'bds-hole-discovery-reroll-traps-fixed-20260525-1';
+const BDS_CACHE = 'bds-resource-juice-no-regression-20260525-1';
 const BDS_FILES = [
   './index.html',
-  './style.css?v=hole-discovery-reroll-traps-fixed-20260525-1',
-  './game.js?v=hole-discovery-reroll-traps-fixed-20260525-1',
+  './style.css?v=hole-markers-reroll-no-regression-20260525-1',
+  './game.js?v=hole-markers-reroll-no-regression-20260525-1',
   './style.css',
   './game.js',
   './manifest.webmanifest',
@@ -12,6 +12,8 @@ const BDS_FILES = [
   './musiques/music-bds-menu.mp3',
   './musiques/music-bds-ambiance.mp3',
   './musiques/music-bds-marche.mp3',
+  './musiques/music-bds-victory.mp3',
+  './musiques/music-bds-victoire.mp3',
   './bruitages/click.mp3',
   './bruitages/confirm.mp3',
   './bruitages/launch.mp3',
@@ -33,7 +35,14 @@ const BDS_FILES = [
   './bruitages/destroy.mp3',
   './bruitages/build.mp3',
   './bruitages/repair.mp3',
-  './bruitages/victory.mp3'
+  './bruitages/victory.mp3',
+  './bruitages/victory-1.mp3',
+  './bruitages/victory-2.mp3',
+  './bruitages/victory-3.mp3',
+  './bruitages/victoire.mp3',
+  './bruitages/victoire-1.mp3',
+  './bruitages/victoire-2.mp3',
+  './bruitages/victoire-3.mp3'
 ];
 self.addEventListener('install', (event) => {
   self.skipWaiting();
