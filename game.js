@@ -3444,6 +3444,8 @@ function shadeHexColor(color, amount) {
       return columns.map((relX, colIndex) => ({
         relX,
         dz,
+        rowIndex,
+        colIndex,
         trap: colIndex === trapIndex
       }));
     });
@@ -3478,6 +3480,15 @@ function shadeHexColor(color, amount) {
   // Un trou de vol ne peut ajouter qu'un seul trou bonus à la fois.
   // La limite globale reste MAX_BONUS_HOLES_PER_PLAYER.
   const THEFT_BONUS_HOLE_CHANCES = [0, 0, 0, 1, 1, 1];
+  const HOLE_LINE_BONUS_OPTIONS = [
+    { id: 'doubleResources', label: 'Ressources ×2', icon: '✨' },
+    { id: 'secondShot',      label: 'Seconde bille',  icon: '⚪' },
+    { id: 'freeTower',       label: 'Tour gratuite',  icon: '🗼' },
+    { id: 'gold5',           label: '+5 or',          icon: '🪙', resource: 'gold',  amount: 5 },
+    { id: 'wood5',           label: '+5 bois',        icon: '🪵', resource: 'wood',  amount: 5 },
+    { id: 'stone5',          label: '+5 pierres',     icon: '🪨', resource: 'stone', amount: 5 }
+  ];
+  let completedHoleRows = { 1: new Set(), 2: new Set() };
   const DEBRIS_CLEAR_COST = { gold: 1 };
   const DEBRIS_RADIUS = 2.25;
   const DEBRIS_STAGE_RADII = [0, 2.25, 2.82, 3.45];
@@ -3555,6 +3566,9 @@ function shadeHexColor(color, amount) {
       backEdgePenalty: false,
       damageEventUsed: false,
       bonusDamageUsed: false,
+      damageDealt: false,
+      resourceGain: false,
+      mixedComboShown: false,
     };
   }
 
@@ -3630,13 +3644,85 @@ function shadeHexColor(color, amount) {
     }
   }
 
-  function markHoleVisited(h) {
-    if (!h) return;
+  function rollHoleLineBonus() {
+    return HOLE_LINE_BONUS_OPTIONS[randInt(0, HOLE_LINE_BONUS_OPTIONS.length - 1)];
+  }
+
+  function applyHoleLineBonus(player, bonus) {
+    const pl = players[player - 1];
+    if (!pl || !bonus) return '';
+
+    if (bonus.id === 'doubleResources') {
+      const added = {};
+      RESOURCE_TYPES.forEach(type => {
+        const amount = Number(pl.res[type]) || 0;
+        if (amount > 0) {
+          pl.res[type] += amount;
+          added[type] = amount;
+        }
+      });
+      const total = rewardTotal(added);
+      if (total > 0) statForPlayer(player).resources += total;
+      animateResourceReward(added, ball.position.clone().add(new THREE.Vector3(0, 1.2, 0)));
+      return total > 0 ? 'Ressources doublées : ' + rewardLine(added) : 'Ressources ×2 sans effet';
+    }
+
+    if (bonus.id === 'secondShot') {
+      // La récompense donne une seconde bille utilisable immédiatement si le tour d'attaque le permet.
+      // La sécurité générale reste à 2 lancers maximum par tour.
+      if ((pl.shotsFiredThisTurn || 0) < 2) {
+        pl.extraShotsLeft = Math.max(pl.extraShotsLeft || 0, 1);
+        pl.bonusSecondShotThisTurn = true;
+      }
+      return 'Seconde bille obtenue';
+    }
+
+    if (bonus.id === 'freeTower') {
+      pl.freeTowerBuilds = (pl.freeTowerBuilds || 0) + 1;
+      return 'Tour gratuite en réserve';
+    }
+
+    if (bonus.resource && bonus.amount) {
+      pl.res[bonus.resource] = (pl.res[bonus.resource] || 0) + bonus.amount;
+      statForPlayer(player).resources += bonus.amount;
+      animateResourceReward({ [bonus.resource]: bonus.amount }, ball.position.clone().add(new THREE.Vector3(0, 1.2, 0)));
+      return '+' + bonus.amount + ' ' + (RESOURCE_NAMES[bonus.resource] || bonus.resource);
+    }
+
+    return bonus.label || 'Bonus obtenu';
+  }
+
+  function checkHoleLineCompletion(player, rowIndex) {
+    if (!player || rowIndex == null) return;
+    const rowKey = String(rowIndex);
+    if (!completedHoleRows[player]) completedHoleRows[player] = new Set();
+    if (completedHoleRows[player].has(rowKey)) return;
+
+    const rowHoles = holes.filter(h => h.player === player && Number(h.rowIndex) === Number(rowIndex));
+    if (!rowHoles.length || !rowHoles.every(h => h.visited)) return;
+
+    completedHoleRows[player].add(rowKey);
+    const bonus = rollHoleLineBonus();
+    const resultText = applyHoleLineBonus(player, bonus);
+    turnSummary.push('Ligne de trous complète : ' + (bonus.label || resultText));
+    bigMessage('LIGNE DÉCOUVERTE !', 'Joueur ' + player + '<br>' + (bonus.icon || '✨') + ' ' + resultText, 'jackpot', 2600);
+    battleNotice('LIGNE COMPLÈTE', (bonus.icon || '✨') + ' ' + resultText, 'jackpot', 3600);
+    floatText('LIGNE COMPLÈTE<br>' + (bonus.icon || '✨'), ball.position.clone().add(new THREE.Vector3(0, 2.2, 0)), 'jackpot');
+    playSfx('jackpot', 1.45);
+    updateHUD();
+  }
+
+  function markHoleVisited(h, deferLineBonus = false) {
+    if (!h) return false;
+    const wasVisited = !!h.visited;
     h.visited = true;
     updateHoleTrapVisual(h);
+    if (!wasVisited && !deferLineBonus) checkHoleLineCompletion(h.player, h.rowIndex);
+    return !wasVisited;
   }
 
   function resetRelicHolesForMatch() {
+    completedHoleRows = { 1: new Set(), 2: new Set() };
     holes.forEach(h => {
       h.relic = false;
       h.relicFound = false;
@@ -4775,6 +4861,8 @@ function shadeHexColor(color, amount) {
     holes.push({
       player,
       x, z,
+      rowIndex: Number(spec.rowIndex) || 0,
+      colIndex: Number(spec.colIndex) || 0,
       baseTrap: !!spec.trap,
       trap: !!spec.trap,
       trapKnown: false,
@@ -4837,7 +4925,8 @@ function shadeHexColor(color, amount) {
     secondBallTurns: 0,
     extraShotsLeft: 0,
     secondBallActiveThisTurn: false,
-    shotsFiredThisTurn: 0
+    shotsFiredThisTurn: 0,
+    freeTowerBuilds: 0
   }));
 
   let active = 1, phase = 'setup', setupMode = true, placingTower = true;
@@ -6186,6 +6275,10 @@ function addDamagedRoofDetails(parent, p, x, y, z, radius, central = false, crit
     playSfx('jackpot', 1.35);
     floatText('RELIQUE<br>+1 🏺', ball.position.clone().add(new THREE.Vector3(0, 1.8, 0)), 'jackpot');
     bigMessage('RELIQUE TROUVÉE !', '🏺 À vendre au marché contre ' + RELIC_MARKET_GOLD_VALUE + ' or', 'jackpot', 2600);
+    if (rewardTotal(rew) > 0) {
+      currentShot.resourceGain = true;
+      maybeTriggerMixedComboFX();
+    }
     setTimeout(updateHUD, 520);
   }
 
@@ -6268,6 +6361,17 @@ function addDamagedRoofDetails(parent, p, x, y, z, radius, central = false, crit
     }
 
     return out;
+  }
+
+  function maybeTriggerMixedComboFX() {
+    if (!currentShot || currentShot.mixedComboShown || !currentShot.damageDealt || !currentShot.resourceGain) return;
+    currentShot.mixedComboShown = true;
+    statForPlayer(active).combos++;
+    turnSummary.push('Combo : dégâts + gain de ressources');
+    bigMessage('COMBO ROYAL !', 'Dégâts + ressources dans le même lancer', 'combo', 2300);
+    battleNotice('COMBO ROYAL', 'Dégâts + gain de ressources', 'jackpot', 3300);
+    floatText('COMBO ROYAL<br>DÉGÂTS + BUTIN', ball.position.clone().add(new THREE.Vector3(0, 2.7, 0)), 'combo');
+    playSfx('jackpot', 1.35);
   }
 
   function gain(rew) {
@@ -7733,6 +7837,7 @@ function addDamagedRoofDetails(parent, p, x, y, z, radius, central = false, crit
       pl.queuedBonusNextTurn = null;
       pl.bonusSecondShotThisTurn = false;
       pl.bonusDoubleDamageThisTurn = false;
+      pl.freeTowerBuilds = 0;
     });
     clearAllKits();
     clearMudZones();
@@ -8252,7 +8357,15 @@ function spawnVictoryCelebration(report) {
     if (!setupMode && t.pos) {
       // Reconstruction normale : le joueur peut reconstruire la tour ailleurs.
       // Les anciens gravats restent sur le couloir et continuent de gêner tant qu'ils ne sont pas déblayés.
-      if (!pay(pl.res, towerRebuildCost[slot])) { showToast('Ressources insuffisantes'); return; }
+      const useFreeTower = (pl.freeTowerBuilds || 0) > 0;
+      if (useFreeTower) {
+        pl.freeTowerBuilds--;
+        turnSummary.push('Tour gratuite utilisée');
+        battleNotice('TOUR GRATUITE', 'Reconstruction sans coût', 'gain', 2200);
+      } else if (!pay(pl.res, towerRebuildCost[slot])) {
+        showToast('Ressources insuffisantes');
+        return;
+      }
       const attacker = enemy(p);
       if (!players[attacker-1].ramps[slot].built) {
         players[attacker-1].ramps[slot].unlocked = false; updateTowerGhosts();
@@ -8288,6 +8401,10 @@ function spawnVictoryCelebration(report) {
     const newRatio = t.max ? Math.max(0, t.hp) / t.max : 0;
     const realDamage = Math.min(amount, Math.max(0, oldHp));
     statForPlayer(active).damage += realDamage;
+    if (realDamage > 0) {
+      currentShot.damageDealt = true;
+      maybeTriggerMixedComboFX();
+    }
     const towerFxPos = t.pos ? t.pos.clone().add(new THREE.Vector3(0, 3.9, 0)) : ball.position.clone();
     impact(towerFxPos, 0xffaa33, 1.55);
     playSfx('damage', 1);
@@ -8346,6 +8463,10 @@ function spawnVictoryCelebration(report) {
     const newRatio = target.max ? target.hp / target.max : 0;
     const realDamage = Math.min(amount, oldHp);
     statForPlayer(active).damage += realDamage;
+    if (realDamage > 0) {
+      currentShot.damageDealt = true;
+      maybeTriggerMixedComboFX();
+    }
     const castleFxPos = target.hit
       ? new THREE.Vector3(castleX(defender) + target.hit.x, 4.4, castleZ(defender) + target.hit.z)
       : ball.position.clone().add(new THREE.Vector3(0, 1.4, 0));
@@ -8831,7 +8952,10 @@ function spawnVictoryCelebration(report) {
     UI.btnRamp.disabled       = !gameStarted || gamePaused || aiTurn || gameOver || turnLocked || setupMode || phase !== 'attack' || shotStarted || !players[active-1].ramps.some(r => r.unlocked && !r.built);
     if (UI.btnSecondBall) UI.btnSecondBall.disabled = true;
     const pt = players[active-1].towers.filter(t => t.placed).length;
-    UI.btnPlaceTower.textContent = setupMode ? `🗼 Tours initiales ${pt}/4` : `🗼 Zones tours ${pt}/4`;
+    const freeTowerCount = players[active-1].freeTowerBuilds || 0;
+    UI.btnPlaceTower.textContent = setupMode
+      ? `🗼 Tours initiales ${pt}/4`
+      : `🗼 Zones tours ${pt}/4${freeTowerCount > 0 ? ' · gratuite x' + freeTowerCount : ''}`;
     if (UI.btnCastleBuild) UI.btnCastleBuild.textContent = '🏰 Château / construction';
     if (UI.btnRandomRepair) UI.btnRandomRepair.textContent = randomRepairUsedThisTurn ? '🔧 Réparation utilisée' : '🔧 Réparation +40 PV · coût';
     const activeKitsStock = playerKits(active);
@@ -9084,15 +9208,18 @@ function spawnVictoryCelebration(report) {
           ball.position.set(h.x, .55, h.z); velocity.set(0, 0, 0);
           impact(ball.position, h.trap ? 0xff3333 : 0xffdd66);
           statForPlayer().holesHit++;
-          markHoleVisited(h);
+          const newlyVisitedMainHole = markHoleVisited(h, true);
           if (h.relic && !h.relicFound) {
             collectRelicFromHole(h);
+            if (newlyVisitedMainHole) checkHoleLineCompletion(h.player, h.rowIndex);
             scheduleFinishTurn('La bille a trouvé une relique.', 900);
           } else if (h.trap) {
             loseRandomResources(h);
+            if (newlyVisitedMainHole) checkHoleLineCompletion(h.player, h.rowIndex);
             scheduleFinishTurn('La bille est tombée dans un piège.', 900);
           } else {
             gain(h.reward);
+            if (newlyVisitedMainHole) checkHoleLineCompletion(h.player, h.rowIndex);
             scheduleFinishTurn('La bille est tombée dans un trou.', 900);
           }
         } else { impact(ball.position, 0x999999); showToast('Trop vite !'); }

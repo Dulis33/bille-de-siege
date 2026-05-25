@@ -5363,3 +5363,72 @@ button {
   from { opacity: 0; transform: translateY(18px) scale(.92); }
   to { opacity: 1; transform: translateY(0) scale(1); }
 }
+
+/* ─────────────────────────────────────────────
+   Correctif 2026-05-25 : chrono + pause vraiment en bas
+   ───────────────────────────────────────────── */
+#turnTimer,
+.pause-btn {
+  position: fixed !important;
+  top: auto !important;
+  bottom: calc(5px + env(safe-area-inset-bottom)) !important;
+  transform: none !important;
+  z-index: 9500 !important;
+  pointer-events: auto !important;
+}
+#turnTimer {
+  left: max(7px, env(safe-area-inset-left)) !important;
+  right: auto !important;
+  min-width: 70px !important;
+  height: 31px !important;
+  min-height: 31px !important;
+  padding: 3px 7px !important;
+  gap: 4px !important;
+  border-radius: 999px !important;
+}
+#turnTimer span { font-size: 11px !important; }
+#turnTimer b {
+  font-size: 19px !important;
+  line-height: 1 !important;
+  min-width: 26px !important;
+}
+#turnTimer small {
+  font-size: 8px !important;
+  letter-spacing: .7px !important;
+}
+.pause-btn {
+  right: max(7px, env(safe-area-inset-right)) !important;
+  left: auto !important;
+  min-height: 31px !important;
+  height: 31px !important;
+  padding: 4px 9px !important;
+  font-size: 9.5px !important;
+  line-height: 1 !important;
+  letter-spacing: .9px !important;
+  border-radius: 999px !important;
+}
+#eventBanner {
+  bottom: calc(42px + env(safe-area-inset-bottom)) !important;
+}
+#controls {
+  padding-bottom: calc(39px + env(safe-area-inset-bottom)) !important;
+}
+@media (max-width: 520px) {
+  #turnTimer {
+    left: max(5px, env(safe-area-inset-left)) !important;
+    min-width: 62px !important;
+    height: 28px !important;
+    min-height: 28px !important;
+    padding: 2px 6px !important;
+  }
+  #turnTimer span { font-size: 10px !important; }
+  #turnTimer b { font-size: 17px !important; min-width: 23px !important; }
+  #turnTimer small { font-size: 7px !important; }
+  .pause-btn {
+    right: max(5px, env(safe-area-inset-right)) !important;
+    height: 28px !important;
+    min-height: 28px !important;
+    padding: 3px 7px !important;
+    font-size: 8.6px !important;
+  }
+}
