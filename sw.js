@@ -1,8 +1,8 @@
-const BDS_CACHE = 'bds-resource-juice-no-regression-20260525-1';
+const BDS_CACHE = 'bds-addictive-juice-design-20260525-1';
 const BDS_FILES = [
   './index.html',
-  './style.css?v=hole-markers-reroll-no-regression-20260525-1',
-  './game.js?v=hole-markers-reroll-no-regression-20260525-1',
+  './style.css?v=addictive-juice-design-20260525-1',
+  './game.js?v=addictive-juice-design-20260525-1',
   './style.css',
   './game.js',
   './manifest.webmanifest',
@@ -42,7 +42,17 @@ const BDS_FILES = [
   './bruitages/victoire.mp3',
   './bruitages/victoire-1.mp3',
   './bruitages/victoire-2.mp3',
-  './bruitages/victoire-3.mp3'
+  './bruitages/victoire-3.mp3',
+  './bruitages/ligne-complete-1.mp3',
+  './bruitages/ligne-complete-2.mp3',
+  './bruitages/ligne-complete-3.mp3',
+  './bruitages/relique-1.mp3',
+  './bruitages/relique-2.mp3',
+  './bruitages/evenement-1.mp3',
+  './bruitages/evenement-2.mp3',
+  './bruitages/impact-pierre-1.mp3',
+  './bruitages/impact-pierre-2.mp3',
+  './bruitages/impact-pierre-3.mp3'
 ];
 self.addEventListener('install', (event) => {
   self.skipWaiting();

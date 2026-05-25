@@ -5889,3 +5889,208 @@ button.tap-pressed:not(:disabled)::before,
   .reward-confetti { font-size: 19px !important; }
   .combo-shockwave > div { width: min(91vw, 350px) !important; padding: 15px 14px !important; }
 }
+
+/* ───────────────────────────────────────────────
+   PACK JUICE 2026-05-25 — jeu plus vivant, sans changer les règles
+   ─────────────────────────────────────────────── */
+html, body {
+  background:
+    radial-gradient(circle at 18% 10%, rgba(48, 210, 147, .18), transparent 34%),
+    radial-gradient(circle at 82% 4%, rgba(255, 204, 73, .20), transparent 30%),
+    radial-gradient(circle at 45% 94%, rgba(59, 236, 255, .12), transparent 36%),
+    #130908 !important;
+}
+
+#game {
+  filter: saturate(1.18) brightness(1.055) contrast(1.08) !important;
+}
+
+#addictionLayer,
+#ambientSparkLayer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 880;
+  overflow: hidden;
+}
+
+#ambientSparkLayer i {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  font-style: normal;
+  color: rgba(255, 239, 164, .68);
+  font-size: calc(10px * var(--size));
+  text-shadow: 0 0 12px rgba(255, 221, 95, .62), 0 0 22px rgba(82, 255, 181, .22);
+  opacity: .35;
+  animation: ambientFloat var(--d) ease-in-out var(--delay) infinite alternate;
+}
+
+@keyframes ambientFloat {
+  0% { transform: translate3d(-8px, 10px, 0) scale(.85); opacity: .12; }
+  45% { opacity: .42; }
+  100% { transform: translate3d(10px, -18px, 0) scale(1.18); opacity: .62; }
+}
+
+#hypeMeter {
+  position: fixed;
+  left: 50%;
+  top: max(74px, env(safe-area-inset-top, 0px) + 66px);
+  width: min(76vw, 330px);
+  height: 34px;
+  transform: translateX(-50%) translateY(-14px) scale(.96);
+  opacity: 0;
+  border-radius: 999px;
+  padding: 4px 12px;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 8px;
+  overflow: hidden;
+  background: linear-gradient(135deg, rgba(18, 8, 5, .78), rgba(43, 19, 7, .65));
+  border: 1px solid rgba(255, 230, 110, .40);
+  box-shadow: 0 10px 34px rgba(0,0,0,.38), 0 0 28px rgba(255, 207, 71, .20);
+  transition: opacity .22s ease, transform .22s ease;
+}
+#hypeMeter.show { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+#hypeMeter .hype-label,
+#hypeMeter .hype-value { position: relative; z-index: 2; font-weight: 1000; letter-spacing: 1.8px; }
+#hypeMeter .hype-label { color: #fff6b6; font-size: 11px; }
+#hypeMeter .hype-value { color: #fff; font-size: 14px; text-shadow: 0 0 10px rgba(255,255,255,.55); }
+#hypeMeter .hype-fill {
+  position: absolute;
+  left: 4px;
+  top: 4px;
+  bottom: 4px;
+  width: 8%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #32ff9f, #ffe45f, #ff7a3d);
+  box-shadow: 0 0 20px rgba(255, 219, 83, .55);
+  transition: width .28s cubic-bezier(.18,1.2,.25,1);
+}
+#hypeMeter.gain .hype-fill { background: linear-gradient(90deg, #15ff7d, #beff63, #ffe45f); }
+#hypeMeter.damage .hype-fill,
+#hypeMeter.destroy .hype-fill { background: linear-gradient(90deg, #ff3b2f, #ff9645, #ffe45f); }
+#hypeMeter.combo .hype-fill,
+#hypeMeter.jackpot .hype-fill { background: linear-gradient(90deg, #42f7ff, #fff36b, #ff49d7); }
+
+#momentBanner {
+  position: fixed;
+  left: 50%;
+  top: max(118px, env(safe-area-inset-top, 0px) + 108px);
+  transform: translateX(-50%) translateY(-18px) scale(.94);
+  opacity: 0;
+  min-width: min(88vw, 360px);
+  max-width: min(92vw, 430px);
+  padding: 12px 16px;
+  border-radius: 24px;
+  text-align: center;
+  background: linear-gradient(145deg, rgba(23, 11, 5, .88), rgba(62, 29, 8, .78));
+  border: 1px solid rgba(255, 232, 120, .46);
+  box-shadow: 0 18px 44px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.14), 0 0 26px rgba(255, 213, 72, .18);
+  transition: opacity .22s ease, transform .24s cubic-bezier(.2,1.25,.25,1);
+}
+#momentBanner.show { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+#momentBanner strong {
+  display: block;
+  color: #fff2a5;
+  font-size: 16px;
+  font-weight: 1000;
+  letter-spacing: 2.2px;
+  text-transform: uppercase;
+  text-shadow: 0 0 16px rgba(255,225,90,.55);
+}
+#momentBanner span {
+  display: block;
+  margin-top: 3px;
+  color: #f2fff1;
+  font-size: 13px;
+  font-weight: 800;
+}
+#momentBanner.gain { border-color: rgba(102,255,158,.50); box-shadow: 0 18px 44px rgba(0,0,0,.45), 0 0 30px rgba(55,255,143,.20); }
+#momentBanner.damage,
+#momentBanner.destroy { border-color: rgba(255,111,72,.55); box-shadow: 0 18px 44px rgba(0,0,0,.45), 0 0 30px rgba(255,76,49,.22); }
+#momentBanner.combo,
+#momentBanner.jackpot { border-color: rgba(255,238,92,.72); box-shadow: 0 18px 50px rgba(0,0,0,.50), 0 0 42px rgba(255,221,66,.28); }
+#momentBanner.market { border-color: rgba(255,204,75,.55); }
+#momentBanner.cyan { border-color: rgba(75,235,255,.55); }
+#momentBanner.red { border-color: rgba(255,96,70,.55); }
+
+.juice-emoji {
+  position: fixed;
+  z-index: 2100;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  font-size: 22px;
+  font-weight: 1000;
+  text-shadow: 0 3px 10px rgba(0,0,0,.55), 0 0 20px rgba(255,255,255,.32);
+  animation: juiceEmojiBurst 1.22s cubic-bezier(.16,.85,.26,1) forwards;
+}
+@keyframes juiceEmojiBurst {
+  0% { opacity: 0; transform: translate(-50%, -50%) scale(.42) rotate(-12deg); }
+  12% { opacity: 1; }
+  72% { opacity: 1; }
+  100% { opacity: 0; transform: translate(calc(-50% + var(--jx)), calc(-50% + var(--jy))) scale(1.25) rotate(18deg); }
+}
+
+body.juice-pulse-gold #addictionLayer::after,
+body.juice-pulse-green #addictionLayer::after,
+body.juice-pulse-red #addictionLayer::after,
+body.juice-pulse-cyan #addictionLayer::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 890;
+  opacity: 0;
+  animation: juiceScreenPulse .55s ease-out forwards;
+}
+body.juice-pulse-gold #addictionLayer::after { background: radial-gradient(circle at 50% 44%, rgba(255,223,70,.24), transparent 54%); }
+body.juice-pulse-green #addictionLayer::after { background: radial-gradient(circle at 50% 44%, rgba(50,255,135,.20), transparent 54%); }
+body.juice-pulse-red #addictionLayer::after { background: radial-gradient(circle at 50% 44%, rgba(255,75,45,.22), transparent 54%); }
+body.juice-pulse-cyan #addictionLayer::after { background: radial-gradient(circle at 50% 44%, rgba(74,238,255,.20), transparent 54%); }
+@keyframes juiceScreenPulse {
+  0% { opacity: 0; transform: scale(.98); }
+  25% { opacity: 1; }
+  100% { opacity: 0; transform: scale(1.04); }
+}
+
+#bigFx.show {
+  filter: saturate(1.16) brightness(1.08);
+}
+#bigFx.show strong {
+  letter-spacing: 3.5px !important;
+  text-shadow: 0 0 18px rgba(255, 238, 120, .68), 0 4px 12px rgba(0,0,0,.70) !important;
+}
+.battle-notice,
+.shot-recap-card,
+.turn-card,
+.market-box,
+.progression-box,
+.profile-box,
+.customization-box {
+  filter: saturate(1.08) brightness(1.04);
+}
+.resource-fly-token,
+.resource-splash-token,
+.reward-confetti {
+  filter: saturate(1.22) brightness(1.12) drop-shadow(0 0 8px rgba(255, 236, 120, .28));
+}
+
+button, .pause-btn, .castle-pill, .market-actions button, .victory-actions button {
+  -webkit-tap-highlight-color: transparent !important;
+  transition: transform .10s ease, filter .14s ease, box-shadow .14s ease !important;
+}
+button.tap-pressed, .pause-btn.tap-pressed, .castle-pill.tap-pressed {
+  transform: translateY(2px) scale(.965) !important;
+  filter: brightness(1.22) saturate(1.30) !important;
+  box-shadow: inset 0 3px 10px rgba(0,0,0,.30), 0 0 22px rgba(255, 221, 90, .38) !important;
+}
+
+@media (max-width: 560px) {
+  #hypeMeter { top: max(66px, env(safe-area-inset-top, 0px) + 58px); width: min(82vw, 320px); height: 30px; }
+  #momentBanner { top: max(102px, env(safe-area-inset-top, 0px) + 94px); padding: 10px 13px; border-radius: 20px; }
+  #momentBanner strong { font-size: 14px; letter-spacing: 1.7px; }
+  #momentBanner span { font-size: 12px; }
+  .juice-emoji { font-size: 19px; }
+}

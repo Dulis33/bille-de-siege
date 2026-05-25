@@ -1852,6 +1852,24 @@ try {
       'bruitages/combo-1.mp3',
       'bruitages/combo-2.mp3',
       'bruitages/combo-3.mp3'
+    ],
+    lineComplete: [
+      'bruitages/ligne-complete-1.mp3',
+      'bruitages/ligne-complete-2.mp3',
+      'bruitages/ligne-complete-3.mp3'
+    ],
+    relic: [
+      'bruitages/relique-1.mp3',
+      'bruitages/relique-2.mp3'
+    ],
+    event: [
+      'bruitages/evenement-1.mp3',
+      'bruitages/evenement-2.mp3'
+    ],
+    impactStone: [
+      'bruitages/impact-pierre-1.mp3',
+      'bruitages/impact-pierre-2.mp3',
+      'bruitages/impact-pierre-3.mp3'
     ]
   };
 
@@ -2761,6 +2779,137 @@ try {
   document.body.appendChild(bigFx);
   const bigFxTitle = bigFx.querySelector('strong');
   const bigFxText = bigFx.querySelector('span');
+
+
+  // Couche "arcade juice" : pur habillage visuel/sonore, aucune règle modifiée.
+  const addictionLayer = document.createElement('div');
+  addictionLayer.id = 'addictionLayer';
+  addictionLayer.innerHTML = `
+    <div id="ambientSparkLayer" aria-hidden="true"></div>
+    <div id="hypeMeter" aria-hidden="true">
+      <span class="hype-label">ÉLAN</span>
+      <b class="hype-value">0</b>
+      <i class="hype-fill"></i>
+    </div>
+    <div id="momentBanner" aria-live="polite">
+      <strong></strong>
+      <span></span>
+    </div>`;
+  document.body.appendChild(addictionLayer);
+  const ambientSparkLayer = addictionLayer.querySelector('#ambientSparkLayer');
+  const hypeMeter = addictionLayer.querySelector('#hypeMeter');
+  const hypeValue = hypeMeter ? hypeMeter.querySelector('.hype-value') : null;
+  const hypeFill = hypeMeter ? hypeMeter.querySelector('.hype-fill') : null;
+  const momentBanner = addictionLayer.querySelector('#momentBanner');
+  const momentBannerTitle = momentBanner ? momentBanner.querySelector('strong') : null;
+  const momentBannerText = momentBanner ? momentBanner.querySelector('span') : null;
+  let hypeScore = 0;
+  let hypeHideTimer = null;
+
+  function buildAmbientSparkles() {
+    if (!ambientSparkLayer || ambientSparkLayer.childElementCount) return;
+    const symbols = ['✦', '✧', '•', '✶'];
+    for (let i = 0; i < 28; i++) {
+      const s = document.createElement('i');
+      s.textContent = symbols[i % symbols.length];
+      s.style.setProperty('--x', (Math.random() * 100).toFixed(2) + 'vw');
+      s.style.setProperty('--y', (Math.random() * 100).toFixed(2) + 'vh');
+      s.style.setProperty('--d', (7 + Math.random() * 14).toFixed(2) + 's');
+      s.style.setProperty('--delay', (-Math.random() * 18).toFixed(2) + 's');
+      s.style.setProperty('--size', (0.55 + Math.random() * 0.95).toFixed(2));
+      ambientSparkLayer.appendChild(s);
+    }
+  }
+
+  function pulseScreen(kind = 'gold') {
+    document.body.classList.remove('juice-pulse-gold', 'juice-pulse-green', 'juice-pulse-red', 'juice-pulse-cyan');
+    void document.body.offsetWidth;
+    document.body.classList.add('juice-pulse-' + kind);
+    clearTimeout(pulseScreen._t);
+    pulseScreen._t = setTimeout(() => {
+      document.body.classList.remove('juice-pulse-gold', 'juice-pulse-green', 'juice-pulse-red', 'juice-pulse-cyan');
+    }, 560);
+  }
+
+  function setHype(points = 0, label = '', variant = 'gold') {
+    hypeScore = THREE.MathUtils.clamp(hypeScore + points, 0, 100);
+    if (!hypeMeter) return;
+    hypeMeter.className = 'show ' + variant;
+    if (hypeValue) hypeValue.textContent = String(Math.round(hypeScore));
+    if (hypeFill) hypeFill.style.width = Math.max(8, hypeScore) + '%';
+    if (label) hypeMeter.dataset.label = label;
+    clearTimeout(hypeHideTimer);
+    hypeHideTimer = setTimeout(() => {
+      hypeScore = Math.max(0, hypeScore - 22);
+      if (hypeScore <= 3) hypeMeter.classList.remove('show');
+      else {
+        if (hypeValue) hypeValue.textContent = String(Math.round(hypeScore));
+        if (hypeFill) hypeFill.style.width = hypeScore + '%';
+      }
+    }, 4200);
+  }
+
+  function showMomentBanner(title, text = '', variant = 'gold', duration = 1750) {
+    if (!momentBanner || (turnOverlay && turnOverlay.classList && turnOverlay.classList.contains('show'))) return;
+    if (momentBannerTitle) momentBannerTitle.textContent = title;
+    if (momentBannerText) momentBannerText.innerHTML = text;
+    momentBanner.className = 'show ' + variant;
+    clearTimeout(momentBanner._t);
+    momentBanner._t = setTimeout(() => momentBanner.classList.remove('show'), duration);
+  }
+
+  function spawnJuiceEmojiBurst(center, icons, amount = 18, variant = 'gold') {
+    if (!center) return;
+    const p = center.clone ? worldToScreen(center) : center;
+    const list = Array.isArray(icons) && icons.length ? icons : ['✨'];
+    for (let i = 0; i < amount; i++) {
+      const node = document.createElement('div');
+      node.className = 'juice-emoji ' + variant;
+      node.textContent = list[i % list.length];
+      node.style.left = p.x + 'px';
+      node.style.top = p.y + 'px';
+      const angle = Math.random() * Math.PI * 2;
+      const radius = 60 + Math.random() * 170;
+      node.style.setProperty('--jx', (Math.cos(angle) * radius).toFixed(1) + 'px');
+      node.style.setProperty('--jy', (Math.sin(angle) * radius - 60 - Math.random() * 70).toFixed(1) + 'px');
+      node.style.animationDelay = (i * 0.012).toFixed(3) + 's';
+      document.body.appendChild(node);
+      setTimeout(() => node.remove(), 1300);
+    }
+  }
+
+  function playJuiceChord(kind = 'gain', power = 1) {
+    if (!sfxEnabled) return;
+    const ctx = getMusicContext();
+    if (!ctx || !AUDIO_SYNTH_FALLBACK_ENABLED) return;
+    try { if (ctx.state === 'suspended') ctx.resume(); } catch (e) {}
+    const now = ctx.currentTime;
+    const master = ctx.createGain();
+    master.gain.setValueAtTime(Math.min(0.55, 0.18 + power * 0.07) * sfxVolume, now);
+    master.connect(ctx.destination);
+    const seq = kind === 'damage' ? [180, 140, 90] : kind === 'market' ? [520, 740, 1040, 1320] : kind === 'victory' ? [523, 659, 784, 1046, 1318] : [660, 880, 1174, 1568];
+    seq.forEach((freq, i) => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = kind === 'damage' ? 'sawtooth' : 'triangle';
+      osc.frequency.setValueAtTime(freq, now + i * 0.055);
+      gain.gain.setValueAtTime(0.0001, now + i * 0.055);
+      gain.gain.exponentialRampToValueAtTime(0.22, now + i * 0.055 + 0.014);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + i * 0.055 + 0.16 + power * 0.018);
+      osc.connect(gain);
+      gain.connect(master);
+      osc.start(now + i * 0.055);
+      osc.stop(now + i * 0.055 + 0.22 + power * 0.025);
+    });
+    setTimeout(() => { try { master.disconnect(); } catch (e) {} }, 900);
+  }
+
+  function celebrateMicroMoment(title, text, variant, pos, icons, points = 10) {
+    setHype(points, title, variant);
+    showMomentBanner(title, text, variant);
+    pulseScreen(variant === 'damage' || variant === 'destroy' ? 'red' : (variant === 'gain' ? 'green' : 'gold'));
+    if (pos) spawnJuiceEmojiBurst(pos, icons, Math.min(34, 12 + Math.floor(points * 0.55)), variant);
+  }
 
   // Bandeau événement : une règle spéciale aléatoire peut apparaître tous les 3 tours.
   const eventBanner = document.createElement('div');
@@ -3790,9 +3939,11 @@ function shadeHexColor(color, amount) {
 
     turnSummary.push('Ligne complète : ' + icon + ' bonus');
     impact(ball.position, 0x56f7ff, 2.2);
-    playSfx('jackpot', 1.45);
+    playRandomSfx('lineComplete', 'jackpot', 1.45);
     bigMessage(title, detail, 'jackpot', 3000);
     battleNotice('LIGNE COMPLÈTE', icon + ' Bonus de découverte pour J' + player, 'jackpot', 3600);
+    celebrateMicroMoment('LIGNE COMPLÈTE !', icon + ' Bonus débloqué', 'jackpot', ball.position.clone().add(new THREE.Vector3(0, 1.4, 0)), ['🕳️', icon, '✨', '🎁'], 38);
+    playJuiceChord('victory', 1.45);
     floatText('LIGNE !<br>' + icon, ball.position.clone().add(new THREE.Vector3(0, 2.2, 0)), 'jackpot');
     updateHUD();
   }
@@ -6511,7 +6662,7 @@ function addDamagedRoofDetails(parent, p, x, y, z, radius, central = false, crit
 
     turnSummary.push('Relique trouvée : +1 🏺');
     impact(ball.position, 0xfff06a, 2.1);
-    playSfx('jackpot', 1.35);
+    playRandomSfx('relic', 'jackpot', 1.35);
     floatText('RELIQUE<br>+1 🏺', ball.position.clone().add(new THREE.Vector3(0, 1.8, 0)), 'jackpot');
     bigMessage('RELIQUE TROUVÉE !', '🏺 À vendre au marché contre ' + RELIC_MARKET_GOLD_VALUE + ' or', 'jackpot', 2600);
     setTimeout(updateHUD, 520);
@@ -6547,6 +6698,9 @@ function addDamagedRoofDetails(parent, p, x, y, z, radius, central = false, crit
     eventBanner.className = flash ? 'show flash' : 'show';
     eventBanner.innerHTML = '<b>' + activeTurnEvent.icon + ' ' + activeTurnEvent.title + '</b><span>' + activeTurnEvent.desc + '</span>';
     if (flash) {
+      playRandomSfx('event', 'confirm', 1.05);
+      showMomentBanner(activeTurnEvent.icon + ' ÉVÉNEMENT !', activeTurnEvent.desc, 'combo', 2400);
+      pulseScreen('gold');
       clearTimeout(eventBanner._flashTimer);
       eventBanner._flashTimer = setTimeout(() => {
         if (activeTurnEvent && !setupMode && !gameOver) eventBanner.className = 'show compact';
@@ -6622,6 +6776,15 @@ function addDamagedRoofDetails(parent, p, x, y, z, radius, central = false, crit
     playResourceGainSfx(rew, total);
     floatText(rewardHtml(rew), ball.position.clone().add(new THREE.Vector3(0, 1.2, 0)), total >= 12 ? 'jackpot' : 'gain');
     showGainCelebration(rew, total, gainOrigin);
+    celebrateMicroMoment(
+      total >= 12 ? 'GROS BUTIN !' : (resourceCount >= 2 || total >= 8 ? 'BELLE RÉCOLTE !' : 'RÉCOLTE !'),
+      rewardHtml(rew),
+      total >= 12 ? 'jackpot' : 'gain',
+      gainOrigin,
+      Object.keys(rew || {}).flatMap(k => [resourceIcon(k), resourceIcon(k)]),
+      total >= 12 ? 28 : (total >= 8 ? 18 : 10)
+    );
+    playJuiceChord(total >= 12 ? 'victory' : 'gain', total >= 12 ? 1.45 : 0.85);
 
     if (typeof showObjectiveProgress === 'function') showObjectiveProgress('resources', active, total >= 12);
 
@@ -8024,6 +8187,8 @@ function addDamagedRoofDetails(parent, p, x, y, z, radius, central = false, crit
     startTurnIntroCamera(active);
     startTurnTimer(60000);
     updateHUD();
+    showMomentBanner('TOUR ' + matchTurns + ' · JOUEUR ' + active, activeTurnEvent ? ('Événement : ' + activeTurnEvent.short) : 'Prépare ton coup', 'gold', 1900);
+    setHype(6, 'Nouveau tour', 'gold');
     showToast('Tour ' + matchTurns + ' · Joueur ' + active + '<br>Choisis ta vue' + (activeTurnEvent ? '<br>Événement : ' + activeTurnEvent.short : ''));
     if (isAITurn()) scheduleAIAction(runAITurn, 900);
   }
@@ -8068,6 +8233,7 @@ function addDamagedRoofDetails(parent, p, x, y, z, radius, central = false, crit
     resetBall();
     resumeTurnTimer();
     updateHUD();
+    showMomentBanner('PHASE DÉFENSE', 'Construis, répare, prépare ton prochain tir', 'cyan', 1450);
     showToast('Défense<br>Tours, château, réparations et kits');
   }
 
@@ -8086,6 +8252,8 @@ function addDamagedRoofDetails(parent, p, x, y, z, radius, central = false, crit
     pl.secondBallActiveThisTurn = pl.secondBallTurns > 0;
     resetBall();
     resumeTurnTimer();
+    showMomentBanner('PHASE ATTAQUE', 'Choisis ta trajectoire et fais exploser le tour', 'red', 1450);
+    setHype(5, 'Attaque', 'red');
     showToast('Attaque<br>Marché, seconde bille et rampes d’accès disponibles ici');
   }
 
@@ -8270,6 +8438,8 @@ function spawnVictoryCelebration(report) {
     turnText.innerHTML = buildVictoryHeroHtml(winner, victoryPointReport) + buildVictoryScoreHtml(winner) + buildVictoryPointHtml(victoryPointReport) + buildVictoryActionsHtml();
     turnOverlay.classList.add('show');
     spawnVictoryCelebration(victoryPointReport);
+    celebrateMicroMoment('VICTOIRE !', getProfileName(winner) + ' domine le siège', 'jackpot', victoryFocus, ['🏆','👑','✨','🎉','⚔️'], 46);
+    playJuiceChord('victory', 1.65);
     setTimeout(() => {
       const replay = document.getElementById('btnReplayVictory');
       const prog = document.getElementById('btnVictoryProgression');
@@ -8685,11 +8855,14 @@ function spawnVictoryCelebration(report) {
       turnSummary.push('Tour ' + (slot+1) + ' détruite (-' + realDamage + ' PV)');
       focusEventCameraOn(towerFxPos, 1550, 12, 17);
       showShotTitle('PERCÉE !', 'Tour détruite · rampe ' + (slot+1) + ' débloquée', 'destroy', towerFxPos, 2800);
+      celebrateMicroMoment('PERCÉE !', 'Rampe ' + (slot + 1) + ' débloquée', 'destroy', towerFxPos, ['💥','🧱','🪵','⚔️'], 26);
+      playJuiceChord('damage', 1.25);
       floatText('RAMPE DÉBLOQUÉE', ball.position.clone().add(new THREE.Vector3(0, 2.2, 0)), 'destroy');
     } else {
       towerMesh(defender, t);
       if (realDamage > 0) {
         turnSummary.push('Tour ' + (slot+1) + ' -' + realDamage + ' PV');
+        if (realDamage >= 10) celebrateMicroMoment('GROS IMPACT', 'Tour ' + (slot+1) + ' · -' + realDamage + ' PV', 'damage', towerFxPos, ['💥','🧱','⚡'], 16);
         showToast('Tour ' + (slot+1) + '<br>-' + realDamage + ' PV');
       }
     }
@@ -8707,6 +8880,8 @@ function spawnVictoryCelebration(report) {
       statForPlayer(active).combos++;
       focusEventCameraOn(ball.position.clone().add(new THREE.Vector3(0, 1.6, 0)), 1500, 12, 16);
       showShotTitle('COMBO DE SIÈGE !', 'Tour détruite + château touché · +2 dégâts', 'combo', ball.position, 2600);
+      celebrateMicroMoment('COMBO DE SIÈGE !', 'Tour détruite + château touché', 'combo', ball.position.clone().add(new THREE.Vector3(0, 1.4, 0)), ['🔥','👑','💥','⚔️'], 34);
+      playJuiceChord('victory', 1.35);
       floatText('COMBO +2', ball.position.clone().add(new THREE.Vector3(0, 2.6, 0)), 'combo');
       turnSummary.push('Combo de siège : +2 dégâts');
     }
@@ -8746,11 +8921,16 @@ function spawnVictoryCelebration(report) {
       turnSummary.push(target.name + ' détruit (-' + realDamage + ' PV)');
       focusEventCameraOn(castleFxPos, 1650, 12, 18);
       showShotTitle('DÉMOLITION !', target.icon + ' ' + target.name, 'destroy', castleFxPos, 3000);
+      celebrateMicroMoment('DÉMOLITION !', target.icon + ' ' + target.name, 'destroy', castleFxPos, ['💥','🧱','🏰','🔥'], 32);
+      playJuiceChord('damage', 1.35);
     } else {
       updateCastlePartVisual(defender, idx);
       turnSummary.push(target.name + ' -' + realDamage + ' PV');
       if (wasFragile) battleNotice('STRUCTURE FRAGILISÉE', target.icon + ' ' + target.name + ' · ' + target.hp + '/' + target.max + ' PV', 'damage', 2200);
-      if (realDamage >= 10) showShotTitle('COUP BRUTAL', target.icon + ' ' + target.name + '<br>-' + realDamage + ' PV', 'damage', castleFxPos, 2100);
+      if (realDamage >= 10) {
+        showShotTitle('COUP BRUTAL', target.icon + ' ' + target.name + '<br>-' + realDamage + ' PV', 'damage', castleFxPos, 2100);
+        celebrateMicroMoment('COUP BRUTAL', '-' + realDamage + ' PV', 'damage', castleFxPos, ['💥','⚔️','🧱'], 18);
+      }
       else battleNotice('⚔️ Touché', target.icon + ' ' + target.name + ' · -' + realDamage + ' PV', 'damage', 2200);
     }
 
@@ -9029,6 +9209,8 @@ function spawnVictoryCelebration(report) {
     playRandomSfx('marketButton', 'marketExchange', isMarketSaleActive() ? 1.35 : 1.15);
     turnSummary.push('Marché' + (isMarketSaleActive() ? ' soldé' : '') + ' : -' + trade.cost + ' ' + trade.fromLabel + ' / +' + trade.gain + ' ' + trade.toLabel);
     showToast('Marché<br>' + trade.cost + ' ' + trade.fromIcon + ' → ' + trade.gain + ' ' + trade.toIcon);
+    celebrateMicroMoment('MARCHÉ CONCLU', trade.cost + ' ' + trade.fromIcon + ' → ' + trade.gain + ' ' + trade.toIcon, 'market', { x: window.innerWidth * 0.5, y: window.innerHeight * 0.42 }, ['🪙','⚖️','✨'], 12);
+    playJuiceChord('market', 0.9);
     updateHUD();
     refreshMarket();
   }
@@ -9885,6 +10067,7 @@ function spawnVictoryCelebration(report) {
     renderer.render(scene, camera);
   }
 
+  buildAmbientSparkles();
   updateTowerGhosts();
   window.__BDS_BOOT_OK = true;
   const pendingMode = sessionStorage.getItem('BDS_START_MODE');
