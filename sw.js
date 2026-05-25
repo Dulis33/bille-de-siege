@@ -1,8 +1,8 @@
-const BDS_CACHE = 'bds-full-juice-player-experience-20260525-1';
+const BDS_CACHE = 'bds-portrait-player-experience-20260525-1';
 const BDS_FILES = [
   './index.html',
-  './style.css?v=full-juice-player-experience-20260525-1',
-  './game.js?v=full-juice-player-experience-20260525-1',
+  './style.css?v=portrait-player-experience-20260525-1',
+  './game.js?v=portrait-player-experience-20260525-1',
   './style.css',
   './game.js',
   './manifest.webmanifest',

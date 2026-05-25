@@ -5478,7 +5478,7 @@ button {
 }
 .battle-notice.gain span { color: rgba(255,245,205,.86) !important; }
 
-/* Orientation tablette : le jeu est pensé pour le paysage. */
+/* Orientation mobile/tablette : le jeu est maintenant pensé pour le portrait. */
 #bdsOrientationLock {
   display: none; position: fixed; inset: 0; z-index: 2147482500; align-items: center; justify-content: center;
   padding: 22px; background: radial-gradient(circle at 50% 28%, rgba(255,214,116,.18), transparent 34%), rgba(5, 10, 6, .92);
@@ -5494,5 +5494,6 @@ button {
 .orientation-card h2 { margin: 0 0 10px; font-family: Georgia, serif; font-size: clamp(25px, 8vw, 40px); letter-spacing: 2px; text-transform: uppercase; color: #fff0b8; }
 .orientation-card p { margin: 0 auto 12px; max-width: 34ch; color: rgba(255,246,220,.92); font-size: 15px; line-height: 1.35; }
 .orientation-card small { color: rgba(255,224,138,.86); }
-@media (orientation: portrait) and (max-width: 900px) { #bdsOrientationLock { display: flex !important; } }
-@media (max-height: 520px) and (orientation: landscape) { :root { --ui-bottom-h: 132px !important; } }
+@media (orientation: landscape) and (max-width: 1200px) { #bdsOrientationLock { display: flex !important; } }
+@media (orientation: portrait) { :root { --ui-bottom-h: 150px !important; } }
+@media (max-width: 520px) and (orientation: portrait) { :root { --ui-bottom-h: 142px !important; } }
