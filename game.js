@@ -355,27 +355,7 @@ try {
     { id: 'dragon', icon: '🐉', label: 'Dragon' },
     { id: 'crown', icon: '👑', label: 'Roi' },
     { id: 'fox', icon: '🦊', label: 'Renard' },
-    { id: 'wolf', icon: '🐺', label: 'Loup' },
-    { id: 'lion', icon: '🦁', label: 'Lion' },
-    { id: 'eagle', icon: '🦅', label: 'Aigle' },
-    { id: 'bear', icon: '🐻', label: 'Ours' },
-    { id: 'owl', icon: '🦉', label: 'Hibou' },
-    { id: 'boar', icon: '🐗', label: 'Sanglier' },
-    { id: 'unicorn', icon: '🦄', label: 'Licorne' },
-    { id: 'phoenix', icon: '🔥', label: 'Phénix' },
-    { id: 'skull', icon: '💀', label: 'Crâne' },
-    { id: 'bombardier', icon: '💣', label: 'Bombardier' },
-    { id: 'castle', icon: '🏰', label: 'Château' },
-    { id: 'gem', icon: '💎', label: 'Joyau' },
-    { id: 'lightning', icon: '⚡', label: 'Foudre' },
-    { id: 'moon', icon: '🌙', label: 'Lune' },
-    { id: 'star', icon: '⭐', label: 'Étoile' },
-    { id: 'clover', icon: '🍀', label: 'Trèfle' },
-    { id: 'mushroom', icon: '🍄', label: 'Champignon' },
-    { id: 'acorn', icon: '🌰', label: 'Gland' },
-    { id: 'explorer', icon: '🧭', label: 'Explorateur' },
-    { id: 'smith', icon: '⚒️', label: 'Forgeron' },
-    { id: 'champion', icon: '🏆', label: 'Champion' }
+    { id: 'wolf', icon: '🐺', label: 'Loup' }
   ];
   const DEFAULT_PROFILE_AVATAR = 'knight';
 
@@ -386,19 +366,6 @@ try {
 
   function profileAvatarData(id) {
     return PROFILE_AVATARS.find(a => a.id === normalizeProfileAvatar(id)) || PROFILE_AVATARS[0];
-  }
-
-  function profileTitleData(progressData) {
-    const pr = progressData || defaultProgress();
-    const earned = Number(pr.lifetimeEarned || 0);
-    const record = Math.max(SCORE_TO_BEAT_DEFAULT, Number(pr.bestScoreToBeat || SCORE_TO_BEAT_DEFAULT));
-    if (earned >= 260) return { icon: '👑', label: 'Seigneur du Siège' };
-    if (earned >= 180) return { icon: '🏆', label: 'Champion des Remparts' };
-    if (earned >= 120) return { icon: '🔥', label: 'Briseur de Châteaux' };
-    if (earned >= 70) return { icon: '🧱', label: 'Maître Bâtisseur' };
-    if (record >= SCORE_TO_BEAT_DEFAULT + 18) return { icon: '🎯', label: 'Tireur Royal' };
-    if (earned >= 30) return { icon: '🪙', label: 'Pilleur Malin' };
-    return { icon: '🌱', label: 'Apprenti du Siège' };
   }
 
   const PROFILES_STORAGE_KEY = 'BDS_PLAYER_PROFILES_V1';
@@ -1498,14 +1465,12 @@ try {
       const activeJ2 = profileState.activeSlots['2'] === profile.id;
       const pr = profile.progress || defaultProgress();
       const avatar = profileAvatarData(profile.avatar);
-      const title = profileTitleData(pr);
       return `
         <div class="profile-card ${(activeJ1 || activeJ2) ? 'active' : ''}">
           <div class="profile-main-line">
             <b><span class="profile-avatar-pill" title="${avatar.label}">${avatar.icon}</span>${profile.name}</b>
             <span>${activeJ1 ? 'J1' : ''}${activeJ1 && activeJ2 ? ' / ' : ''}${activeJ2 ? 'J2' : ''}</span>
           </div>
-          <div class="profile-title-badge"><span>${title.icon}</span><b>${title.label}</b></div>
           <small>${pr.victoryPoints || 0} points disponibles · ${pr.lifetimeEarned || 0} gagnés · score à battre ${Math.max(SCORE_TO_BEAT_DEFAULT, pr.bestScoreToBeat || SCORE_TO_BEAT_DEFAULT)}</small>
           <div class="profile-actions">
             <button data-profile-j1="${profile.id}" ${activeJ1 ? 'class="selected"' : ''}>J1</button>
@@ -1822,32 +1787,8 @@ try {
       'bruitages/marche-btn-6.mp3',
       'bruitages/marche-btn-7.mp3',
       'bruitages/marche-btn-8.mp3'
-    ],
-    victory: [
-      'bruitages/victory.mp3',
-      'bruitages/victory-1.mp3',
-      'bruitages/victory-2.mp3',
-      'bruitages/victory-3.mp3',
-      'bruitages/victoire.mp3',
-      'bruitages/victoire-1.mp3',
-      'bruitages/victoire-2.mp3',
-      'bruitages/victoire-3.mp3'
     ]
   };
-
-  const VICTORY_AUDIO_FILES = [
-    'musiques/music-bds-victory.mp3',
-    'musiques/music-bds-victoire.mp3',
-    'bruitages/victory.mp3',
-    'bruitages/victory-1.mp3',
-    'bruitages/victory-2.mp3',
-    'bruitages/victory-3.mp3',
-    'bruitages/victoire.mp3',
-    'bruitages/victoire-1.mp3',
-    'bruitages/victoire-2.mp3',
-    'bruitages/victoire-3.mp3'
-  ];
-  let victoryAudio = null;
 
   // Réglage individuel du volume de chaque bruitage.
   // 1.00 = volume normal, 0.50 = moitié moins fort, 1.25 = un peu plus fort.
@@ -1882,15 +1823,7 @@ try {
     'marketButton.5': 0.70,
     'marketButton.6': 0.70,
     'marketButton.7': 0.70,
-    'marketButton.8': 0.70,
-    'victory.1': 0.90,
-    'victory.2': 0.90,
-    'victory.3': 0.90,
-    'victory.4': 0.90,
-    'victory.5': 0.90,
-    'victory.6': 0.90,
-    'victory.7': 0.90,
-    'victory.8': 0.90
+    'marketButton.8': 0.70
   };
 
   function getSfxMultiplier(kind) {
@@ -2274,68 +2207,6 @@ try {
   }
 
 
-  function shuffleCopy(list) {
-    const out = Array.isArray(list) ? list.slice() : [];
-    for (let i = out.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      const tmp = out[i]; out[i] = out[j]; out[j] = tmp;
-    }
-    return out;
-  }
-
-  function tryPlayStandaloneAudio(url, volume = 0.85) {
-    return new Promise(resolve => {
-      let done = false;
-      const audio = new Audio(url);
-      const finish = ok => {
-        if (done) return;
-        done = true;
-        audio.removeEventListener('error', onError);
-        resolve(!!ok);
-      };
-      const onError = () => finish(false);
-      audio.preload = 'auto';
-      audio.loop = false;
-      audio.volume = clamp01(volume);
-      audio.addEventListener('error', onError, { once: true });
-      try {
-        if (victoryAudio) { try { victoryAudio.pause(); victoryAudio.currentTime = 0; } catch (e) {} }
-        const promise = audio.play();
-        if (promise && typeof promise.then === 'function') {
-          promise.then(() => {
-            victoryAudio = audio;
-            finish(true);
-          }).catch(() => finish(false));
-        } else {
-          victoryAudio = audio;
-          finish(true);
-        }
-      } catch (e) {
-        finish(false);
-      }
-      setTimeout(() => finish(false), 1400);
-    });
-  }
-
-  async function playVictoryAudio() {
-    // La musique/son de victoire personnalisé est prioritaire.
-    // On accepte plusieurs noms pour éviter de casser le choix de fichier déjà fait.
-    try { await unlockAudio(); } catch (e) {}
-    try { stopRollingSound(); } catch (e) {}
-    try { stopBackgroundMusic(false); } catch (e) {}
-
-    const volume = Math.min(1, Math.max(0.55, sfxVolume * 0.9));
-    const urls = shuffleCopy(VICTORY_AUDIO_FILES);
-    for (const url of urls) {
-      // On tente vraiment la lecture du MP3 au lieu de retomber trop vite
-      // sur le son synthétique si le fichier n'était pas encore préchargé.
-      const ok = await tryPlayStandaloneAudio(url, volume);
-      if (ok) return true;
-    }
-    playRandomSfx('victory', 'victory', 1.8, true);
-    return false;
-  }
-
   function getRollingAudio() {
     if (rollingFileUnavailable || !SFX_FILES.ballRoll) return null;
     if (!rollingAudio) {
@@ -2703,12 +2574,6 @@ try {
   if (mainSfx) mainSfx.addEventListener('click', toggleSfx, true);
   if (mainMusic) mainMusic.addEventListener('click', toggleBackgroundMusic, true);
   document.addEventListener('pointerdown', unlockAudio, { once: true, capture: true });
-  document.addEventListener('pointerdown', (ev) => {
-    const btn = ev.target && ev.target.closest ? ev.target.closest('button, .pause-btn, .castle-pill') : null;
-    if (!btn || btn.disabled) return;
-    btn.classList.add('tap-pressed');
-    window.setTimeout(() => btn.classList.remove('tap-pressed'), 170);
-  }, true);
   document.addEventListener('click', (ev) => {
     if (ev.target && ev.target.closest && ev.target.closest('button, .main-menu-box, .modal-box')) playSfx('click');
   }, true);
@@ -2806,8 +2671,8 @@ try {
 
   /* ── Scene ── */
   const scene = new THREE.Scene();
-  scene.background = new THREE.Color(0x102015); // rendu plus vivant, moins terne
-  scene.fog = new THREE.FogExp2(0x0b2818, 0.00235);
+  scene.background = new THREE.Color(0x090f0b); // salle plus moderne, sombre et lisible
+  scene.fog = new THREE.FogExp2(0x07150e, 0.0027);
 
   const camera = new THREE.PerspectiveCamera(54, innerWidth / (innerHeight - VIEW_BOTTOM_RESERVED), 0.1, 900);
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: false, powerPreference: 'high-performance' });
@@ -2817,7 +2682,7 @@ try {
   renderer.shadowMap.enabled = false;
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.54;
+  renderer.toneMappingExposure = 1.38;
 
   window.addEventListener('resize', () => {
     renderer.setSize(innerWidth, innerHeight - VIEW_BOTTOM_RESERVED);
@@ -2827,7 +2692,7 @@ try {
 
   /* ── Éclairage style salle de billard ── */
   // Ambiance renforcée : on garde l'atmosphère billard, mais le plateau reste lisible.
-  scene.add(new THREE.AmbientLight(0xfff3df, 1.58));
+  scene.add(new THREE.AmbientLight(0xfff0dc, 1.42));
 
   const keyLight = new THREE.DirectionalLight(0xffe7c0, 1.72);
   keyLight.position.set(-14, 58, 38);
@@ -2863,7 +2728,7 @@ try {
   });
 
   // Remplissage doux pour déboucher les ombres sans tuer le style billard.
-  const fillLight = new THREE.HemisphereLight(0xffe8b8, 0x164a2a, 0.98);
+  const fillLight = new THREE.HemisphereLight(0xffdfb0, 0x12311d, 0.82);
   scene.add(fillLight);
 
 
@@ -3318,7 +3183,39 @@ function shadeHexColor(color, amount) {
     trapMarker.add(trapBarA, trapBarB);
     scene.add(trapMarker);
 
-    return { x, z, ring, inner, pocket, shadow, holeGlow, trapMarker };
+    // Marqueur cyan persistant : trou déjà découvert / visité par une bille.
+    // Il ne révèle jamais la ressource actuelle, il sert uniquement au suivi des lignes complètes.
+    const discoveredMarker = new THREE.Group();
+    discoveredMarker.visible = false;
+    discoveredMarker.position.set(x, 0.545, z);
+
+    const discoveredMat = new THREE.MeshBasicMaterial({
+      color: 0x56f7ff,
+      transparent: true,
+      opacity: 0.92,
+      depthWrite: false,
+      side: THREE.DoubleSide
+    });
+    const discoveredSoftMat = new THREE.MeshBasicMaterial({
+      color: 0x9ffcff,
+      transparent: true,
+      opacity: 0.36,
+      depthWrite: false,
+      side: THREE.DoubleSide
+    });
+
+    const discoveredOuter = new THREE.Mesh(new THREE.TorusGeometry(HOLE_R * 1.48, 0.055, 10, 64), discoveredMat);
+    discoveredOuter.rotation.x = Math.PI / 2;
+    discoveredOuter.position.y = 0.005;
+    const discoveredInner = new THREE.Mesh(new THREE.TorusGeometry(HOLE_R * 1.12, 0.035, 8, 52), discoveredSoftMat);
+    discoveredInner.rotation.x = Math.PI / 2;
+    discoveredInner.position.y = 0.018;
+    const discoveredDot = new THREE.Mesh(new THREE.SphereGeometry(0.115, 12, 8), discoveredMat.clone());
+    discoveredDot.position.set(HOLE_R * 1.46, 0.08, -HOLE_R * 1.46);
+    discoveredMarker.add(discoveredOuter, discoveredInner, discoveredDot);
+    scene.add(discoveredMarker);
+
+    return { x, z, ring, inner, pocket, shadow, holeGlow, trapMarker, discoveredMarker };
   }
 
   function bonusHoleZ(attacker) {
@@ -3485,6 +3382,8 @@ function shadeHexColor(color, amount) {
       return columns.map((relX, colIndex) => ({
         relX,
         dz,
+        rowIndex,
+        colIndex,
         trap: colIndex === trapIndex
       }));
     });
@@ -3501,6 +3400,9 @@ function shadeHexColor(color, amount) {
   const sideTheftHoles = [];
   const bonusHoles = [];
   const slopes = [];
+  // Une ligne complète est validée une seule fois par joueur et par rangée de trous.
+  // Les pièges gardent leur position fixe ; seuls les gains des trous non-pièges changent.
+  const completedHoleRows = [new Set(), new Set()];
   const RESOURCE_TYPES = ['stone', 'wood', 'gold'];
   const RESOURCE_ICONS = { stone: '🪨', wood: '🪵', gold: '🪙', relic: '🏺' };
   const RESOURCE_NAMES = { stone: 'pierre', wood: 'bois', gold: 'or', relic: 'relique' };
@@ -3640,24 +3542,95 @@ function shadeHexColor(color, amount) {
     const revealed = !!(h.baseTrap && h.trap && h.trapKnown);
     if (h.trapMarker) h.trapMarker.visible = revealed;
     if (h.holeGlow && h.holeGlow.material && h.holeGlow.material.color) {
-      const color = revealed ? 0xff3030 : (h.discovered ? 0x62f7ff : (h.relicKnown ? 0xfff06a : 0xffd65a));
-      h.holeGlow.material.color.setHex(color);
-      h.holeGlow.material.opacity = h.discovered ? 0.38 : 0.26;
+      h.holeGlow.material.color.setHex(revealed ? 0xff3030 : 0xfff06a);
     }
-    if (h.ring && h.ring.material && h.ring.material.emissive) {
-      h.ring.material.emissive.setHex(revealed ? 0x3a0000 : (h.discovered ? 0x003a44 : 0x1c1200));
-      h.ring.material.emissiveIntensity = h.discovered ? 0.34 : 0.18;
+  }
+
+  function updateHoleDiscoveredVisual(h) {
+    if (!h || !h.discoveredMarker) return;
+    h.discoveredMarker.visible = !!h.discovered;
+    if (h.discoveredMarker.visible) {
+      const scale = h.baseTrap && h.trapKnown ? 1.08 : 1.0;
+      h.discoveredMarker.scale.setScalar(scale);
     }
+  }
+
+  function holeRowKey(h) {
+    if (!h) return '';
+    return String(Number.isFinite(h.rowIndex) ? h.rowIndex : h.dz);
   }
 
   function markHoleDiscovered(h) {
     if (!h) return;
+    const wasNew = !h.discovered;
     h.discovered = true;
-    updateHoleTrapVisual(h);
-    progressStory('Trou découvert', 'Ce trou reste marqué pour la partie.', '🕳️');
+    updateHoleDiscoveredVisual(h);
+    if (wasNew) {
+      checkCompletedHoleRow(h.player, holeRowKey(h));
+    }
+  }
+
+  function checkCompletedHoleRow(player, rowKey) {
+    const doneSet = completedHoleRows[player - 1];
+    if (!doneSet || doneSet.has(rowKey)) return false;
+    const row = holes.filter(h => h.player === player && holeRowKey(h) === rowKey);
+    if (!row.length || row.some(h => !h.discovered)) return false;
+    doneSet.add(rowKey);
+    grantCompletedHoleRowBonus(player, row.length);
+    return true;
+  }
+
+  function grantCompletedHoleRowBonus(player, rowSize = 0) {
+    const pl = players[player - 1];
+    if (!pl) return;
+
+    const choices = ['doubleResources', 'secondBall', 'freeTower', 'gold', 'wood', 'stone'];
+    const choice = choices[randInt(0, choices.length - 1)];
+    let title = 'LIGNE DE TROUS COMPLÈTE !';
+    let detail = 'J' + player + ' a découvert toute une ligne' + (rowSize ? ' · ' + rowSize + ' trous' : '');
+    let icon = '🕳️';
+
+    if (choice === 'doubleResources') {
+      const before = { stone: pl.res.stone || 0, wood: pl.res.wood || 0, gold: pl.res.gold || 0 };
+      RESOURCE_TYPES.forEach(type => {
+        const amount = before[type] || 0;
+        if (amount > 0) {
+          pl.res[type] += amount;
+          statForPlayer(player).resources += amount;
+        }
+      });
+      icon = '✨';
+      detail += '<br>✨ Ressources x2';
+      animateResourceReward(before, ball.position.clone().add(new THREE.Vector3(0, 1.4, 0)));
+    } else if (choice === 'secondBall') {
+      pl.extraShotsLeft = Math.max(pl.extraShotsLeft || 0, 1);
+      pl.bonusSecondShotThisTurn = true;
+      icon = '⚪';
+      detail += '<br>⚪ Seconde bille gagnée';
+    } else if (choice === 'freeTower') {
+      pl.freeTowerBuilds = (pl.freeTowerBuilds || 0) + 1;
+      icon = '🗼';
+      detail += '<br>🗼 1 reconstruction de tour gratuite';
+    } else {
+      const amount = 5;
+      pl.res[choice] = (pl.res[choice] || 0) + amount;
+      statForPlayer(player).resources += amount;
+      icon = RESOURCE_ICONS[choice] || '🎁';
+      detail += '<br>' + icon + ' +5 ' + (RESOURCE_NAMES[choice] || choice);
+      animateResourceReward({ [choice]: amount }, ball.position.clone().add(new THREE.Vector3(0, 1.4, 0)));
+    }
+
+    turnSummary.push('Ligne complète : ' + icon + ' bonus');
+    impact(ball.position, 0x56f7ff, 2.2);
+    playSfx('jackpot', 1.45);
+    bigMessage(title, detail, 'jackpot', 3000);
+    battleNotice('LIGNE COMPLÈTE', icon + ' Bonus de découverte pour J' + player, 'jackpot', 3600);
+    floatText('LIGNE !<br>' + icon, ball.position.clone().add(new THREE.Vector3(0, 2.2, 0)), 'jackpot');
+    updateHUD();
   }
 
   function resetRelicHolesForMatch() {
+    completedHoleRows.forEach(set => set.clear());
     holes.forEach(h => {
       h.relic = false;
       h.relicFound = false;
@@ -3666,13 +3639,13 @@ function shadeHexColor(color, amount) {
       h.trapKnown = false;
       h.trap = !!h.baseTrap;
       updateHoleTrapVisual(h);
+      updateHoleDiscoveredVisual(h);
     });
 
     // Les reliques sont tirées une seule fois au début de la partie.
-    // Il y en a 4 dans chaque couloir d'attaque, avec un tirage aléatoire indépendant.
-    // Elles restent ensuite au même endroit jusqu’à la fin du match.
+    // Elles ne remplacent jamais un piège : les pièges restent exactement au même endroit toute la partie.
     [1, 2].forEach(player => {
-      shuffle(holes.filter(h => h.player === player)).slice(0, RELIC_HOLES_PER_SIDE).forEach(h => {
+      shuffle(holes.filter(h => h.player === player && !h.baseTrap)).slice(0, RELIC_HOLES_PER_SIDE).forEach(h => {
         h.relic = true;
         h.relicFound = false;
         h.relicKnown = false;
@@ -3695,10 +3668,12 @@ function shadeHexColor(color, amount) {
         h.reward = null;
         h.kind = h.trapKnown ? 'piège révélé' : 'trou inconnu';
       } else {
+        h.trap = false;
         h.reward = makeHoleReward();
         h.kind = holeRewardLabel(h.reward);
       }
       updateHoleTrapVisual(h);
+      updateHoleDiscoveredVisual(h);
     });
   }
 
@@ -4796,6 +4771,10 @@ function shadeHexColor(color, amount) {
     holes.push({
       player,
       x, z,
+      dz: spec.dz,
+      rowIndex: spec.rowIndex,
+      colIndex: spec.colIndex,
+      discovered: false,
       baseTrap: !!spec.trap,
       trap: !!spec.trap,
       trapKnown: false,
@@ -4807,7 +4786,7 @@ function shadeHexColor(color, amount) {
       shadow: h.shadow,
       holeGlow: h.holeGlow,
       trapMarker: h.trapMarker,
-      discovered: false,
+      discoveredMarker: h.discoveredMarker,
       last: false
     });
   }
@@ -4854,6 +4833,7 @@ function shadeHexColor(color, amount) {
     queuedBonusNextTurn: null,
     bonusSecondShotThisTurn: false,
     bonusDoubleDamageThisTurn: false,
+    freeTowerBuilds: 0,
     secondBallTurns: 0,
     extraShotsLeft: 0,
     secondBallActiveThisTurn: false
@@ -4930,11 +4910,8 @@ function shadeHexColor(color, amount) {
 
   function panDefenseCamera(dx, dy) {
     const scale = THREE.MathUtils.clamp(defenseCamDist * 0.0064, 0.28, 1.25);
-    // Contrôle inversé comme la visée lance-pierre :
-    // glisser vers la droite déplace la vue vers la gauche, et inversement.
-    // Même logique verticale pour garder une sensation cohérente en placement de tours.
-    defenseCamPanX += dx * scale;
-    defenseCamPanZ += dy * dir(active) * scale;
+    defenseCamPanX -= dx * scale;
+    defenseCamPanZ += -dy * dir(active) * scale;
     clampDefenseCamera();
   }
 
@@ -6072,61 +6049,6 @@ function addDamagedRoofDetails(parent, p, x, y, z, radius, central = false, crit
     }, duration);
   }
 
-  const ACTION_CAMERA_ZOOM_ENABLED = false;
-
-  function focusEventCameraOn(pos, duration = 1250, height = 13, distance = 19) {
-    // Désactivé volontairement : les zooms automatiques pendant les actions donnaient
-    // l'impression que la bille disparaissait. On garde les effets, textes, tremblements
-    // et particules, mais la caméra reste stable pendant le lancer.
-    if (!ACTION_CAMERA_ZOOM_ENABLED) return;
-    if (!pos || gameOver || gamePaused) return;
-    const target = pos.clone ? pos.clone() : new THREE.Vector3(pos.x || 0, pos.y || 0, pos.z || 0);
-    target.y = Math.max(1.8, target.y || 1.8);
-    const viewPos = target.clone().add(new THREE.Vector3(0, height, -dir(active) * distance));
-    rampCameraFocus = { target, pos: viewPos, until: Date.now() + duration };
-  }
-
-  function showShotTitle(title, text = '', variant = 'combo', pos = ball.position, duration = 2300) {
-    bigMessage(title, text, variant, duration);
-    battleNotice(title, text, variant, Math.max(2500, duration + 400));
-    if (pos && pos.clone) {
-      floatText(title.replace(/\s+/g, '<br>'), pos.clone().add(new THREE.Vector3(0, 2.4, 0)), variant);
-    }
-  }
-
-  function progressStory(title, text = '', icon = '🏆') {
-    battleNotice(icon + ' ' + title, text, 'progress-fun', 3300);
-  }
-
-  function aiIntentLabel(type) {
-    return {
-      classicRamp: 'ouvre une route vers le château',
-      sideTheft: 'tente un trou de vol',
-      tower: 'attaque une tour',
-      kit: 'cherche un kit utile',
-      bonusHole: 'vise un trou bonus',
-      hole: 'cherche des ressources',
-      lane: 'prépare un tir libre'
-    }[type] || 'prépare un tir varié';
-  }
-
-  function showAIIntent(plan, label) {
-    const txt = label || aiIntentLabel(plan && plan.type);
-    battleNotice('🤖 INTENTION IA', txt, 'ai-intent', 3200);
-    bigMessage('INTENTION IA', '🤖 ' + txt, 'second', 1550);
-  }
-
-  function setButtonHint(btn, reason, readyText) {
-    if (!btn) return;
-    if (btn.disabled && reason) {
-      btn.title = reason;
-      btn.dataset.lockReason = reason;
-    } else {
-      btn.title = readyText || btn.title || '';
-      delete btn.dataset.lockReason;
-    }
-  }
-
   function pulseResource(type) {
     const target = UI[type];
     if (!target) return;
@@ -6365,13 +6287,13 @@ function addDamagedRoofDetails(parent, p, x, y, z, radius, central = false, crit
     playSfx(total >= 12 ? 'jackpot' : 'gain', total >= 12 ? 1.6 : 1);
     floatText(rewardHtml(rew), ball.position.clone().add(new THREE.Vector3(0, 1.2, 0)), total >= 12 ? 'jackpot' : 'gain');
     if (eventReward.applied) {
-      showShotTitle(activeTurnEvent.icon + ' ' + activeTurnEvent.title, rewardHtml(rew), 'jackpot', ball.position, 1850);
+      bigMessage(activeTurnEvent.icon + ' ' + activeTurnEvent.title, rewardHtml(rew), 'jackpot', 1050);
     } else if (total >= 12) {
-      showShotTitle('GROS BUTIN !', rewardHtml(rew), 'jackpot', ball.position, 2600);
+      bigMessage('GROS BUTIN !', rewardHtml(rew), 'jackpot', 2400);
     } else if (resourceCount >= 2 || total >= 10) {
-      showShotTitle('BELLE RÉCOLTE', rewardHtml(rew), 'gain', ball.position, 2100);
+      showToast('BONUS<br>' + txt);
     } else {
-      battleNotice('💰 Récolte', rewardHtml(rew), 'gain', 2400);
+      showToast('GAIN<br>' + txt);
     }
     setTimeout(updateHUD, 520);
   }
@@ -7627,7 +7549,7 @@ function addDamagedRoofDetails(parent, p, x, y, z, radius, central = false, crit
       : plan.type === 'hole' ? 'sur trou visible'
       : 'libre varié';
     turnSummary.push('IA : tir ' + label);
-    showAIIntent(plan, label);
+    showToast('IA<br>' + label);
     updateHUD();
   }
 
@@ -7785,6 +7707,7 @@ function addDamagedRoofDetails(parent, p, x, y, z, radius, central = false, crit
       pl.queuedBonusNextTurn = null;
       pl.bonusSecondShotThisTurn = false;
       pl.bonusDoubleDamageThisTurn = false;
+      pl.freeTowerBuilds = 0;
     });
     clearAllKits();
     clearMudZones();
@@ -7845,55 +7768,22 @@ function addDamagedRoofDetails(parent, p, x, y, z, radius, central = false, crit
     setTimeout(advanceAfterPause, 3600);
   }
 
-  function medalForPlayerStats(s, winner) {
-    const medals = [];
-    if (winner) medals.push('🏆 Vainqueur');
-    if ((s.damage || 0) >= 120) medals.push('💥 Destructeur');
-    if ((s.resources || 0) >= 80) medals.push('💰 Collectionneur');
-    if ((s.holesHit || 0) >= 18) medals.push('🕳️ Explorateur');
-    if ((s.combos || 0) >= 2) medals.push('🔥 Comboteur');
-    if ((s.relicsFound || 0) >= 1) medals.push('🏺 Archéologue');
-    if (!medals.length) medals.push('🎱 Stratège prudent');
-    return medals;
-  }
-
-  function bestStatLabel(s) {
-    const entries = [
-      ['PV retirés', s.damage || 0],
-      ['Ressources', s.resources || 0],
-      ['Trous', s.holesHit || 0],
-      ['Combos', s.combos || 0],
-      ['Vols', s.edgeSteals || 0],
-      ['Reliques', s.relicsFound || 0]
-    ].sort((a, b) => b[1] - a[1]);
-    return entries[0][0] + ' : ' + entries[0][1];
-  }
-
   function buildVictoryScoreHtml(winner) {
-    const rows = [1, 2].map(player => {
-      const s = statForPlayer(player);
-      const destroyedTotal = s.partsDestroyed + s.towersDestroyed;
-      const medals = medalForPlayerStats(s, player === winner).map(m => '<span>' + m + '</span>').join('');
-      return `
-        <div class="victory-player-report ${player === winner ? 'winner' : ''}">
-          <h3>${getProfileAvatar(player)} J${player} · ${gameMode === 'solo' && player === 2 ? 'IA' : getProfileName(player)}</h3>
-          <div class="victory-medals">${medals}</div>
-          <div class="victory-stats compact">
-            <div><b>${s.resources}</b><span>ressources</span></div>
-            <div><b>${s.damage}</b><span>PV retirés</span></div>
-            <div><b>${destroyedTotal}</b><span>détruits</span></div>
-            <div><b>${s.holesHit}</b><span>trous</span></div>
-            <div><b>${s.combos}</b><span>combos</span></div>
-            <div><b>${s.secondShots}</b><span>2e tirs</span></div>
-          </div>
-          <small>Meilleur domaine : ${bestStatLabel(s)}</small>
-        </div>`;
-    }).join('');
+    const s = statForPlayer(winner);
+    const destroyedTotal = s.partsDestroyed + s.towersDestroyed;
     return `
-      <div class="victory-score-title">Récapitulatif de bataille</div>
-      <div class="victory-battle-report">
-        <div class="victory-match-line"><b>${matchTurns}</b><span>manches jouées</span></div>
-        ${rows}
+      <div class="victory-score-title">Score de siège</div>
+      <div class="victory-stats">
+        <div><b>${matchTurns}</b><span>manches jouées</span></div>
+        <div><b>${s.turns}</b><span>tours du vainqueur</span></div>
+        <div><b>${s.resources}</b><span>ressources gagnées</span></div>
+        <div><b>${s.damage}</b><span>PV retirés</span></div>
+        <div><b>${destroyedTotal}</b><span>éléments détruits</span></div>
+        <div><b>${s.holesHit}</b><span>trous atteints</span></div>
+        <div><b>${s.combos}</b><span>combos de siège</span></div>
+        <div><b>${s.edgeSteals}</b><span>pillages / vols</span></div>
+        <div><b>${s.relicsFound || 0}</b><span>reliques trouvées</span></div>
+        <div><b>${s.secondShots}</b><span>seconds lancers</span></div>
       </div>
     `;
   }
@@ -8000,7 +7890,7 @@ function spawnVictoryCelebration(report) {
     victoryFocus = new THREE.Vector3(castleX(defeated), 4.2, castleZ(defeated));
     victoryCameraOffset = new THREE.Vector3(0, 17, castleZ(defeated) > 0 ? 30 : -30);
     impact(victoryFocus, 0xffcc55, 3.2);
-    playVictoryAudio();
+    playSfx('victory', 1.7);
     triggerShake(0.55, 0.75);
     hideBigMessage();
     const victoryPointReport = awardVictoryPoints(winner);
@@ -8144,32 +8034,6 @@ function spawnVictoryCelebration(report) {
     }).filter(Boolean);
   }
 
-  function classifyShotRecap(items) {
-    const joined = (items || []).join(' ').toLowerCase();
-    const hasCombo = joined.includes('combo');
-    const hasDestroy = joined.includes('détruit') || joined.includes('détruite');
-    const hasDamage = joined.includes('pv') || hasDestroy;
-    const hasGain = /\+\d+/.test(joined) && (joined.includes('🪙') || joined.includes('🪵') || joined.includes('🪨') || joined.includes('ressource'));
-    const hasHole = joined.includes('trou') || joined.includes('relique') || joined.includes('piège');
-    if (hasCombo || (hasDamage && hasGain)) return { icon: '👑', title: 'TIR ROYAL', cls: 'royal' };
-    if (hasDestroy) return { icon: '💥', title: 'DÉMOLITION', cls: 'destroy' };
-    if (hasDamage) return { icon: '⚔️', title: 'COUP BRUTAL', cls: 'damage' };
-    if (hasGain) return { icon: '💰', title: 'BELLE RÉCOLTE', cls: 'gain' };
-    if (hasHole) return { icon: '🕳️', title: 'EXPLORATION', cls: 'hole' };
-    return { icon: '🎱', title: 'LANCER TERMINÉ', cls: 'neutral' };
-  }
-
-  function buildShotRecapHtml(items) {
-    const recap = classifyShotRecap(items);
-    const rows = items && items.length
-      ? items.map(item => '<div class="shot-recap-row">' + item + '</div>').join('')
-      : '<div class="shot-recap-row muted">Aucun gain / aucun dégât</div>';
-    return '<div class="shot-recap-card ' + recap.cls + '">' +
-      '<div class="shot-recap-head"><span>' + recap.icon + '</span><b>' + recap.title + '</b><small>Résumé du lancer</small></div>' +
-      '<div class="shot-recap-body">' + rows + '</div>' +
-      '</div>';
-  }
-
   function finishTurn(reason = '') {
     pauseTurnTimer();
     if (finishTimer) {
@@ -8203,8 +8067,9 @@ function spawnVictoryCelebration(report) {
     }
 
     const recapItems = compactTurnSummary(turnSummary);
-    const recapType = classifyShotRecap(recapItems);
-    const gains = buildShotRecapHtml(recapItems);
+    const gains = recapItems.length
+      ? '<div class="recap-list">' + recapItems.map(item => '<div class="recap-item">' + item + '</div>').join('') + '</div>'
+      : '<div class="recap-empty">Aucun gain / aucun dégât</div>';
 
     const debrisToShow = Array.isArray(shotCreatedDebris)
       ? shotCreatedDebris.filter(d => d && d.mesh)
@@ -8215,12 +8080,12 @@ function spawnVictoryCelebration(report) {
       hideBigMessage();
       const wait = DEBRIS_FOCUS_DURATION + 220;
       setTimeout(() => {
-        if (!gameOver) showTurnPause(recapType.icon + ' ' + recapType.title, gains);
+        if (!gameOver) showTurnPause('RÉCAP DU LANCER', gains);
       }, wait);
       return;
     }
 
-    showTurnPause(recapType.icon + ' ' + recapType.title, gains);
+    showTurnPause('RÉCAP DU LANCER', gains);
   }
 
   function isReservedRampZoneForDefender(defender, x, z) {
@@ -8353,10 +8218,17 @@ function spawnVictoryCelebration(report) {
     const pz = candidate.z;
 
     const t = pl.towers[slot];
+    let usedFreeTower = false;
     if (!setupMode && t.pos) {
       // Reconstruction normale : le joueur peut reconstruire la tour ailleurs.
       // Les anciens gravats restent sur le couloir et continuent de gêner tant qu'ils ne sont pas déblayés.
-      if (!pay(pl.res, towerRebuildCost[slot])) { showToast('Ressources insuffisantes'); return; }
+      if ((pl.freeTowerBuilds || 0) > 0) {
+        pl.freeTowerBuilds--;
+        usedFreeTower = true;
+        turnSummary.push('Tour gratuite utilisée');
+      } else if (!pay(pl.res, towerRebuildCost[slot])) {
+        showToast('Ressources insuffisantes'); return;
+      }
       const attacker = enemy(p);
       if (!players[attacker-1].ramps[slot].built) {
         players[attacker-1].ramps[slot].unlocked = false; updateTowerGhosts();
@@ -8365,7 +8237,7 @@ function spawnVictoryCelebration(report) {
     t.placed = true; t.hp = t.max; t.pos = new THREE.Vector3(px, .1, pz);
     towerMesh(p, t); updateHUD();
     playSfx('build', 1);
-    showToast(`${setupMode ? 'Tour' : 'Tour reconstruite'} ${slot+1}<br>${t.hp}/${t.max} PV`);
+    showToast(`${setupMode ? 'Tour' : 'Tour reconstruite'} ${slot+1}<br>${t.hp}/${t.max} PV${usedFreeTower ? '<br>🗼 Bonus ligne : gratuit' : ''}`);
     if (pl.towers.every(t => t.placed)) {
       placingTower = false;
       if (setupMode && active === 1) {
@@ -8415,8 +8287,7 @@ function spawnVictoryCelebration(report) {
       impact(towerFxPos, 0xff5522, 2.85);
       playSfx('destroy', 1.5);
       turnSummary.push('Tour ' + (slot+1) + ' détruite (-' + realDamage + ' PV)');
-      focusEventCameraOn(towerFxPos, 1550, 12, 17);
-      showShotTitle('PERCÉE !', 'Tour détruite · rampe ' + (slot+1) + ' débloquée', 'destroy', towerFxPos, 2800);
+      bigMessage('TOUR DÉTRUITE !', 'Rampe ' + (slot+1) + ' débloquée', 'destroy', 2600);
       floatText('RAMPE DÉBLOQUÉE', ball.position.clone().add(new THREE.Vector3(0, 2.2, 0)), 'destroy');
     } else {
       towerMesh(defender, t);
@@ -8437,8 +8308,7 @@ function spawnVictoryCelebration(report) {
       comboBonus = 2;
       currentShot.comboSiegeUsed = true;
       statForPlayer(active).combos++;
-      focusEventCameraOn(ball.position.clone().add(new THREE.Vector3(0, 1.6, 0)), 1500, 12, 16);
-      showShotTitle('COMBO DE SIÈGE !', 'Tour détruite + château touché · +2 dégâts', 'combo', ball.position, 2600);
+      bigMessage('COMBO DE SIÈGE !', 'Tour détruite + château touché · +2 dégâts', 'combo', 1350);
       floatText('COMBO +2', ball.position.clone().add(new THREE.Vector3(0, 2.6, 0)), 'combo');
       turnSummary.push('Combo de siège : +2 dégâts');
     }
@@ -8476,14 +8346,12 @@ function spawnVictoryCelebration(report) {
       spawnDebrisInAttackLane(active, castleFxPos, target.name, { sourceType: 'castle', sourcePlayer: defender, sourceIndex: idx });
       updateCastlePartVisual(defender, idx);
       turnSummary.push(target.name + ' détruit (-' + realDamage + ' PV)');
-      focusEventCameraOn(castleFxPos, 1650, 12, 18);
-      showShotTitle('DÉMOLITION !', target.icon + ' ' + target.name, 'destroy', castleFxPos, 3000);
+      bigMessage('PARTIE DÉTRUITE !', target.icon + ' ' + target.name, 'destroy', 2800);
     } else {
       updateCastlePartVisual(defender, idx);
       turnSummary.push(target.name + ' -' + realDamage + ' PV');
       if (wasFragile) battleNotice('STRUCTURE FRAGILISÉE', target.icon + ' ' + target.name + ' · ' + target.hp + '/' + target.max + ' PV', 'damage', 2200);
-      if (realDamage >= 10) showShotTitle('COUP BRUTAL', target.icon + ' ' + target.name + '<br>-' + realDamage + ' PV', 'damage', castleFxPos, 2100);
-      else battleNotice('⚔️ Touché', target.icon + ' ' + target.name + ' · -' + realDamage + ' PV', 'damage', 2200);
+      showToast(target.icon + ' ' + target.name + '<br>-' + realDamage + ' PV');
     }
 
     updateHUD();
@@ -8636,10 +8504,7 @@ function spawnVictoryCelebration(report) {
       const power = Math.hypot(dx, dy);
       const armed = power >= AIM_MIN_POWER && Math.abs(dy) >= AIM_VERTICAL_MIN;
       if (armed) {
-        // Contrôle type lance-pierre cohérent pour les deux joueurs :
-        // tirer le doigt vers la droite envoie/visualise la bille vers la gauche, et inversement.
-        const aimX = (active === 1 ? -dx : dx) * .014;
-        velocity.x = aimX; velocity.z = dir(active) * Math.abs(dy) * .024;
+        velocity.x = -dx * .014; velocity.z = dir(active) * Math.abs(dy) * .024;
         playSfx('launch', Math.min(2.2, Math.max(0.8, power / 115)));
         canShoot = false; shotStarted = true; secondShotReady = false; pauseTurnTimer(); updateHUD();
       } else {
@@ -8940,20 +8805,9 @@ function spawnVictoryCelebration(report) {
     if (UI.btnSideRamp) UI.btnSideRamp.disabled = !gameStarted || gamePaused || aiTurn || gameOver || turnLocked || setupMode || phase !== 'attack' || shotStarted || !(players[active-1].sideRamps || []).some(r => !r.built) || !canPay(players[active-1].res, SIDE_RIDGE.cost);
     UI.btnRamp.disabled       = !gameStarted || gamePaused || aiTurn || gameOver || turnLocked || setupMode || phase !== 'attack' || shotStarted || !players[active-1].ramps.some(r => r.unlocked && !r.built);
     if (UI.btnSecondBall) UI.btnSecondBall.disabled = true;
-
-    setButtonHint(UI.btnAttack, 'Attaque impossible : termine la préparation, attends la fin du lancer ou laisse l’IA jouer.', 'Passer en phase attaque');
-    setButtonHint(UI.btnDefense, 'Défense impossible : tu es déjà en lancer, en pause ou dans une phase verrouillée.', 'Passer en phase défense');
-    setButtonHint(UI.btnMarket, marketTradeUsedThisTurn ? 'Marché déjà utilisé ce tour.' : 'Marché indisponible pendant un lancer, une pause ou la préparation.', 'Ouvrir le marché');
-    setButtonHint(UI.btnPlaceTower, setupMode ? 'Place tes tours initiales sur les zones bleues.' : 'Tours disponibles uniquement en phase défense.', 'Placer / reconstruire une tour');
-    setButtonHint(UI.btnCastleBuild, 'Construction du château disponible uniquement en défense.', 'Réparer ou reconstruire le château');
-    setButtonHint(UI.btnRandomRepair, randomRepairUsedThisTurn ? 'Réparation déjà utilisée ce tour.' : 'Aucune pièce réparable ou ressources insuffisantes.', 'Réparer une pièce de château');
-    setButtonHint(UI.btnRepairKit, 'Aucun kit utilisable pour le moment.', 'Utiliser un kit');
-    setButtonHint(UI.btnClearDebris, activeDebrisCount() <= 0 ? 'Aucun décombre gênant dans ton couloir.' : 'Déblayage possible seulement en attaque avant le lancer, avec 1 or.', 'Déblayer un décombre');
-    setButtonHint(UI.btnSideRamp, 'Rampe latérale possible seulement en attaque avant le lancer avec les ressources nécessaires.', 'Construire une rampe latérale');
-    setButtonHint(UI.btnRamp, 'Détruis une tour adverse pour débloquer une rampe château, puis construis-la en attaque.', 'Construire une rampe château');
-
     const pt = players[active-1].towers.filter(t => t.placed).length;
-    UI.btnPlaceTower.textContent = setupMode ? `🗼 Tours initiales ${pt}/4` : `🗼 Zones tours ${pt}/4`;
+        const freeTowerText = (!setupMode && (players[active - 1].freeTowerBuilds || 0) > 0) ? ` · gratuit x${players[active - 1].freeTowerBuilds}` : '';
+    UI.btnPlaceTower.textContent = setupMode ? `🗼 Tours initiales ${pt}/4` : `🗼 Tours / reconstruction ${pt}/4${freeTowerText}`;
     if (UI.btnCastleBuild) UI.btnCastleBuild.textContent = '🏰 Château / construction';
     if (UI.btnRandomRepair) UI.btnRandomRepair.textContent = randomRepairUsedThisTurn ? '🔧 Réparation utilisée' : '🔧 Réparation +40 PV · coût';
     const activeKitsStock = playerKits(active);
@@ -9162,9 +9016,8 @@ function spawnVictoryCelebration(report) {
           holeResolved = true; ballInHole = true;
           ball.position.set(h.x, .55, h.z); velocity.set(0, 0, 0);
           impact(ball.position, h.trap ? 0xff3333 : 0xffdd66);
-          markHoleDiscovered(h);
-          focusEventCameraOn(ball.position.clone().add(new THREE.Vector3(0, 1.0, 0)), 1150, 10, 15);
           statForPlayer().holesHit++;
+          markHoleDiscovered(h);
           if (h.relic && !h.relicFound) {
             collectRelicFromHole(h);
             scheduleFinishTurn('La bille a trouvé une relique.', 900);
@@ -9578,7 +9431,7 @@ function spawnVictoryCelebration(report) {
     cameraUpdate(); animateLamps(); animateHoleGlow(); updateKitAnimations();
     if (!gamePaused && dragging && canShoot) {
       const dx = dragNow.x - dragStart.x, dy = dragNow.y - dragStart.y;
-      const vx = (active === 1 ? -dx : dx) * .014, vz = dir(active) * Math.abs(dy) * .024;
+      const vx = -dx * .014, vz = dir(active) * Math.abs(dy) * .024;
       const start = ball.position.clone().add(new THREE.Vector3(0, 0.18, 0));
       const end = ball.position.clone().add(new THREE.Vector3(vx * 24, 0.18, vz * 24));
       aimLine.geometry.setFromPoints([start, end]);

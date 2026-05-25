@@ -1,0 +1,3 @@
+Base utilisée : fichiers sources mis à jour fournis dans cette conversation.
+Correction appliquée : audio build/repair/victory renforcé, chemins bruitage/ conservés, cache PWA changé.
+Menu principal : conservé, pas reconstruit.
