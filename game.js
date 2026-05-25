@@ -1822,8 +1822,32 @@ try {
       'bruitages/marche-btn-6.mp3',
       'bruitages/marche-btn-7.mp3',
       'bruitages/marche-btn-8.mp3'
+    ],
+    victory: [
+      'bruitages/victory.mp3',
+      'bruitages/victory-1.mp3',
+      'bruitages/victory-2.mp3',
+      'bruitages/victory-3.mp3',
+      'bruitages/victoire.mp3',
+      'bruitages/victoire-1.mp3',
+      'bruitages/victoire-2.mp3',
+      'bruitages/victoire-3.mp3'
     ]
   };
+
+  const VICTORY_AUDIO_FILES = [
+    'musiques/music-bds-victory.mp3',
+    'musiques/music-bds-victoire.mp3',
+    'bruitages/victory.mp3',
+    'bruitages/victory-1.mp3',
+    'bruitages/victory-2.mp3',
+    'bruitages/victory-3.mp3',
+    'bruitages/victoire.mp3',
+    'bruitages/victoire-1.mp3',
+    'bruitages/victoire-2.mp3',
+    'bruitages/victoire-3.mp3'
+  ];
+  let victoryAudio = null;
 
   // Réglage individuel du volume de chaque bruitage.
   // 1.00 = volume normal, 0.50 = moitié moins fort, 1.25 = un peu plus fort.
@@ -1858,7 +1882,15 @@ try {
     'marketButton.5': 0.70,
     'marketButton.6': 0.70,
     'marketButton.7': 0.70,
-    'marketButton.8': 0.70
+    'marketButton.8': 0.70,
+    'victory.1': 0.90,
+    'victory.2': 0.90,
+    'victory.3': 0.90,
+    'victory.4': 0.90,
+    'victory.5': 0.90,
+    'victory.6': 0.90,
+    'victory.7': 0.90,
+    'victory.8': 0.90
   };
 
   function getSfxMultiplier(kind) {
@@ -2241,6 +2273,68 @@ try {
     setTimeout(() => { try { master.disconnect(); } catch (e) {} }, 1200);
   }
 
+
+  function shuffleCopy(list) {
+    const out = Array.isArray(list) ? list.slice() : [];
+    for (let i = out.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      const tmp = out[i]; out[i] = out[j]; out[j] = tmp;
+    }
+    return out;
+  }
+
+  function tryPlayStandaloneAudio(url, volume = 0.85) {
+    return new Promise(resolve => {
+      let done = false;
+      const audio = new Audio(url);
+      const finish = ok => {
+        if (done) return;
+        done = true;
+        audio.removeEventListener('error', onError);
+        resolve(!!ok);
+      };
+      const onError = () => finish(false);
+      audio.preload = 'auto';
+      audio.loop = false;
+      audio.volume = clamp01(volume);
+      audio.addEventListener('error', onError, { once: true });
+      try {
+        if (victoryAudio) { try { victoryAudio.pause(); victoryAudio.currentTime = 0; } catch (e) {} }
+        const promise = audio.play();
+        if (promise && typeof promise.then === 'function') {
+          promise.then(() => {
+            victoryAudio = audio;
+            finish(true);
+          }).catch(() => finish(false));
+        } else {
+          victoryAudio = audio;
+          finish(true);
+        }
+      } catch (e) {
+        finish(false);
+      }
+      setTimeout(() => finish(false), 1400);
+    });
+  }
+
+  async function playVictoryAudio() {
+    // La musique/son de victoire personnalisé est prioritaire.
+    // On accepte plusieurs noms pour éviter de casser le choix de fichier déjà fait.
+    try { await unlockAudio(); } catch (e) {}
+    try { stopRollingSound(); } catch (e) {}
+    try { stopBackgroundMusic(false); } catch (e) {}
+
+    const volume = Math.min(1, Math.max(0.55, sfxVolume * 0.9));
+    const urls = shuffleCopy(VICTORY_AUDIO_FILES);
+    for (const url of urls) {
+      // On tente vraiment la lecture du MP3 au lieu de retomber trop vite
+      // sur le son synthétique si le fichier n'était pas encore préchargé.
+      const ok = await tryPlayStandaloneAudio(url, volume);
+      if (ok) return true;
+    }
+    playRandomSfx('victory', 'victory', 1.8, true);
+    return false;
+  }
 
   function getRollingAudio() {
     if (rollingFileUnavailable || !SFX_FILES.ballRoll) return null;
@@ -5972,7 +6066,13 @@ function addDamagedRoofDetails(parent, p, x, y, z, radius, central = false, crit
     }, duration);
   }
 
+  const ACTION_CAMERA_ZOOM_ENABLED = false;
+
   function focusEventCameraOn(pos, duration = 1250, height = 13, distance = 19) {
+    // Désactivé volontairement : les zooms automatiques pendant les actions donnaient
+    // l'impression que la bille disparaissait. On garde les effets, textes, tremblements
+    // et particules, mais la caméra reste stable pendant le lancer.
+    if (!ACTION_CAMERA_ZOOM_ENABLED) return;
     if (!pos || gameOver || gamePaused) return;
     const target = pos.clone ? pos.clone() : new THREE.Vector3(pos.x || 0, pos.y || 0, pos.z || 0);
     target.y = Math.max(1.8, target.y || 1.8);
@@ -7894,7 +7994,7 @@ function spawnVictoryCelebration(report) {
     victoryFocus = new THREE.Vector3(castleX(defeated), 4.2, castleZ(defeated));
     victoryCameraOffset = new THREE.Vector3(0, 17, castleZ(defeated) > 0 ? 30 : -30);
     impact(victoryFocus, 0xffcc55, 3.2);
-    playSfx('victory', 1.7);
+    playVictoryAudio();
     triggerShake(0.55, 0.75);
     hideBigMessage();
     const victoryPointReport = awardVictoryPoints(winner);
