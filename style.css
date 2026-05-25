@@ -5252,183 +5252,120 @@ button {
 }
 .battle-notice.second strong { color: #dbe8ff !important; }
 
-/* ─────────────────────────────────────────────
-   Événement de manche — fenêtre stylée claire
-   ───────────────────────────────────────────── */
-#eventModal {
-  position: fixed !important;
-  inset: 0 !important;
-  z-index: 7600 !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  padding: 18px !important;
-  background:
-    radial-gradient(circle at 50% 35%, rgba(255,226,150,.20), transparent 34%),
-    rgba(2, 8, 5, .56) !important;
-  backdrop-filter: blur(7px) saturate(1.12) !important;
-  -webkit-backdrop-filter: blur(7px) saturate(1.12) !important;
-  opacity: 1 !important;
-  pointer-events: auto !important;
-  transition: opacity .28s ease, transform .28s ease !important;
-}
-#eventModal.hidden {
-  display: none !important;
-  opacity: 0 !important;
-  pointer-events: none !important;
-}
-.event-modal-card {
-  position: relative !important;
-  width: min(92vw, 480px) !important;
-  padding: 22px 20px 20px !important;
-  border-radius: 28px !important;
-  text-align: center !important;
-  color: #fff6d7 !important;
-  border: 1px solid rgba(255,219,132,.72) !important;
-  background:
-    linear-gradient(145deg, rgba(45, 24, 9, .96), rgba(8, 29, 19, .94) 48%, rgba(4, 10, 8, .98)),
-    radial-gradient(circle at top, rgba(255,213,118,.20), transparent 48%) !important;
-  box-shadow:
-    0 22px 80px rgba(0,0,0,.62),
-    inset 0 0 0 1px rgba(255,255,255,.08),
-    0 0 42px rgba(255,201,86,.18) !important;
-  animation: eventCardPop .36s cubic-bezier(.2, 1.15, .2, 1) both !important;
-}
-.event-modal-card::before {
-  content: "";
-  position: absolute;
-  inset: 9px;
-  border-radius: 22px;
-  border: 1px solid rgba(255,255,255,.07);
-  pointer-events: none;
-}
-.event-modal-kicker {
-  font-family: Georgia, serif !important;
-  font-size: 11px !important;
-  letter-spacing: 3px !important;
-  color: rgba(255,224,148,.82) !important;
-  margin-bottom: 8px !important;
-}
-.event-modal-icon {
-  width: 64px !important;
-  height: 64px !important;
-  margin: 0 auto 10px !important;
-  display: grid !important;
-  place-items: center !important;
-  border-radius: 50% !important;
-  font-size: 34px !important;
-  background: radial-gradient(circle, rgba(255,236,165,.98), rgba(174,105,32,.92)) !important;
-  box-shadow: 0 0 28px rgba(255,206,93,.42), inset 0 0 12px rgba(255,255,255,.30) !important;
-}
-.event-modal-card h2 {
-  margin: 0 0 9px !important;
-  font-family: Georgia, serif !important;
-  font-size: clamp(22px, 6vw, 34px) !important;
-  letter-spacing: 3px !important;
-  line-height: 1.05 !important;
-  text-transform: uppercase !important;
-  color: #fff0b8 !important;
-  text-shadow: 0 2px 8px rgba(0,0,0,.70) !important;
-}
-.event-modal-card p {
-  margin: 0 auto 11px !important;
-  max-width: 38ch !important;
-  font-size: 15px !important;
-  line-height: 1.38 !important;
-  color: rgba(255,255,244,.92) !important;
-}
-.event-modal-card small {
-  display: inline-block !important;
-  padding: 5px 10px !important;
-  border-radius: 999px !important;
-  color: rgba(255,236,178,.86) !important;
-  background: rgba(255,210,90,.10) !important;
-  border: 1px solid rgba(255,210,90,.18) !important;
-  font-size: 11px !important;
-}
-.event-modal-close {
-  position: absolute !important;
-  top: 10px !important;
-  right: 10px !important;
-  width: 34px !important;
-  height: 34px !important;
-  border-radius: 50% !important;
-  border: 1px solid rgba(255,220,150,.32) !important;
-  color: #ffe8a6 !important;
-  background: rgba(0,0,0,.28) !important;
-  font-size: 18px !important;
-  font-weight: 900 !important;
-}
-@keyframes eventCardPop {
-  from { opacity: 0; transform: translateY(18px) scale(.92); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
+
+/* Correctif orientation tablette paysage 20260525 */
+:root {
+  --ui-bottom-h: 144px !important;
+  --bds-bottom-button-y: calc(8px + env(safe-area-inset-bottom)) !important;
 }
 
-/* ─────────────────────────────────────────────
-   Correctif 2026-05-25 : chrono + pause vraiment en bas
-   ───────────────────────────────────────────── */
+#game {
+  position: fixed !important;
+  left: 0 !important;
+  top: 0 !important;
+  width: 100vw !important;
+  height: calc(100dvh - var(--ui-bottom-h)) !important;
+}
+
 #turnTimer,
-.pause-btn {
+#btnPause {
   position: fixed !important;
   top: auto !important;
-  bottom: calc(5px + env(safe-area-inset-bottom)) !important;
+  bottom: var(--bds-bottom-button-y) !important;
   transform: none !important;
-  z-index: 9500 !important;
-  pointer-events: auto !important;
+  z-index: 1200 !important;
 }
+
 #turnTimer {
-  left: max(7px, env(safe-area-inset-left)) !important;
+  left: calc(10px + env(safe-area-inset-left)) !important;
   right: auto !important;
-  min-width: 70px !important;
-  height: 31px !important;
-  min-height: 31px !important;
-  padding: 3px 7px !important;
-  gap: 4px !important;
-  border-radius: 999px !important;
+  min-width: 78px !important;
+  height: 34px !important;
+  padding: 4px 10px !important;
 }
-#turnTimer span { font-size: 11px !important; }
-#turnTimer b {
-  font-size: 19px !important;
-  line-height: 1 !important;
-  min-width: 26px !important;
-}
-#turnTimer small {
-  font-size: 8px !important;
-  letter-spacing: .7px !important;
-}
-.pause-btn {
-  right: max(7px, env(safe-area-inset-right)) !important;
+
+#btnPause {
+  right: calc(10px + env(safe-area-inset-right)) !important;
   left: auto !important;
-  min-height: 31px !important;
-  height: 31px !important;
-  padding: 4px 9px !important;
-  font-size: 9.5px !important;
-  line-height: 1 !important;
-  letter-spacing: .9px !important;
-  border-radius: 999px !important;
+  min-height: 34px !important;
+  padding: 6px 12px !important;
 }
-#eventBanner {
-  bottom: calc(42px + env(safe-area-inset-bottom)) !important;
-}
+
 #controls {
-  padding-bottom: calc(39px + env(safe-area-inset-bottom)) !important;
+  height: var(--ui-bottom-h) !important;
+  padding: 10px 108px calc(46px + env(safe-area-inset-bottom)) !important;
+  box-sizing: border-box !important;
 }
-@media (max-width: 520px) {
-  #turnTimer {
-    left: max(5px, env(safe-area-inset-left)) !important;
-    min-width: 62px !important;
-    height: 28px !important;
-    min-height: 28px !important;
-    padding: 2px 6px !important;
+
+#eventBanner {
+  bottom: calc(var(--ui-bottom-h) + 10px + env(safe-area-inset-bottom)) !important;
+}
+
+#worldActionPrompt,
+#cameraControls {
+  bottom: calc(var(--ui-bottom-h) + 14px + env(safe-area-inset-bottom)) !important;
+}
+
+#bdsOrientationLock {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 2147483600;
+  align-items: center;
+  justify-content: center;
+  padding: 22px;
+  background:
+    radial-gradient(circle at center, rgba(38,100,62,.88), rgba(8,18,12,.98) 64%),
+    linear-gradient(135deg, #1a0e06, #0f2018);
+  color: #fff3cf;
+  text-align: center;
+}
+.orientation-card {
+  max-width: 420px;
+  border: 1px solid rgba(255,216,126,.58);
+  border-radius: 24px;
+  padding: 24px 20px;
+  background: linear-gradient(160deg, rgba(26,14,6,.94), rgba(9,40,26,.92));
+  box-shadow: 0 24px 70px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.08);
+}
+.orientation-icon {
+  width: 72px;
+  height: 72px;
+  display: grid;
+  place-items: center;
+  margin: 0 auto 12px;
+  border-radius: 22px;
+  border: 1px solid rgba(255,216,126,.50);
+  color: #ffe08a;
+  font-size: 48px;
+  font-weight: 900;
+}
+.orientation-card h2 {
+  margin: 0 0 8px;
+  font-family: 'Cinzel', serif;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: #ffe08a;
+}
+.orientation-card p {
+  margin: 0 0 10px;
+  font-size: 15px;
+  line-height: 1.35;
+  color: rgba(255,244,220,.92);
+}
+.orientation-card small { color: rgba(255,224,138,.86); }
+
+@media (orientation: portrait) and (max-width: 900px) {
+  #bdsOrientationLock { display: flex !important; }
+}
+
+@media (max-height: 520px) and (orientation: landscape) {
+  :root { --ui-bottom-h: 118px !important; }
+  #controls {
+    padding: 7px 100px calc(40px + env(safe-area-inset-bottom)) !important;
+    gap: 4px !important;
   }
-  #turnTimer span { font-size: 10px !important; }
-  #turnTimer b { font-size: 17px !important; min-width: 23px !important; }
-  #turnTimer small { font-size: 7px !important; }
-  .pause-btn {
-    right: max(5px, env(safe-area-inset-right)) !important;
-    height: 28px !important;
-    min-height: 28px !important;
-    padding: 3px 7px !important;
-    font-size: 8.6px !important;
-  }
+  #turnTimer, #btnPause { min-height: 30px !important; height: 30px !important; }
+  #btnPause { padding: 4px 10px !important; font-size: 11px !important; }
+  #turnTimer b { font-size: 19px !important; min-width: 28px !important; }
 }

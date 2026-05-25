@@ -1,8 +1,8 @@
-const BDS_CACHE = 'bds-bottom-hud-combo-line-bonus-20260525-1';
+const BDS_CACHE = 'bds-orientation-landscape-20260525-1';
 const BDS_FILES = [
   './index.html',
-  './style.css?v=bottom-hud-combo-line-bonus-20260525-1',
-  './game.js?v=bottom-hud-combo-line-bonus-20260525-1',
+  './style.css?v=orientation-landscape-20260525-1',
+  './game.js?v=orientation-landscape-20260525-1',
   './style.css',
   './game.js',
   './manifest.webmanifest',
