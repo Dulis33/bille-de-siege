@@ -1,4 +1,4 @@
-// Bille de Siège — base stable + kits, décombres évolutifs, pluie boueuse + visuel modernisé léger.
+// Bille de Siège — IA visée améliorée, vol allégé, buttes sécurisées, popup événements.
 (() => {
 try {
   ['bdsBootV11','bdsBootFinal','bdsBoot','bdsBootClean'].forEach(function(id){
@@ -199,7 +199,7 @@ try {
 
   // Références de progression : les objectifs doivent demander une vraie performance,
   // pas être atteints automatiquement pendant une partie normale.
-  const CASTLE_PART_HP_VALUES = [12, 12, 12, 12, 14, 14, 14, 14, 22];
+  const CASTLE_PART_HP_VALUES = [15, 15, 15, 15, 18, 18, 18, 18, 28];
   const DEFENSE_TOWER_HP_VALUES = [85, 105, 125, 150];
   const DAMAGE_OBJECTIVE_BASE = CASTLE_PART_HP_VALUES.reduce((sum, hp) => sum + hp, 0)
     + DEFENSE_TOWER_HP_VALUES.reduce((sum, hp) => sum + hp, 0);
@@ -466,27 +466,6 @@ try {
   }
 
   let progress = getPlayerProgress(1);
-
-  // Correctif GitHub/mobile : suppression unique des points de test des profils.
-  // Les cosmétiques déjà débloqués sont conservés ; seuls les compteurs de points sont remis à zéro.
-  const POINTS_CLEANUP_STORAGE_KEY = 'BDS_POINTS_CLEANUP_20260525_1';
-
-  function cleanupVictoryPointsOnce() {
-    try {
-      if (localStorage.getItem(POINTS_CLEANUP_STORAGE_KEY) === 'done') return;
-      Object.values(profileState.profiles || {}).forEach(profile => {
-        if (!profile || !profile.progress) return;
-        profile.progress.victoryPoints = 0;
-        profile.progress.lifetimeEarned = 0;
-      });
-      progress = getPlayerProgress(1);
-      localStorage.setItem(PROFILES_STORAGE_KEY, JSON.stringify(profileState));
-      localStorage.setItem(PROGRESS_STORAGE_KEY, JSON.stringify(progress));
-      localStorage.setItem(POINTS_CLEANUP_STORAGE_KEY, 'done');
-    } catch (err) {}
-  }
-
-  cleanupVictoryPointsOnce();
 
   function saveProfiles() {
     try { localStorage.setItem(PROFILES_STORAGE_KEY, JSON.stringify(profileState)); } catch (err) {}
@@ -2629,6 +2608,44 @@ try {
   eventBanner.className = 'hidden';
   document.body.appendChild(eventBanner);
 
+  const eventModal = document.createElement('div');
+  eventModal.id = 'eventModal';
+  eventModal.className = 'hidden';
+  eventModal.innerHTML = `
+    <div class="event-modal-card">
+      <button class="event-modal-close" type="button" aria-label="Fermer">✕</button>
+      <div class="event-modal-kicker">ÉVÉNEMENT DE MANCHE</div>
+      <div class="event-modal-icon"></div>
+      <h2></h2>
+      <p></p>
+      <small>Actif pour les deux joueurs pendant cette manche.</small>
+    </div>`;
+  document.body.appendChild(eventModal);
+  const eventModalClose = eventModal.querySelector('.event-modal-close');
+  const eventModalIcon = eventModal.querySelector('.event-modal-icon');
+  const eventModalTitle = eventModal.querySelector('h2');
+  const eventModalText = eventModal.querySelector('p');
+  let eventModalTimer = null;
+
+  function hideTurnEventModal() {
+    if (!eventModal) return;
+    eventModal.className = 'hidden';
+    if (eventModalTimer) { clearTimeout(eventModalTimer); eventModalTimer = null; }
+  }
+
+  function showTurnEventModal(evt) {
+    if (!evt || !eventModal || setupMode || gameOver) return;
+    if (eventModalIcon) eventModalIcon.textContent = evt.icon || '✦';
+    if (eventModalTitle) eventModalTitle.textContent = evt.title || 'ÉVÉNEMENT';
+    if (eventModalText) eventModalText.textContent = evt.desc || '';
+    eventModal.className = 'show';
+    if (eventModalTimer) clearTimeout(eventModalTimer);
+    eventModalTimer = setTimeout(hideTurnEventModal, 4600);
+  }
+
+  if (eventModalClose) eventModalClose.onclick = hideTurnEventModal;
+  eventModal.addEventListener('click', (e) => { if (e.target === eventModal) hideTurnEventModal(); });
+
   // File d'attente des messages courts : évite les superpositions avec les gros effets et les overlays.
   const toastQueue = [];
   let toastBusy = false;
@@ -3215,9 +3232,10 @@ function shadeHexColor(color, amount) {
     return (zoneEdge + rampZ) / 2;
   }
 
-  function createBonusHoleVisual(attacker) {
+  function createBonusHoleVisual(attacker, variantIndex = 0, zOffset = 0) {
     const laneX = attackX(attacker);
-    const z = bonusHoleZ(attacker);
+    const baseZ = bonusHoleZ(attacker);
+    const z = THREE.MathUtils.clamp(baseZ + zOffset, -CFG.laneL / 2 + 22, CFG.laneL / 2 - 22);
     const g = new THREE.Group();
     g.position.set(laneX, 0.02, z);
 
@@ -3267,10 +3285,11 @@ function shadeHexColor(color, amount) {
       y: 0.42,
       minX,
       maxX,
-      vx: (Math.random() < 0.5 ? -1 : 1) * (0.028 + Math.random() * 0.038),
+      vx: (Math.random() < 0.5 ? -1 : 1) * (0.024 + Math.random() * 0.034 + variantIndex * 0.004),
       nextSpeedChange: Date.now() + 500 + Math.random() * 1100,
       last: false,
       mesh: g,
+      variantIndex,
       ring,
       glow
     };
@@ -3278,6 +3297,32 @@ function shadeHexColor(color, amount) {
 
   function buildBonusHoles() {
     [1, 2].forEach(attacker => bonusHoles.push(createBonusHoleVisual(attacker)));
+  }
+
+  function countBonusHolesForPlayer(player) {
+    return bonusHoles.filter(h => h && h.attacker === player).length;
+  }
+
+  function spawnExtraBonusHolesForPlayer(player, requested = 0, reason = 'Trou de vol') {
+    const remaining = Math.max(0, MAX_BONUS_HOLES_PER_PLAYER - countBonusHolesForPlayer(player));
+    const count = Math.max(0, Math.min(requested, remaining));
+    if (!count) return 0;
+    const offsets = [-22, 22, -36, 36, -50, 50];
+    const already = countBonusHolesForPlayer(player);
+    for (let i = 0; i < count; i++) {
+      const offset = offsets[(already + i - 1 + offsets.length) % offsets.length];
+      const h = createBonusHoleVisual(player, already + i, offset);
+      bonusHoles.push(h);
+    }
+    const label = count === 1 ? '1 trou bonus mobile ajouté' : count + ' trous bonus mobiles ajoutés';
+    turnSummary.push(reason + ' : ' + label);
+    bigMessage('TROUS BONUS AJOUTÉS', label, 'jackpot', 2300);
+    battleNotice('NOUVEAU BONUS', label, 'jackpot', 3100);
+    return count;
+  }
+
+  function rollTheftBonusHoleCount() {
+    return THEFT_BONUS_HOLE_CHANCES[randInt(0, THEFT_BONUS_HOLE_CHANCES.length - 1)] || 0;
   }
 
   function updateBonusHoles(dt = 1) {
@@ -3400,6 +3445,11 @@ function shadeHexColor(color, amount) {
     { id: 'gold5',      label: '+5 or',         icon: '🪙', resource: 'gold',  amount: 5, summary: '+5 or au prochain tour' },
     { id: 'doubleDamage', label: 'Dégâts doublés', icon: '💥', summary: 'dégâts doublés au prochain tour' }
   ];
+  const MAX_BONUS_HOLES_PER_PLAYER = 3; // Maximum total par joueur : 1 trou mobile de base + 2 emplacements gagnables.
+  const THEFT_MISS_CHANCE = 0.26;
+  // Un trou de vol ne peut ajouter qu'un seul trou bonus à la fois.
+  // La limite globale reste MAX_BONUS_HOLES_PER_PLAYER.
+  const THEFT_BONUS_HOLE_CHANCES = [0, 0, 0, 1, 1, 1];
   const DEBRIS_CLEAR_COST = { gold: 1 };
   const DEBRIS_RADIUS = 2.25;
   const DEBRIS_STAGE_RADII = [0, 2.25, 2.82, 3.45];
@@ -3481,6 +3531,26 @@ function shadeHexColor(color, amount) {
   }
 
   let currentShot = createShotState();
+
+  function beginShotLaunch(player = active) {
+    const pl = players[player - 1];
+    if (!pl) return false;
+    pl.shotsFiredThisTurn = pl.shotsFiredThisTurn || 0;
+    if (pl.shotsFiredThisTurn >= 2) {
+      canShoot = false;
+      secondShotReady = false;
+      pl.extraShotsLeft = 0;
+      showToast('Limite atteinte<br>2 lancers maximum par tour');
+      return false;
+    }
+    pl.shotsFiredThisTurn++;
+    return true;
+  }
+
+  function resetTurnShotCounter(player = active) {
+    const pl = players[player - 1];
+    if (pl) pl.shotsFiredThisTurn = 0;
+  }
 
   function randInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -4727,7 +4797,8 @@ function shadeHexColor(color, amount) {
     bonusDoubleDamageThisTurn: false,
     secondBallTurns: 0,
     extraShotsLeft: 0,
-    secondBallActiveThisTurn: false
+    secondBallActiveThisTurn: false,
+    shotsFiredThisTurn: 0
   }));
 
   let active = 1, phase = 'setup', setupMode = true, placingTower = true;
@@ -6093,7 +6164,8 @@ function addDamagedRoofDetails(parent, p, x, y, z, radius, central = false, crit
       activeTurnEvent = drawRandomTurnEvent();
       if (activeTurnEvent && activeTurnEvent.mud) spawnMudZonesForEvent();
       updateEventBanner(true);
-      // L'événement reste visible dans un bandeau compact : pas de gros panneau central qui masque le plateau.
+      showTurnEventModal(activeTurnEvent);
+      // L'événement reste visible ensuite dans un bandeau compact.
     } else {
       updateEventBanner();
     }
@@ -6247,24 +6319,38 @@ function addDamagedRoofDetails(parent, p, x, y, z, radius, central = false, crit
   }
 
   function handleBackEdgePenalty() {
+    // Ancienne règle supprimée : le mur du fond ne vole plus de ressources.
+    // Il sert uniquement de rebond physique.
     if (currentShot.backEdgePenalty || gameOver) return;
     currentShot.backEdgePenalty = true;
-    loseRandomResourcesFromPlayer(enemy(active), 1, 3, 'Rebord adverse');
   }
 
 
 
-  function stealRandomResourcesFromPlayer(victim, min = 3, max = 8, label = 'Vol de ressources') {
+  function stealRandomResourcesFromPlayer(victim, min = 1, max = 3, label = 'Vol de ressources') {
     const thief = active;
     const victimRes = players[victim - 1].res;
     const thiefRes = players[thief - 1].res;
     const availableTotal = RESOURCE_TYPES.reduce((sum, type) => sum + (victimRes[type] || 0), 0);
+    const bonusCount = Math.min(1, rollTheftBonusHoleCount()); // sécurité : 1 trou bonus maximum par bille tombée dans un trou de vol
+
+    if (Math.random() < THEFT_MISS_CHANCE) {
+      const added = spawnExtraBonusHolesForPlayer(thief, bonusCount, label);
+      turnSummary.push(label + ' : vol raté' + (added ? ' · +' + added + ' trou bonus' : ''));
+      impact(ball.position, 0xffc24b, 1.15);
+      floatText('VOL RATÉ', ball.position.clone().add(new THREE.Vector3(0, 1.8, 0)), 'trap');
+      showToast(label + '<br>Vol raté' + (added ? '<br>+' + added + ' trou bonus' : ''));
+      updateHUD();
+      return 0;
+    }
 
     if (!availableTotal) {
-      turnSummary.push(label + ' : adversaire sans ressource');
+      const added = spawnExtraBonusHolesForPlayer(thief, bonusCount, label);
+      turnSummary.push(label + ' : adversaire sans ressource' + (added ? ' · +' + added + ' trou bonus' : ''));
       impact(ball.position, 0xffc24b, 1.35);
       floatText('VOL<br>0', ball.position.clone().add(new THREE.Vector3(0, 1.8, 0)), 'trap');
-      showToast(label + '<br>L’adversaire n’a rien à voler');
+      showToast(label + '<br>L’adversaire n’a rien à voler' + (added ? '<br>+' + added + ' trou bonus' : ''));
+      updateHUD();
       return 0;
     }
 
@@ -6283,16 +6369,18 @@ function addDamagedRoofDetails(parent, p, x, y, z, radius, central = false, crit
     }
 
     const stolenTotal = rewardTotal(stolen);
+    const added = spawnExtraBonusHolesForPlayer(thief, bonusCount, label);
     Object.keys(stolen).forEach(type => pulseResource(type));
     statForPlayer(thief).resources += stolenTotal;
     statForPlayer(thief).edgeSteals++;
 
     const line = rewardLine(stolen);
-    turnSummary.push(label + ' : +' + line + ' volé à J' + victim);
-    impact(ball.position, 0xffc24b, 2.0);
+    turnSummary.push(label + ' : +' + line + ' volé à J' + victim + (added ? ' · +' + added + ' trou bonus' : ''));
+    impact(ball.position, 0xffc24b, 1.8);
     floatText('VOL<br>' + rewardHtml(stolen), ball.position.clone().add(new THREE.Vector3(0, 1.8, 0)), 'combo');
-    bigMessage('VOL DE RESSOURCES', '+' + stolenTotal + ' ressource' + (stolenTotal > 1 ? 's' : '') + '<br>' + rewardHtml(stolen), 'jackpot', 2600);
-    showToast(label + '<br>' + line);
+    const bonusLine = added ? '<br>+' + added + ' trou' + (added > 1 ? 's' : '') + ' bonus mobile' + (added > 1 ? 's' : '') : '';
+    bigMessage('VOL DE RESSOURCES', '+' + stolenTotal + ' ressource' + (stolenTotal > 1 ? 's' : '') + '<br>' + rewardHtml(stolen) + bonusLine, 'jackpot', 2600);
+    showToast(label + '<br>' + line + (added ? '<br>+' + added + ' trou bonus' : ''));
     updateHUD();
     return stolenTotal;
   }
@@ -7178,7 +7266,9 @@ function addDamagedRoofDetails(parent, p, x, y, z, radius, central = false, crit
         const debrisPenalty = aiPathDebrisPenalty(active, sx, tx, targetZ);
         const sidePenalty = Math.abs(sx - preferredStart) * (plan.type === 'classicRamp' || plan.type === 'tower' ? 0.20 : 0.32);
         const targetPenalty = Math.abs(to) * (preciseTarget ? 3.0 : 0.44);
-        const straightPenalty = Math.abs(tx - sx) < 1.2 && debrisPenalty > 0 ? 10 : 0;
+        const angle = Math.abs(tx - sx);
+        const antiStraightPenalty = angle < 1.4 ? 11.5 : (angle < 3.1 ? 4.2 : 0);
+        const straightPenalty = (angle < 1.2 && debrisPenalty > 0 ? 10 : 0) + antiStraightPenalty;
         const score = debrisPenalty + sidePenalty + targetPenalty + straightPenalty + Math.random() * 0.35;
         if (!best || score < best.score) best = { startX: sx, targetX: tx, targetZ, debrisPenalty, score };
       });
@@ -7226,12 +7316,14 @@ function addDamagedRoofDetails(parent, p, x, y, z, radius, central = false, crit
 
   function aiChooseBonusHoleTarget() {
     const profile = aiProfile();
-    const h = bonusHoles.find(item => item.attacker === active);
-    if (!h) return null;
+    const candidates = bonusHoles.filter(item => item && item.attacker === active);
+    if (!candidates.length) return null;
     const hasQueued = !!players[active - 1].queuedBonusNextTurn;
-    const appeal = 18 + profile.resourceBias * 10 + profile.attackBias * 4 - (hasQueued ? 14 : 0);
+    const appeal = 18 + profile.resourceBias * 10 + profile.attackBias * 4 + Math.min(12, candidates.length * 3) - (hasQueued ? 14 : 0);
     if (Math.random() * 100 > appeal) return null;
-    return h;
+    return candidates
+      .map(h => ({ h, score: Math.random() * 10 - Math.abs(h.x - attackX(active)) * 0.06 - Math.abs(h.z - startZ(active)) * 0.002 }))
+      .sort((a, b) => b.score - a.score)[0].h;
   }
 
   function aiChooseTowerTarget() {
@@ -7414,6 +7506,8 @@ function addDamagedRoofDetails(parent, p, x, y, z, radius, central = false, crit
     const startX = optimizedLine.startX;
     const targetX = optimizedLine.targetX;
 
+    if (!beginShotLaunch(active)) return;
+
     ball.position.x = startX;
     ball.position.z = startZ(active);
     ball.position.y = CFG.ballR + .18;
@@ -7561,6 +7655,7 @@ function addDamagedRoofDetails(parent, p, x, y, z, radius, central = false, crit
 
     statForPlayer(active).turns++;
     secondShotReady = false;
+    resetTurnShotCounter(active);
     rerollHoleRewards();
     turnLocked = false;
     canShoot = false;
@@ -7586,6 +7681,7 @@ function addDamagedRoofDetails(parent, p, x, y, z, radius, central = false, crit
     clearPendingWorldAction();
     phase = 'setup'; setupMode = true; active = 1; placingTower = true;
     activeTurnEvent = null;
+    hideTurnEventModal();
     rampCameraFocus = null;
     turnIntroCamera = null;
     shotCreatedDebris = [];
@@ -7634,6 +7730,7 @@ function addDamagedRoofDetails(parent, p, x, y, z, radius, central = false, crit
     placingTower = false;
     turnSummary = [];
     const bonusSecondShot = !!pl.bonusSecondShotThisTurn;
+    pl.shotsFiredThisTurn = 0;
     pl.extraShotsLeft = (pl.secondBallTurns > 0 || bonusSecondShot) ? 1 : 0;
     pl.secondBallActiveThisTurn = pl.secondBallTurns > 0;
     resetBall();
@@ -7772,6 +7869,7 @@ function spawnVictoryCelebration(report) {
     players.forEach(pl => { pl.extraShotsLeft = 0; pl.secondBallActiveThisTurn = false; });
     secondShotReady = false;
     activeTurnEvent = null;
+    hideTurnEventModal();
     rampCameraFocus = null;
     updateEventBanner();
     stopTurnTimer(true);
@@ -7933,7 +8031,7 @@ function spawnVictoryCelebration(report) {
     if (autoSwitchStarted) return;
 
     const pl = players[active-1];
-    if (phase === 'attack' && shotStarted && pl.extraShotsLeft > 0) {
+    if (phase === 'attack' && shotStarted && pl.extraShotsLeft > 0 && (pl.shotsFiredThisTurn || 0) < 2) {
       pl.extraShotsLeft--;
       statForPlayer(active).secondShots++;
       secondShotReady = true;
@@ -7943,6 +8041,10 @@ function spawnVictoryCelebration(report) {
       updateHUD();
       showSecondShotNotice();
       return;
+    }
+    if (phase === 'attack' && (pl.shotsFiredThisTurn || 0) >= 2) {
+      pl.extraShotsLeft = 0;
+      secondShotReady = false;
     }
 
     autoSwitchStarted = true;
@@ -8387,6 +8489,7 @@ function spawnVictoryCelebration(report) {
       const power = Math.hypot(dx, dy);
       const armed = power >= AIM_MIN_POWER && Math.abs(dy) >= AIM_VERTICAL_MIN;
       if (armed) {
+        if (!beginShotLaunch(active)) { downData = null; pointerMode = 'none'; return; }
         velocity.x = -dx * .014; velocity.z = dir(active) * Math.abs(dy) * .024;
         playSfx('launch', Math.min(2.2, Math.max(0.8, power / 115)));
         canShoot = false; shotStarted = true; secondShotReady = false; pauseTurnTimer(); updateHUD();
@@ -8843,6 +8946,49 @@ function spawnVictoryCelebration(report) {
     });
   }
 
+  function enforceCastleAndSideBackWalls() {
+    const defender = enemy(active);
+    const laneX = attackX(active);
+    const inAttackLane = Math.abs(ball.position.x - laneX) < CFG.laneW / 2 + CFG.ballR * 0.65;
+    const insideCastleWidth = Math.abs(ball.position.x - castleX(defender)) < BUTTE.w / 2 + CFG.ballR * 0.45;
+    const frontGateZ = castleZ(defender) - dir(active) * (BUTTE.d / 2 + CFG.ballR * 0.60);
+    const backWallZ = castleZ(defender) + dir(active) * (BUTTE.d / 2 + CFG.ballR * 0.72);
+
+    if (inAttackLane && insideCastleWidth && !castleAccessThisShot && !sideRidgeAccessThisShot) {
+      const passedFront = (ball.position.z - frontGateZ) * dir(active) > 0;
+      if (passedFront) {
+        ball.position.z = frontGateZ - dir(active) * 0.35;
+        velocity.z = -dir(active) * Math.max(0.12, Math.abs(velocity.z) * 0.72);
+        velocity.x *= 0.70;
+        impact(ball.position, 0x77ccff, 1.05);
+        showToast('Butte : il faut une rampe');
+      }
+    }
+
+    if (castleAccessThisShot && inAttackLane && insideCastleWidth) {
+      const hitBackWall = (ball.position.z - backWallZ) * dir(active) > 0;
+      if (hitBackWall) {
+        ball.position.z = backWallZ - dir(active) * 0.45;
+        velocity.z = -dir(active) * Math.max(0.10, Math.abs(velocity.z) * 0.66);
+        velocity.x *= 0.78;
+        impact(ball.position, 0xd8c070, 0.95);
+      }
+    }
+
+    if (sideRidgeAccessThisShot) {
+      const ridge = sideRidgeHitForAttacker(active, ball.position.x, ball.position.z, 1.05);
+      if (ridge) {
+        const hitRidgeEnd = (ball.position.z - ridge.zEnd) * dir(active) > 0;
+        if (hitRidgeEnd) {
+          ball.position.z = ridge.zEnd - dir(active) * 0.45;
+          velocity.z = -dir(active) * Math.max(0.10, Math.abs(velocity.z) * 0.66);
+          velocity.x *= 0.76;
+          impact(ball.position, 0xd8c070, 0.9);
+        }
+      }
+    }
+  }
+
   /* ── Physique ── */
   function physics() {
     if (gameOver || turnLocked || phase !== 'attack' || canShoot) return;
@@ -8858,7 +9004,7 @@ function spawnVictoryCelebration(report) {
       const hitBackEdge = active === 1
         ? ball.position.z <= -CFG.laneL / 2 + margin
         : ball.position.z >=  CFG.laneL / 2 - margin;
-      if (hitBackEdge && !sideRidgeAccessThisShot) handleBackEdgePenalty();
+      if (hitBackEdge && !sideRidgeAccessThisShot) handleBackEdgePenalty(); // rebond uniquement : plus de perte de ressources
       velocity.z *= -.65;
       ball.position.z = THREE.MathUtils.clamp(ball.position.z, -CFG.laneL/2 + margin, CFG.laneL/2 - margin);
       impact(ball.position, hitBackEdge ? 0xffc24b : 0xe0d0a0, hitBackEdge ? 1.4 : 1);
@@ -8925,7 +9071,7 @@ function spawnVictoryCelebration(report) {
           ball.position.set(h.x, BUTTE.h + 0.55, h.z);
           velocity.set(0, 0, 0);
           statForPlayer().holesHit++;
-          stealRandomResourcesFromPlayer(enemy(active), 3, 8, 'Trou de vol latéral');
+          stealRandomResourcesFromPlayer(enemy(active), 1, 3, 'Trou de vol latéral');
           scheduleFinishTurn('La bille est tombée dans le trou de vol.', 900);
         } else {
           impact(ball.position, 0xffc24b, 1.05);
@@ -9148,6 +9294,7 @@ function spawnVictoryCelebration(report) {
     });
 
     blockSolidButtesAndRampSides();
+    enforceCastleAndSideBackWalls();
 
     // Les buttes latérales sont des couloirs hauts avec rebord intérieur :
     // - sans rampe latérale réussie, elles bloquent la bille ;

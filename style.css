@@ -5253,133 +5253,113 @@ button {
 .battle-notice.second strong { color: #dbe8ff !important; }
 
 /* ─────────────────────────────────────────────
-   PATCH 2026-05-25 — CHRONO + PAUSE TOUT EN BAS
-   Objectif : libérer les côtés de la zone de tir.
-   Le chrono et le bouton Pause ne flottent plus sur le plateau.
-───────────────────────────────────────────── */
-:root {
-  --ui-bottom-h: 166px !important;
-  --bds-low-bar-h: 48px !important;
-}
-
-#game {
-  height: calc(100vh - var(--ui-bottom-h)) !important;
-}
-
-#controls {
-  height: var(--ui-bottom-h) !important;
-  padding: 10px 10px calc(58px + env(safe-area-inset-bottom)) !important;
-  gap: 6px !important;
-  justify-content: flex-start !important;
-  overflow: visible !important;
-}
-
-#turnTimer,
-.pause-btn {
+   Événement de manche — fenêtre stylée claire
+   ───────────────────────────────────────────── */
+#eventModal {
   position: fixed !important;
-  top: auto !important;
-  bottom: calc(6px + env(safe-area-inset-bottom)) !important;
-  transform: none !important;
-  z-index: 120 !important;
+  inset: 0 !important;
+  z-index: 7600 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 18px !important;
+  background:
+    radial-gradient(circle at 50% 35%, rgba(255,226,150,.20), transparent 34%),
+    rgba(2, 8, 5, .56) !important;
+  backdrop-filter: blur(7px) saturate(1.12) !important;
+  -webkit-backdrop-filter: blur(7px) saturate(1.12) !important;
+  opacity: 1 !important;
+  pointer-events: auto !important;
+  transition: opacity .28s ease, transform .28s ease !important;
 }
-
-#turnTimer {
-  left: max(10px, env(safe-area-inset-left)) !important;
-  right: auto !important;
-  min-width: 82px !important;
-  height: 38px !important;
+#eventModal.hidden {
+  display: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+.event-modal-card {
+  position: relative !important;
+  width: min(92vw, 480px) !important;
+  padding: 22px 20px 20px !important;
+  border-radius: 28px !important;
+  text-align: center !important;
+  color: #fff6d7 !important;
+  border: 1px solid rgba(255,219,132,.72) !important;
+  background:
+    linear-gradient(145deg, rgba(45, 24, 9, .96), rgba(8, 29, 19, .94) 48%, rgba(4, 10, 8, .98)),
+    radial-gradient(circle at top, rgba(255,213,118,.20), transparent 48%) !important;
+  box-shadow:
+    0 22px 80px rgba(0,0,0,.62),
+    inset 0 0 0 1px rgba(255,255,255,.08),
+    0 0 42px rgba(255,201,86,.18) !important;
+  animation: eventCardPop .36s cubic-bezier(.2, 1.15, .2, 1) both !important;
+}
+.event-modal-card::before {
+  content: "";
+  position: absolute;
+  inset: 9px;
+  border-radius: 22px;
+  border: 1px solid rgba(255,255,255,.07);
+  pointer-events: none;
+}
+.event-modal-kicker {
+  font-family: Georgia, serif !important;
+  font-size: 11px !important;
+  letter-spacing: 3px !important;
+  color: rgba(255,224,148,.82) !important;
+  margin-bottom: 8px !important;
+}
+.event-modal-icon {
+  width: 64px !important;
+  height: 64px !important;
+  margin: 0 auto 10px !important;
+  display: grid !important;
+  place-items: center !important;
+  border-radius: 50% !important;
+  font-size: 34px !important;
+  background: radial-gradient(circle, rgba(255,236,165,.98), rgba(174,105,32,.92)) !important;
+  box-shadow: 0 0 28px rgba(255,206,93,.42), inset 0 0 12px rgba(255,255,255,.30) !important;
+}
+.event-modal-card h2 {
+  margin: 0 0 9px !important;
+  font-family: Georgia, serif !important;
+  font-size: clamp(22px, 6vw, 34px) !important;
+  letter-spacing: 3px !important;
+  line-height: 1.05 !important;
+  text-transform: uppercase !important;
+  color: #fff0b8 !important;
+  text-shadow: 0 2px 8px rgba(0,0,0,.70) !important;
+}
+.event-modal-card p {
+  margin: 0 auto 11px !important;
+  max-width: 38ch !important;
+  font-size: 15px !important;
+  line-height: 1.38 !important;
+  color: rgba(255,255,244,.92) !important;
+}
+.event-modal-card small {
+  display: inline-block !important;
   padding: 5px 10px !important;
-  gap: 5px !important;
   border-radius: 999px !important;
+  color: rgba(255,236,178,.86) !important;
+  background: rgba(255,210,90,.10) !important;
+  border: 1px solid rgba(255,210,90,.18) !important;
+  font-size: 11px !important;
 }
-
-#turnTimer span {
-  font-size: 13px !important;
+.event-modal-close {
+  position: absolute !important;
+  top: 10px !important;
+  right: 10px !important;
+  width: 34px !important;
+  height: 34px !important;
+  border-radius: 50% !important;
+  border: 1px solid rgba(255,220,150,.32) !important;
+  color: #ffe8a6 !important;
+  background: rgba(0,0,0,.28) !important;
+  font-size: 18px !important;
+  font-weight: 900 !important;
 }
-
-#turnTimer b {
-  font-size: 22px !important;
-  min-width: 30px !important;
-  line-height: 1 !important;
-}
-
-#turnTimer small {
-  font-size: 9px !important;
-}
-
-.pause-btn {
-  left: auto !important;
-  right: max(10px, env(safe-area-inset-right)) !important;
-  min-height: 38px !important;
-  padding: 7px 12px !important;
-  font-size: 10px !important;
-  letter-spacing: 1.1px !important;
-  border-radius: 999px !important;
-}
-
-#eventBanner {
-  bottom: calc(56px + env(safe-area-inset-bottom)) !important;
-  left: 50% !important;
-  right: auto !important;
-  transform: translateX(-50%) !important;
-  width: min(54vw, 360px) !important;
-  max-width: calc(100vw - 26px) !important;
-  z-index: 118 !important;
-}
-
-#cameraControls {
-  bottom: calc(var(--ui-bottom-h) + 10px + env(safe-area-inset-bottom)) !important;
-}
-
-@media (max-width: 520px) {
-  :root {
-    --ui-bottom-h: 158px !important;
-    --bds-low-bar-h: 46px !important;
-  }
-
-  #controls {
-    padding: 9px 7px calc(54px + env(safe-area-inset-bottom)) !important;
-    gap: 5px !important;
-  }
-
-  #turnTimer {
-    left: 7px !important;
-    bottom: calc(6px + env(safe-area-inset-bottom)) !important;
-    min-width: 74px !important;
-    height: 34px !important;
-    padding: 4px 8px !important;
-  }
-
-  #turnTimer span {
-    font-size: 11px !important;
-  }
-
-  #turnTimer b {
-    font-size: 19px !important;
-    min-width: 27px !important;
-  }
-
-  .pause-btn {
-    right: 7px !important;
-    bottom: calc(6px + env(safe-area-inset-bottom)) !important;
-    min-height: 34px !important;
-    padding: 6px 9px !important;
-    font-size: 9px !important;
-  }
-
-  #eventBanner {
-    bottom: calc(48px + env(safe-area-inset-bottom)) !important;
-    width: min(62vw, 260px) !important;
-    min-height: 32px !important;
-    padding: 5px 7px !important;
-  }
-
-  #eventBanner b {
-    font-size: 8.8px !important;
-    letter-spacing: .75px !important;
-  }
-
-  #cameraControls {
-    bottom: calc(var(--ui-bottom-h) + 8px + env(safe-area-inset-bottom)) !important;
-  }
+@keyframes eventCardPop {
+  from { opacity: 0; transform: translateY(18px) scale(.92); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
 }
