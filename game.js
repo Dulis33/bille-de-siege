@@ -1,4 +1,4 @@
-// Bille de Siège — thème Casino Jackpot clair fête foraine + ouverture vers château.
+// Bille de Siège — thème Casino Jackpot vintage propre + ouverture vers château.
 (() => {
 try {
   ['bdsBootV11','bdsBootFinal','bdsBoot','bdsBootClean'].forEach(function(id){
@@ -167,21 +167,21 @@ try {
       name: 'Casino Jackpot',
       icon: '🎰',
       cost: 80,
-      glow: 'rgba(255,226,120,.60)',
+      glow: 'rgba(255,214,102,.42)',
       palette: {
-        // Ambiance machine à sous / fête foraine claire : crème, turquoise, or.
-        // Le rouge devient un simple accent, pas la couleur dominante.
-        felt: 0xf2c66d,
-        feltAlt: 0x76d8df,
-        butte: 0x9fe7c2,
-        cloth: 0xf6e3a6,
-        rail: 0xf5b84c,
-        rubber: 0x31b8c8,
-        floor: 0xbddde9,
-        wall: 0xf1d38a,
-        accent: 0xfff2a6
+        // Casino propre : ambiance machine à sous vintage.
+        // Plus de rouge dominant, plus de vert fluo, plus d'exposition brûlée.
+        felt: 0xf7e6bf,
+        feltAlt: 0xe1b874,
+        butte: 0xd8a764,
+        cloth: 0xc99255,
+        rail: 0x8f4f25,
+        rubber: 0xf0c96f,
+        floor: 0xa46d3f,
+        wall: 0xb47a43,
+        accent: 0xffd66e
       },
-      description: 'Machines à sous de fête foraine, couleurs claires, or, turquoise et mécanisme Jackpot.'
+      description: 'Machines à sous vintage : ivoire, caramel, bois verni et ampoules dorées.'
     }
   ];
 
@@ -261,14 +261,14 @@ try {
     { id: 'ancient_green', name: 'Pierre ancienne', cost: 170, wall: 0x6f9272, light: 0xacc8a3, dark: 0x394f39, damaged: 0x5c6d50, roof: 0x0f5b39, banner: 0x39b56a, trim: 0xb7c77a, glow: 'rgba(95,220,140,.22)' },
     { id: 'volcanic', name: 'Citadelle volcanique', cost: 210, wall: 0x4a3028, light: 0x8d5842, dark: 0x1b1110, damaged: 0x5d2b20, roof: 0xb33518, banner: 0xff6b21, trim: 0xffbd58, glow: 'rgba(255,95,35,.26)' },
     { id: 'arctic', name: 'Château arctique', cost: 240, wall: 0xbfdce4, light: 0xf4ffff, dark: 0x68848d, damaged: 0x8aa1a8, roof: 0x79e4ff, banner: 0xdafcff, trim: 0xffffff, glow: 'rgba(170,240,255,.30)' },
-    { id: 'casino_vault', name: 'Casino · Machine à sous foraine', cost: 70, wall: 0xf7df93, light: 0xffffff, dark: 0x176b78, damaged: 0xd7a34f, roof: 0x2bbfcf, banner: 0xffcf4d, trim: 0xfff2a6, glow: 'rgba(255,220,90,.44)' },
-    { id: 'casino_palace', name: 'Casino · Jackpot Palace forain', cost: 100, wall: 0xffd67a, light: 0xffffff, dark: 0x1c8ea0, damaged: 0xd99c45, roof: 0x38c7d5, banner: 0xff7b4a, trim: 0xfff2a6, glow: 'rgba(255,229,110,.48)' }
+    { id: 'casino_vault', name: 'Casino · Machine à sous vintage', cost: 70, wall: 0xc98a48, light: 0xffd98a, dark: 0x3c2118, damaged: 0x8f5a32, roof: 0x244f68, banner: 0xf2b541, trim: 0xffdf82, glow: 'rgba(255,198,80,.32)' },
+    { id: 'casino_palace', name: 'Casino · Jackpot Palace vintage', cost: 100, wall: 0xd9a45b, light: 0xffe2a4, dark: 0x4a281d, damaged: 0x9a673c, roof: 0x2b6178, banner: 0xe5af3f, trim: 0xffe08b, glow: 'rgba(255,205,96,.34)' }
   ];
 
   const RAMP_SKINS = [
     { id: 'classic_wood', name: 'Rampe bois classique', icon: '🪵', cost: 0, main: 0x8a4f22, rail: 0x5a2c10, accent: 0xe8c96a, glow: 'rgba(232,201,106,.22)', roughness: 0.64, metalness: 0.02 },
-    { id: 'casino_red_carpet', name: 'Casino · Rampe convoyeur forain', icon: '🎰', cost: 30, main: 0x63d7e2, rail: 0xffd35f, accent: 0xfff2a6, glow: 'rgba(255,220,80,.36)', roughness: 0.42, metalness: 0.24 },
-    { id: 'casino_gold_rail', name: 'Casino · Goulotte jackpot claire', icon: '🪙', cost: 50, main: 0xffdf8a, rail: 0x35bfd0, accent: 0xffffff, glow: 'rgba(255,225,105,.50)', roughness: 0.26, metalness: 0.54 }
+    { id: 'casino_red_carpet', name: 'Casino · Convoyeur machine', icon: '🎰', cost: 30, main: 0xc78342, rail: 0xffd26a, accent: 0x2a6c86, glow: 'rgba(255,205,90,.28)', roughness: 0.48, metalness: 0.20 },
+    { id: 'casino_gold_rail', name: 'Casino · Goulotte jackpot', icon: '🪙', cost: 50, main: 0xd9aa5c, rail: 0x8b4a23, accent: 0xffd86d, glow: 'rgba(255,220,100,.36)', roughness: 0.34, metalness: 0.42 }
   ];
 
   // Références de progression : les objectifs doivent demander une vraie performance,
@@ -3472,7 +3472,12 @@ try {
     wood: makeWoodTexture(4402, 1.5, 8),
     floor: makeDarkFloorTexture(2209),
     stone: makeStoneTexture(7107, 2.4, 2.4),
-    stoneDark: makeStoneTexture(7108, 2.0, 2.0)
+    stoneDark: makeStoneTexture(7108, 2.0, 2.0),
+    casinoLane: makeFeltTexture('#d4ab67', 91231, 5.6, 30),
+    casinoLaneAlt: makeFeltTexture('#c69354', 91232, 5.6, 30),
+    casinoButte: makeFeltTexture('#b98248', 91233, 2.2, 2.2),
+    casinoCloth: makeFeltTexture('#b2763f', 91234, 5.0, 30),
+    casinoFloor: makeFeltTexture('#8d5a35', 91235, 18, 18)
   };
 
   /* ── Matériaux Billard ── */
@@ -3568,10 +3573,25 @@ try {
     material.needsUpdate = true;
   }
 
+  function setMaterialMap(material, texture) {
+    if (!material) return;
+    if (material.map === texture) return;
+    material.map = texture || null;
+    material.needsUpdate = true;
+  }
+
   function applySelectedTheme(player = 1) {
     const theme = findTheme(getSelectedThemeId(player));
     const p = theme.palette || {};
+    const casinoTheme = theme.id === 'casino_royal';
     try { document.body.dataset.boardTheme = theme.id; } catch (err) {}
+    setMaterialMap(mat.felt, casinoTheme ? gfxTex.casinoLane : gfxTex.felt);
+    setMaterialMap(mat.feltAlt, casinoTheme ? gfxTex.casinoLaneAlt : gfxTex.feltAlt);
+    setMaterialMap(mat.butte, casinoTheme ? gfxTex.casinoButte : gfxTex.butte);
+    setMaterialMap(mat.slope, casinoTheme ? gfxTex.casinoLane : gfxTex.felt);
+    setMaterialMap(mat.slopeTop, casinoTheme ? gfxTex.casinoButte : gfxTex.butte);
+    setMaterialMap(mat.cloth, casinoTheme ? gfxTex.casinoCloth : gfxTex.feltAlt);
+    setMaterialMap(mat.floor, casinoTheme ? gfxTex.casinoFloor : gfxTex.floor);
     setMaterialColor(mat.felt, p.felt);
     setMaterialColor(mat.feltAlt, p.feltAlt);
     setMaterialColor(mat.butte, p.butte);
@@ -3582,26 +3602,25 @@ try {
     setMaterialColor(mat.floor, p.floor);
     setMaterialColor(mat.wall, p.wall);
     setMaterialColor(mat.beam, p.rail);
-    setMaterialColor(mat.carpet, theme.id === 'casino_royal' ? 0xf7d878 : 0x361307);
+    setMaterialColor(mat.carpet, theme.id === 'casino_royal' ? 0x8d4d2a : 0x361307);
     setMaterialColor(mat.brass, p.accent || 0xd5ac3e);
     setMaterialColor(mat.holeRing, p.accent || 0xe0b23d);
     setMaterialColor(mat.accentGold, p.accent || 0xffd66e);
     if (theme.id === 'casino_royal') {
-      // Casino Jackpot clair : fête foraine, très lisible sur mobile.
-      // Le thème n'est plus rouge/noir : on pousse les crèmes, turquoises et ors.
-      mat.brass.emissiveIntensity = 0.62;
-      mat.holeRing.emissiveIntensity = 0.66;
+      // Casino propre : chaleureux et lisible sans vert fluo ni blanc brûlé.
+      mat.brass.emissiveIntensity = 0.32;
+      mat.holeRing.emissiveIntensity = 0.34;
       [mat.felt, mat.feltAlt, mat.slope, mat.slopeTop, mat.cloth, mat.floor, mat.wall, mat.rail, mat.wood].forEach(m => {
         if (!m || !m.emissive) return;
-        m.emissive.setHex(0x2a2408);
-        m.emissiveIntensity = 0.22;
+        m.emissive.setHex(0x120900);
+        m.emissiveIntensity = 0.045;
       });
-      if (mat.floor && mat.floor.emissive) mat.floor.emissiveIntensity = 0.32;
-      if (mat.cloth && mat.cloth.emissive) mat.cloth.emissiveIntensity = 0.28;
-      if (mat.felt && mat.felt.emissive) mat.felt.emissiveIntensity = 0.24;
-      renderer.toneMappingExposure = 2.72;
-      scene.background = new THREE.Color(0xf4cf7a);
-      scene.fog = new THREE.Fog(0xf4cf7a, 720, 1600);
+      if (mat.floor && mat.floor.emissive) mat.floor.emissiveIntensity = 0.035;
+      if (mat.cloth && mat.cloth.emissive) mat.cloth.emissiveIntensity = 0.04;
+      if (mat.felt && mat.felt.emissive) mat.felt.emissiveIntensity = 0.035;
+      renderer.toneMappingExposure = 1.68;
+      scene.background = new THREE.Color(0xb98a55);
+      scene.fog = new THREE.Fog(0xb98a55, 520, 1150);
     } else {
       mat.brass.emissiveIntensity = 0.18;
       mat.holeRing.emissiveIntensity = 0.18;
@@ -6200,28 +6219,28 @@ function addDamagedRoofDetails(parent, p, x, y, z, radius, central = false, crit
     scene.add(g);
 
     const pitMat = new THREE.MeshStandardMaterial({
-      color: 0x1b3a40,
-      roughness: 0.78,
-      metalness: 0.12,
-      emissive: 0x103c45,
-      emissiveIntensity: 0.42
+      color: 0x3c241a,
+      roughness: 0.82,
+      metalness: 0.08,
+      emissive: 0x080300,
+      emissiveIntensity: 0.10
     });
     const frameMat = new THREE.MeshStandardMaterial({
-      color: 0xffe28a,
-      roughness: 0.22,
-      metalness: 0.74,
-      emissive: 0x5a3900,
-      emissiveIntensity: 0.34
+      color: 0xd9a34d,
+      roughness: 0.30,
+      metalness: 0.46,
+      emissive: 0x1f1000,
+      emissiveIntensity: 0.12
     });
     const coverMat = new THREE.MeshStandardMaterial({
-      color: 0x65d9e7,
-      roughness: 0.34,
-      metalness: 0.36,
-      emissive: 0x0f4c55,
-      emissiveIntensity: 0.26
+      color: 0xc98545,
+      roughness: 0.46,
+      metalness: 0.20,
+      emissive: 0x120600,
+      emissiveIntensity: 0.055
     });
-    const coverTrimMat = new THREE.MeshBasicMaterial({ color: 0xffe06a, transparent: true, opacity: 0.88 });
-    const neonMat = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.86 });
+    const coverTrimMat = new THREE.MeshBasicMaterial({ color: 0xffd36a, transparent: true, opacity: 0.76 });
+    const neonMat = new THREE.MeshBasicMaterial({ color: 0xffdf83, transparent: true, opacity: 0.66 });
 
     // Grande fente transversale : visuelle uniquement pour conserver les règles actuelles.
     // Le couvercle est une seule plaque. Il s'ouvre toujours vers le château,
@@ -6461,8 +6480,8 @@ function addDamagedRoofDetails(parent, p, x, y, z, radius, central = false, crit
 
     const rampSkinId = material && material.userData ? String(material.userData.rampSkinId || '') : '';
     if (rampSkinId.startsWith('casino_')) {
-      const bulbA = new THREE.MeshBasicMaterial({ color: 0xffd04b, transparent: true, opacity: ghost ? 0.54 : 0.92 });
-      const bulbB = new THREE.MeshBasicMaterial({ color: 0xff315e, transparent: true, opacity: ghost ? 0.50 : 0.86 });
+      const bulbA = new THREE.MeshBasicMaterial({ color: 0xffd06a, transparent: true, opacity: ghost ? 0.46 : 0.78 });
+      const bulbB = new THREE.MeshBasicMaterial({ color: 0x66b8d0, transparent: true, opacity: ghost ? 0.38 : 0.62 });
       for (let i = -4; i <= 4; i++) {
         const z = i * (length / 9);
         [-1, 1].forEach((side, k) => {

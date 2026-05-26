@@ -6319,36 +6319,36 @@ button.tap-pressed, .pause-btn.tap-pressed, .castle-pill.tap-pressed {
 body[data-board-theme="casino_royal"] #hud,
 body[data-board-theme="casino_royal"] #resources,
 body[data-board-theme="casino_royal"] #controls {
-  filter: saturate(1.06) contrast(1.00) brightness(1.16);
+  filter: saturate(1.00) contrast(1.00) brightness(1.00);
 }
 body[data-board-theme="casino_royal"] #resources span {
-  border-color: rgba(255,230,140,.70);
-  background: linear-gradient(180deg, rgba(255,247,190,.46), rgba(92,205,218,.24));
-  box-shadow: inset 0 0 0 1px rgba(255,255,220,.22), 0 0 20px rgba(255,210,80,.16);
+  border-color: rgba(255,214,118,.62);
+  background: linear-gradient(180deg, rgba(255,226,151,.28), rgba(117,74,42,.30));
+  box-shadow: inset 0 0 0 1px rgba(255,236,166,.14), 0 0 14px rgba(255,190,70,.10);
 }
 body[data-board-theme="casino_royal"] .title h1::after {
   content: '  · Casino Jackpot';
-  color: #fff0a4;
-  text-shadow: 0 0 14px rgba(255,224,92,.48), 0 0 24px rgba(80,210,230,.26);
+  color: #ffe29a;
+  text-shadow: 0 0 10px rgba(255,198,80,.32), 0 0 18px rgba(68,46,22,.22);
 }
 
-/* Casino Jackpot : fête foraine claire, moins rouge/noir. */
+/* Casino Jackpot : machine à sous vintage, propre, pas rouge, pas vert fluo, pas surexposé. */
 body[data-board-theme="casino_royal"] {
-  --wood: #d89b3f;
-  --wood-light: #ffe08b;
-  --wood-mid: #f0bf5a;
-  --brass: #ffe278;
-  --brass-light: #fff6bd;
-  --brass-dim: #cf9a2e;
-  --glass: rgba(28, 124, 138, 0.52);
-  --glass-border: rgba(255, 235, 150, .72);
+  --wood: #8f4f25;
+  --wood-light: #d49a54;
+  --wood-mid: #b87537;
+  --brass: #d9a34d;
+  --brass-light: #ffe09a;
+  --brass-dim: #9b682e;
+  --glass: rgba(76, 48, 30, 0.56);
+  --glass-border: rgba(255, 210, 118, .58);
 }
 body[data-board-theme="casino_royal"] #game {
-  background: #f0c56f !important;
-  filter: saturate(1.18) contrast(0.98) brightness(1.46) !important;
+  background: #b98a55 !important;
+  filter: saturate(1.00) contrast(1.02) brightness(1.00) !important;
 }
 body[data-board-theme="casino_royal"] #hud,
 body[data-board-theme="casino_royal"] #resources,
 body[data-board-theme="casino_royal"] footer#controls {
-  background: linear-gradient(180deg, rgba(42, 178, 194, .72), rgba(244, 194, 91, .36), transparent) !important;
+  background: linear-gradient(180deg, rgba(92, 55, 30, .70), rgba(171, 111, 56, .34), transparent) !important;
 }
