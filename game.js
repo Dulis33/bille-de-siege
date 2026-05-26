@@ -1,4 +1,4 @@
-// Bille de Siège — thème Casino Jackpot vintage propre + ouverture vers château.
+// Bille de Siège — Casino contrasté + grande fente jouable + UI thématique.
 (() => {
 try {
   ['bdsBootV11','bdsBootFinal','bdsBoot','bdsBootClean'].forEach(function(id){
@@ -169,19 +169,20 @@ try {
       cost: 80,
       glow: 'rgba(255,214,102,.42)',
       palette: {
-        // Casino propre : ambiance machine à sous vintage.
-        // Plus de rouge dominant, plus de vert fluo, plus d'exposition brûlée.
-        felt: 0xf7e6bf,
-        feltAlt: 0xe1b874,
-        butte: 0xd8a764,
-        cloth: 0xc99255,
-        rail: 0x8f4f25,
-        rubber: 0xf0c96f,
-        floor: 0xa46d3f,
-        wall: 0xb47a43,
+        // Casino machine à sous lisible : piste bleu-roi, rails ivoire/or,
+        // sol caramel. Contraste fort sans rouge dominant, sans vert fluo,
+        // sans surexposition blanche.
+        felt: 0x315f9f,
+        feltAlt: 0x244a86,
+        butte: 0xf0b84a,
+        cloth: 0x2b558d,
+        rail: 0xf5d27a,
+        rubber: 0xffe294,
+        floor: 0xb8793d,
+        wall: 0x7a4327,
         accent: 0xffd66e
       },
-      description: 'Machines à sous vintage : ivoire, caramel, bois verni et ampoules dorées.'
+      description: 'Machines à sous vintage : bleu-roi, ivoire, caramel, or et ampoules jackpot.'
     }
   ];
 
@@ -261,14 +262,14 @@ try {
     { id: 'ancient_green', name: 'Pierre ancienne', cost: 170, wall: 0x6f9272, light: 0xacc8a3, dark: 0x394f39, damaged: 0x5c6d50, roof: 0x0f5b39, banner: 0x39b56a, trim: 0xb7c77a, glow: 'rgba(95,220,140,.22)' },
     { id: 'volcanic', name: 'Citadelle volcanique', cost: 210, wall: 0x4a3028, light: 0x8d5842, dark: 0x1b1110, damaged: 0x5d2b20, roof: 0xb33518, banner: 0xff6b21, trim: 0xffbd58, glow: 'rgba(255,95,35,.26)' },
     { id: 'arctic', name: 'Château arctique', cost: 240, wall: 0xbfdce4, light: 0xf4ffff, dark: 0x68848d, damaged: 0x8aa1a8, roof: 0x79e4ff, banner: 0xdafcff, trim: 0xffffff, glow: 'rgba(170,240,255,.30)' },
-    { id: 'casino_vault', name: 'Casino · Machine à sous vintage', cost: 70, wall: 0xc98a48, light: 0xffd98a, dark: 0x3c2118, damaged: 0x8f5a32, roof: 0x244f68, banner: 0xf2b541, trim: 0xffdf82, glow: 'rgba(255,198,80,.32)' },
-    { id: 'casino_palace', name: 'Casino · Jackpot Palace vintage', cost: 100, wall: 0xd9a45b, light: 0xffe2a4, dark: 0x4a281d, damaged: 0x9a673c, roof: 0x2b6178, banner: 0xe5af3f, trim: 0xffe08b, glow: 'rgba(255,205,96,.34)' }
+    { id: 'casino_vault', name: 'Casino · Machine à sous vintage', cost: 70, wall: 0xf2c45f, light: 0xffefd0, dark: 0x2b2f72, damaged: 0xb46b2d, roof: 0x203b77, banner: 0xf2b541, trim: 0xffdf82, glow: 'rgba(255,198,80,.34)' },
+    { id: 'casino_palace', name: 'Casino · Jackpot Palace vintage', cost: 100, wall: 0xf6d37a, light: 0xffffe8, dark: 0x234d8f, damaged: 0xc47a32, roof: 0x1f6f9f, banner: 0xe5af3f, trim: 0xffe08b, glow: 'rgba(255,205,96,.36)' }
   ];
 
   const RAMP_SKINS = [
     { id: 'classic_wood', name: 'Rampe bois classique', icon: '🪵', cost: 0, main: 0x8a4f22, rail: 0x5a2c10, accent: 0xe8c96a, glow: 'rgba(232,201,106,.22)', roughness: 0.64, metalness: 0.02 },
-    { id: 'casino_red_carpet', name: 'Casino · Convoyeur machine', icon: '🎰', cost: 30, main: 0xc78342, rail: 0xffd26a, accent: 0x2a6c86, glow: 'rgba(255,205,90,.28)', roughness: 0.48, metalness: 0.20 },
-    { id: 'casino_gold_rail', name: 'Casino · Goulotte jackpot', icon: '🪙', cost: 50, main: 0xd9aa5c, rail: 0x8b4a23, accent: 0xffd86d, glow: 'rgba(255,220,100,.36)', roughness: 0.34, metalness: 0.42 }
+    { id: 'casino_red_carpet', name: 'Casino · Convoyeur machine', icon: '🎰', cost: 30, main: 0x2f6fb2, rail: 0xffd26a, accent: 0xfff1b0, glow: 'rgba(255,205,90,.30)', roughness: 0.46, metalness: 0.22 },
+    { id: 'casino_gold_rail', name: 'Casino · Goulotte jackpot', icon: '🪙', cost: 50, main: 0xf0b84a, rail: 0x24549a, accent: 0xfff0a6, glow: 'rgba(255,220,100,.38)', roughness: 0.34, metalness: 0.42 }
   ];
 
   // Références de progression : les objectifs doivent demander une vraie performance,
@@ -3473,11 +3474,11 @@ try {
     floor: makeDarkFloorTexture(2209),
     stone: makeStoneTexture(7107, 2.4, 2.4),
     stoneDark: makeStoneTexture(7108, 2.0, 2.0),
-    casinoLane: makeFeltTexture('#d4ab67', 91231, 5.6, 30),
-    casinoLaneAlt: makeFeltTexture('#c69354', 91232, 5.6, 30),
-    casinoButte: makeFeltTexture('#b98248', 91233, 2.2, 2.2),
-    casinoCloth: makeFeltTexture('#b2763f', 91234, 5.0, 30),
-    casinoFloor: makeFeltTexture('#8d5a35', 91235, 18, 18)
+    casinoLane: makeFeltTexture('#315f9f', 91231, 5.6, 30),
+    casinoLaneAlt: makeFeltTexture('#244a86', 91232, 5.6, 30),
+    casinoButte: makeFeltTexture('#f0b84a', 91233, 2.2, 2.2),
+    casinoCloth: makeFeltTexture('#2b558d', 91234, 5.0, 30),
+    casinoFloor: makeFeltTexture('#b8793d', 91235, 18, 18)
   };
 
   /* ── Matériaux Billard ── */
@@ -3602,25 +3603,26 @@ try {
     setMaterialColor(mat.floor, p.floor);
     setMaterialColor(mat.wall, p.wall);
     setMaterialColor(mat.beam, p.rail);
-    setMaterialColor(mat.carpet, theme.id === 'casino_royal' ? 0x8d4d2a : 0x361307);
+    setMaterialColor(mat.carpet, theme.id === 'casino_royal' ? 0x244a86 : 0x361307);
     setMaterialColor(mat.brass, p.accent || 0xd5ac3e);
     setMaterialColor(mat.holeRing, p.accent || 0xe0b23d);
     setMaterialColor(mat.accentGold, p.accent || 0xffd66e);
     if (theme.id === 'casino_royal') {
-      // Casino propre : chaleureux et lisible sans vert fluo ni blanc brûlé.
-      mat.brass.emissiveIntensity = 0.32;
-      mat.holeRing.emissiveIntensity = 0.34;
+      // Casino contrasté : pistes bleu-roi lisibles, rails ivoire/or, fond caramel.
+      // On évite volontairement le filtre fluo et le blanc brûlé.
+      mat.brass.emissiveIntensity = 0.26;
+      mat.holeRing.emissiveIntensity = 0.28;
       [mat.felt, mat.feltAlt, mat.slope, mat.slopeTop, mat.cloth, mat.floor, mat.wall, mat.rail, mat.wood].forEach(m => {
         if (!m || !m.emissive) return;
-        m.emissive.setHex(0x120900);
-        m.emissiveIntensity = 0.045;
+        m.emissive.setHex(0x050914);
+        m.emissiveIntensity = 0.025;
       });
-      if (mat.floor && mat.floor.emissive) mat.floor.emissiveIntensity = 0.035;
-      if (mat.cloth && mat.cloth.emissive) mat.cloth.emissiveIntensity = 0.04;
-      if (mat.felt && mat.felt.emissive) mat.felt.emissiveIntensity = 0.035;
-      renderer.toneMappingExposure = 1.68;
-      scene.background = new THREE.Color(0xb98a55);
-      scene.fog = new THREE.Fog(0xb98a55, 520, 1150);
+      if (mat.floor && mat.floor.emissive) mat.floor.emissiveIntensity = 0.018;
+      if (mat.cloth && mat.cloth.emissive) mat.cloth.emissiveIntensity = 0.026;
+      if (mat.felt && mat.felt.emissive) mat.felt.emissiveIntensity = 0.018;
+      renderer.toneMappingExposure = 1.42;
+      scene.background = new THREE.Color(0xc58a4a);
+      scene.fog = new THREE.Fog(0xc58a4a, 620, 1350);
     } else {
       mat.brass.emissiveIntensity = 0.18;
       mat.holeRing.emissiveIntensity = 0.18;
@@ -6219,32 +6221,33 @@ function addDamagedRoofDetails(parent, p, x, y, z, radius, central = false, crit
     scene.add(g);
 
     const pitMat = new THREE.MeshStandardMaterial({
-      color: 0x3c241a,
-      roughness: 0.82,
-      metalness: 0.08,
-      emissive: 0x080300,
-      emissiveIntensity: 0.10
+      color: 0x09071a,
+      roughness: 0.92,
+      metalness: 0.05,
+      emissive: 0x03020b,
+      emissiveIntensity: 0.08
     });
     const frameMat = new THREE.MeshStandardMaterial({
-      color: 0xd9a34d,
-      roughness: 0.30,
-      metalness: 0.46,
-      emissive: 0x1f1000,
-      emissiveIntensity: 0.12
+      color: 0xf3c45d,
+      roughness: 0.34,
+      metalness: 0.42,
+      emissive: 0x241400,
+      emissiveIntensity: 0.08
     });
     const coverMat = new THREE.MeshStandardMaterial({
-      color: 0xc98545,
-      roughness: 0.46,
-      metalness: 0.20,
-      emissive: 0x120600,
-      emissiveIntensity: 0.055
+      color: 0x2f6fb2,
+      roughness: 0.38,
+      metalness: 0.24,
+      emissive: 0x020915,
+      emissiveIntensity: 0.035
     });
-    const coverTrimMat = new THREE.MeshBasicMaterial({ color: 0xffd36a, transparent: true, opacity: 0.76 });
-    const neonMat = new THREE.MeshBasicMaterial({ color: 0xffdf83, transparent: true, opacity: 0.66 });
+    const coverTrimMat = new THREE.MeshBasicMaterial({ color: 0xffe7a0, transparent: true, opacity: 0.82 });
+    const neonMat = new THREE.MeshBasicMaterial({ color: 0xffe28a, transparent: true, opacity: 0.72 });
 
-    // Grande fente transversale : visuelle uniquement pour conserver les règles actuelles.
+    // Grande fente transversale jouable.
     // Le couvercle est une seule plaque. Il s'ouvre toujours vers le château,
     // disparaît sous le plateau, puis revient reboucher la fente.
+    // Si la bille passe dans l'ouverture pendant que la plaque est rentrée : lancer perdu.
     addBox(CFG.laneW - 3.0, 0.20, 6.4, 0, -0.05, 0, pitMat, g);
     addBox(CFG.laneW - 1.8, 0.24, 0.46, 0, 0.13, -3.52, frameMat, g);
     addBox(CFG.laneW - 1.8, 0.24, 0.46, 0, 0.13,  3.52, frameMat, g);
@@ -6275,6 +6278,10 @@ function addDamagedRoofDetails(parent, p, x, y, z, radius, central = false, crit
     g.userData.slotTravelDir = playerSide < 0 ? 1 : -1;
     g.userData.slotTravel = 8.2;
     g.userData.slotDrop = 0.72;
+    g.userData.slotHalfW = (CFG.laneW - 4.55) / 2;
+    g.userData.slotHalfD = 3.08;
+    g.userData.slotOpenAmount = 0;
+    g.userData.slotMovedAmount = 0;
 
     addBox(CFG.laneW - 4.4, 0.08, 0.12, 0, 0.43, 0, neonMat, g);
     for (let i = -5; i <= 5; i++) {
@@ -6289,8 +6296,8 @@ function addDamagedRoofDetails(parent, p, x, y, z, radius, central = false, crit
   }
 
   function buildCasinoSlotStrips() {
-    // Une fente décorative par couloir. Elle s'ouvre/se ferme comme un mécanisme de machine à sous,
-    // mais elle ne change pas les règles : aucun piège, aucun gain, aucune collision modifiée.
+    // Une fente jouable par couloir. Quand elle est ouverte, la bille peut tomber dedans.
+    // Ce n'est pas une ressource ni un piège classique : c'est un lancer perdu.
     buildCasinoSlotStrip(CFG.leftX, 0, -1);
     buildCasinoSlotStrip(CFG.rightX, 0, 1);
   }
@@ -6328,6 +6335,8 @@ function addDamagedRoofDetails(parent, p, x, y, z, radius, central = false, crit
         drop = 1 - q;
       }
 
+      g.userData.slotOpenAmount = drop;
+      g.userData.slotMovedAmount = move;
       const travel = g.userData.slotTravel || 8.2;
       const dirZ = g.userData.slotTravelDir || 1;
       const cover = g.userData.slotCover;
@@ -9445,7 +9454,9 @@ function spawnVictoryCelebration(report) {
     const hasDestroy = joined.includes('détruit') || joined.includes('détruite');
     const hasDamage = joined.includes('pv') || hasDestroy;
     const hasGain = /\+\d+/.test(joined) && (joined.includes('🪙') || joined.includes('🪵') || joined.includes('🪨') || joined.includes('ressource'));
-    const hasHole = joined.includes('trou') || joined.includes('relique') || joined.includes('piège');
+    const hasHole = joined.includes('trou') || joined.includes('relique') || joined.includes('piège') || joined.includes('fente');
+    const hasLost = joined.includes('perdu') || joined.includes('avalée');
+    if (hasLost) return { icon: '🎰', title: 'LANCER PERDU', cls: 'damage' };
     if (hasCombo || (hasDamage && hasGain)) return { icon: '👑', title: 'TIR ROYAL', cls: 'royal' };
     if (hasDestroy) return { icon: '💥', title: 'DÉMOLITION', cls: 'destroy' };
     if (hasDamage) return { icon: '⚔️', title: 'COUP BRUTAL', cls: 'damage' };
@@ -10462,6 +10473,40 @@ function spawnVictoryCelebration(report) {
     });
   }
 
+  function resolveCasinoSlotPitFall() {
+    if (!isCasinoBoardTheme() || holeResolved || ballInHole || !shotStarted) return false;
+    const lx = attackX(active);
+    for (const g of casinoSlotStrips) {
+      if (!g || !g.visible) continue;
+      if (Math.abs(g.position.x - lx) > 1.2) continue;
+      const open = Math.max(g.userData.slotOpenAmount || 0, g.userData.slotMovedAmount || 0);
+      if (open < 0.66) continue;
+      const halfW = g.userData.slotHalfW || ((CFG.laneW - 4.55) / 2);
+      const halfD = g.userData.slotHalfD || 3.08;
+      const localX = ball.position.x - g.position.x;
+      const localZ = ball.position.z - g.position.z;
+      if (Math.abs(localX) <= halfW && Math.abs(localZ) <= halfD && ball.position.y < CFG.ballR + 1.45) {
+        const pl = players[active - 1];
+        if (pl) {
+          pl.extraShotsLeft = 0;
+          pl.bonusSecondShotThisTurn = false;
+        }
+        holeResolved = true;
+        ballInHole = true;
+        ball.position.set(g.position.x, 0.20, g.position.z);
+        velocity.set(0, 0, 0);
+        stopRollingSound(false);
+        turnSummary.push('Grande fente jackpot : lancer perdu');
+        impact(ball.position.clone().add(new THREE.Vector3(0, 0.25, 0)), 0xffd36a, 1.45);
+        bigMessage('LANCER PERDU', '🎰 La bille est tombée dans la grande fente jackpot.', 'danger', 1900);
+        battleNotice('🎰 FENTE JACKPOT', 'Bille avalée · coup perdu', 'jackpot', 2600);
+        scheduleFinishTurn('La bille est tombée dans la grande fente jackpot.', 950);
+        return true;
+      }
+    }
+    return false;
+  }
+
   /* ── Physique ── */
   function physics() {
     if (gameOver || turnLocked || phase !== 'attack' || canShoot) return;
@@ -10485,6 +10530,7 @@ function spawnVictoryCelebration(report) {
     updateMudPhysics(1);
     updateDebrisPhysics(1);
     updateKitPhysics();
+    if (resolveCasinoSlotPitFall()) return;
     bonusHoles.forEach(h => {
       if (holeResolved || h.attacker !== active) return;
       const d = Math.hypot(ball.position.x - h.x, ball.position.z - h.z);

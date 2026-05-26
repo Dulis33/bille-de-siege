@@ -6255,7 +6255,7 @@ button.tap-pressed, .pause-btn.tap-pressed, .castle-pill.tap-pressed {
     radial-gradient(circle at 18% 20%, rgba(255,208,61,.42), transparent 20%),
     radial-gradient(circle at 82% 26%, rgba(255,49,94,.36), transparent 22%),
     repeating-linear-gradient(90deg, rgba(255,208,61,.18) 0 3px, transparent 3px 14px),
-    linear-gradient(180deg, #260012 0%, #4b0614 38%, #09020a 100%);
+    linear-gradient(180deg, #1f4f91 0%, #f2be55 48%, #5d321e 100%);
 }
 .theme-preview-casino::before {
   content: '777 JACKPOT';
@@ -6266,7 +6266,7 @@ button.tap-pressed, .pause-btn.tap-pressed, .castle-pill.tap-pressed {
   padding: 3px 9px;
   border-radius: 999px;
   color: #fff2a5;
-  background: linear-gradient(180deg, rgba(255,49,94,.95), rgba(48,0,20,.98));
+  background: linear-gradient(180deg, rgba(255,224,150,.98), rgba(31,79,145,.95));
   border: 1px solid rgba(255,214,110,.82);
   font-size: 9px;
   letter-spacing: 1.8px;
@@ -6279,7 +6279,7 @@ button.tap-pressed, .pause-btn.tap-pressed, .castle-pill.tap-pressed {
   background:
     linear-gradient(90deg, #ffd45f 0 8px, transparent 8px calc(100% - 8px), #ffd45f calc(100% - 8px)),
     repeating-linear-gradient(90deg, #fff2a5 0 18px, #111 18px 28px, #ff315e 28px 46px, #111 46px 56px),
-    linear-gradient(180deg, #2a0610, #050205);
+    linear-gradient(180deg, #244a86, #09071a);
   box-shadow: 0 0 18px rgba(255,49,94,.50), inset 0 0 0 2px rgba(255,208,61,.55);
 }
 .ramp-preview {
@@ -6334,21 +6334,119 @@ body[data-board-theme="casino_royal"] .title h1::after {
 
 /* Casino Jackpot : machine à sous vintage, propre, pas rouge, pas vert fluo, pas surexposé. */
 body[data-board-theme="casino_royal"] {
-  --wood: #8f4f25;
-  --wood-light: #d49a54;
-  --wood-mid: #b87537;
-  --brass: #d9a34d;
-  --brass-light: #ffe09a;
-  --brass-dim: #9b682e;
-  --glass: rgba(76, 48, 30, 0.56);
-  --glass-border: rgba(255, 210, 118, .58);
+  --wood: #7a4327;
+  --wood-light: #c58a4a;
+  --wood-mid: #9d6134;
+  --brass: #f0b84a;
+  --brass-light: #fff0b5;
+  --brass-dim: #a66b28;
+  --casino-blue: #24549a;
+  --casino-blue-light: #3f7cc7;
+  --casino-cream: #fff2cf;
+  --glass: rgba(33, 47, 96, 0.62);
+  --glass-border: rgba(255, 224, 150, .70);
 }
 body[data-board-theme="casino_royal"] #game {
-  background: #b98a55 !important;
-  filter: saturate(1.00) contrast(1.02) brightness(1.00) !important;
+  background: #c58a4a !important;
+  filter: saturate(1.04) contrast(1.08) brightness(1.00) !important;
 }
 body[data-board-theme="casino_royal"] #hud,
 body[data-board-theme="casino_royal"] #resources,
 body[data-board-theme="casino_royal"] footer#controls {
-  background: linear-gradient(180deg, rgba(92, 55, 30, .70), rgba(171, 111, 56, .34), transparent) !important;
+  background: linear-gradient(180deg, rgba(36, 84, 154, .72), rgba(240, 184, 74, .26), transparent) !important;
+}
+
+
+/* Correctif bds-casino-contrast-slotfall-ui-20260526-1 : Casino contrasté + UI machine à sous */
+body[data-board-theme="casino_royal"] #hud,
+body[data-board-theme="casino_royal"] #resources,
+body[data-board-theme="casino_royal"] footer#controls {
+  color: #fff2cf !important;
+  border-color: rgba(255,226,148,.72) !important;
+  box-shadow: 0 10px 28px rgba(29,42,88,.22), inset 0 1px 0 rgba(255,255,255,.18) !important;
+}
+body[data-board-theme="casino_royal"] #hud {
+  background: linear-gradient(180deg, rgba(36,84,154,.92), rgba(123,67,39,.72)) !important;
+}
+body[data-board-theme="casino_royal"] .title h1,
+body[data-board-theme="casino_royal"] .title p {
+  color: #fff2cf !important;
+  text-shadow: 0 2px 0 rgba(31,32,70,.55), 0 0 18px rgba(255,216,100,.42) !important;
+}
+body[data-board-theme="casino_royal"] #resources {
+  background: linear-gradient(180deg, rgba(255,239,190,.86), rgba(226,173,80,.74)) !important;
+  border: 1px solid rgba(36,84,154,.60) !important;
+}
+body[data-board-theme="casino_royal"] #resources span {
+  color: #271707 !important;
+  background: linear-gradient(180deg, rgba(255,252,228,.86), rgba(255,206,92,.48)) !important;
+  border: 1px solid rgba(36,84,154,.40) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.55), 0 0 12px rgba(36,84,154,.14) !important;
+}
+body[data-board-theme="casino_royal"] .player-card,
+body[data-board-theme="casino_royal"] .castle-pill,
+body[data-board-theme="casino_royal"] .pause-btn,
+body[data-board-theme="casino_royal"] button {
+  border-color: rgba(255,224,150,.72) !important;
+}
+body[data-board-theme="casino_royal"] #toast {
+  color: #1b1438 !important;
+  background: linear-gradient(180deg, rgba(255,245,205,.96), rgba(240,184,74,.90)) !important;
+  border: 2px solid rgba(36,84,154,.66) !important;
+  border-radius: 18px !important;
+  box-shadow: 0 14px 34px rgba(28,38,84,.32), 0 0 18px rgba(255,216,90,.22), inset 0 1px 0 rgba(255,255,255,.65) !important;
+}
+body[data-board-theme="casino_royal"] #toast::before,
+body[data-board-theme="casino_royal"] #toast::after {
+  color: #24549a !important;
+}
+body[data-board-theme="casino_royal"] #bigFx:not(.victory),
+body[data-board-theme="casino_royal"] .battle-notice,
+body[data-board-theme="casino_royal"] .turn-card,
+body[data-board-theme="casino_royal"] .shot-recap-card,
+body[data-board-theme="casino_royal"] .world-action-card {
+  background:
+    radial-gradient(circle at 16% 0%, rgba(255,244,190,.30), transparent 34%),
+    linear-gradient(145deg, rgba(255,240,198,.96), rgba(231,178,79,.92) 46%, rgba(36,84,154,.92)) !important;
+  color: #1b1438 !important;
+  border: 2px solid rgba(255,235,170,.88) !important;
+  box-shadow: 0 18px 48px rgba(26,36,84,.34), 0 0 22px rgba(255,218,90,.24), inset 0 1px 0 rgba(255,255,255,.72) !important;
+}
+body[data-board-theme="casino_royal"] #bigFx:not(.victory) strong,
+body[data-board-theme="casino_royal"] .battle-notice strong,
+body[data-board-theme="casino_royal"] .turn-card h2,
+body[data-board-theme="casino_royal"] .shot-recap-head b,
+body[data-board-theme="casino_royal"] .world-action-card b {
+  color: #1f4f91 !important;
+  text-shadow: 0 1px 0 rgba(255,255,255,.65), 0 0 10px rgba(255,216,90,.30) !important;
+}
+body[data-board-theme="casino_royal"] #bigFx:not(.victory) span,
+body[data-board-theme="casino_royal"] .battle-notice span,
+body[data-board-theme="casino_royal"] .turn-card p,
+body[data-board-theme="casino_royal"] .shot-recap-row,
+body[data-board-theme="casino_royal"] .world-action-card span {
+  color: #231b14 !important;
+}
+body[data-board-theme="casino_royal"] .shot-recap-row {
+  background: rgba(255,255,255,.42) !important;
+  border: 1px solid rgba(36,84,154,.28) !important;
+}
+body[data-board-theme="casino_royal"] #turnOverlay {
+  background: rgba(28, 36, 84, .50) !important;
+}
+body[data-board-theme="casino_royal"] #eventBanner {
+  background: linear-gradient(180deg, rgba(255,240,198,.96), rgba(240,184,74,.88)) !important;
+  color: #1f4f91 !important;
+  border: 2px solid rgba(36,84,154,.62) !important;
+  box-shadow: 0 12px 30px rgba(28,36,84,.28), 0 0 20px rgba(255,216,90,.24) !important;
+}
+body[data-board-theme="casino_royal"] #eventBanner b,
+body[data-board-theme="casino_royal"] #eventBanner span { color: #1f4f91 !important; }
+body[data-board-theme="casino_royal"] footer#controls {
+  background: linear-gradient(180deg, rgba(36,84,154,.20), rgba(255,239,190,.56), rgba(36,84,154,.36)) !important;
+}
+body[data-board-theme="casino_royal"] footer#controls .buttons button {
+  color: #fff2cf !important;
+  background: linear-gradient(180deg, rgba(36,84,154,.92), rgba(30,52,100,.88)) !important;
+  box-shadow: 0 8px 18px rgba(28,38,84,.24), inset 0 1px 0 rgba(255,255,255,.18) !important;
 }

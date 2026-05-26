@@ -6,8 +6,8 @@
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#f0c56f",
-  "theme_color": "#f0c56f",
+  "background_color": "#24549a",
+  "theme_color": "#24549a",
   "icons": [
     {
       "src": "logo-bds-192.png",
