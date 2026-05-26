@@ -1,8 +1,8 @@
-const BDS_CACHE = 'bds-casino-startup-fix-20260526-1';
+const BDS_CACHE = 'bds-casino-clear-carnival-slotdir-20260526-1';
 const BDS_FILES = [
   './index.html',
-  './style.css?v=casino-startup-fix-20260526-1',
-  './game.js?v=casino-startup-fix-20260526-1',
+  './style.css?v=casino-clear-carnival-slotdir-20260526-1',
+  './game.js?v=casino-clear-carnival-slotdir-20260526-1',
   './style.css',
   './game.js',
   './manifest.webmanifest',
