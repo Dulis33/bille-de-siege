@@ -1,4 +1,4 @@
-// Bille de Siège — thème Casino Jackpot clair + fantômes/ressources thématiques.
+// Bille de Siège — thème Casino Jackpot clair + correctif démarrage menu.
 (() => {
 try {
   ['bdsBootV11','bdsBootFinal','bdsBoot','bdsBootClean'].forEach(function(id){
@@ -2059,7 +2059,10 @@ try {
   }
 
   updateMainMenuProgress();
-  updateDifficultyMenu();
+  // Important : updateDifficultyMenu() utilise les libellés de ressources thématiques,
+  // déclarés plus bas avec la scène. On ne l'appelle donc pas pendant le chargement
+  // initial du script, sinon Chrome peut bloquer le démarrage sur mobile.
+  // Il est appelé proprement à l'ouverture du menu principal.
 
   // Audio du jeu : 3 musiques MP3 externes + bruitages personnalisables.
   // menu   = musiques/music-bds-menu.mp3
