@@ -2350,6 +2350,121 @@ button.choice-ready:not(:disabled)::after {
   box-shadow: 0 0 18px rgba(255,218,80,.13), 0 0 28px var(--skin-glow), inset 0 0 0 1px rgba(255,228,138,.14);
 }
 
+/* ── Prévisualisation casino : machine à sous, pas château ── */
+.casino-castle-card .castle-preview {
+  background:
+    radial-gradient(circle at 50% 115%, var(--skin-glow), transparent 54%),
+    repeating-linear-gradient(90deg, rgba(255,214,110,.10) 0 2px, transparent 2px 16px),
+    linear-gradient(180deg, #2b0612, #070207);
+}
+.skin-preview-slot-machine {
+  position: absolute;
+  left: 50%;
+  bottom: 7px;
+  width: 82px;
+  height: 72px;
+  transform: translateX(-50%);
+  border-radius: 13px 13px 7px 7px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.22), transparent 22%),
+    linear-gradient(180deg, var(--castle-wall), var(--castle-dark));
+  border: 2px solid var(--castle-trim);
+  box-shadow:
+    inset 0 0 0 3px rgba(0,0,0,.34),
+    inset 0 -16px 18px rgba(0,0,0,.30),
+    0 12px 18px rgba(0,0,0,.58),
+    0 0 18px var(--skin-glow);
+}
+.skin-preview-slot-machine::before {
+  content: '';
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  top: -9px;
+  height: 16px;
+  border-radius: 999px;
+  background: radial-gradient(circle, #fff2a5 0 28%, #ff315e 30% 52%, #360011 55% 100%);
+  box-shadow: 0 0 16px rgba(255,49,94,.58);
+}
+.skin-preview-slot-machine .slot-marquee {
+  position: absolute;
+  left: 50%;
+  top: 8px;
+  transform: translateX(-50%);
+  padding: 2px 8px;
+  border-radius: 999px;
+  color: #fff2a5;
+  background: linear-gradient(180deg, #ff315e, #35000f);
+  border: 1px solid rgba(255,214,110,.76);
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  text-shadow: 0 0 8px rgba(255,214,110,.62);
+}
+.skin-preview-slot-machine .slot-reels {
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  top: 27px;
+  height: 22px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+}
+.skin-preview-slot-machine .slot-reels i {
+  border-radius: 4px;
+  background:
+    radial-gradient(circle at 50% 50%, #ff315e 0 18%, transparent 19%),
+    linear-gradient(180deg, #fff2a5, #e9d8a0);
+  border: 1px solid rgba(0,0,0,.42);
+  box-shadow: inset 0 -5px 8px rgba(0,0,0,.16);
+}
+.skin-preview-slot-machine .slot-reels i:nth-child(2) {
+  background:
+    linear-gradient(135deg, transparent 36%, #ff315e 37% 48%, transparent 49%),
+    linear-gradient(180deg, #fff2a5, #e9d8a0);
+}
+.skin-preview-slot-machine .slot-buttons {
+  position: absolute;
+  left: 17px;
+  bottom: 9px;
+  display: flex;
+  gap: 7px;
+}
+.skin-preview-slot-machine .slot-buttons i {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #ffd45f;
+  box-shadow: 0 0 8px rgba(255,214,110,.72);
+}
+.skin-preview-slot-machine .slot-buttons i:nth-child(2) { background: #ff315e; box-shadow: 0 0 8px rgba(255,49,94,.72); }
+.skin-preview-slot-machine .slot-buttons i:nth-child(3) { background: #35f2ff; box-shadow: 0 0 8px rgba(53,242,255,.62); }
+.skin-preview-slot-machine .slot-lever {
+  position: absolute;
+  right: -13px;
+  top: 25px;
+  width: 6px;
+  height: 32px;
+  border-radius: 999px;
+  background: var(--castle-trim);
+  transform: rotate(22deg);
+  transform-origin: top center;
+  box-shadow: 0 0 10px rgba(255,214,110,.46);
+}
+.skin-preview-slot-machine .slot-lever::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -8px;
+  width: 17px;
+  height: 17px;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: #ff315e;
+  box-shadow: 0 0 14px rgba(255,49,94,.66);
+}
+
 /* ── Prévisualisation château détaillée : 4 murs, 4 tours, donjon central ── */
 .skin-preview-castle-real {
   position: absolute;
@@ -6095,7 +6210,7 @@ button.tap-pressed, .pause-btn.tap-pressed, .castle-pill.tap-pressed {
   .juice-emoji { font-size: 19px; }
 }
 
-/* ── Extension Casino Royal : thèmes de plateau + rampes ── */
+/* ── Extension Casino Jackpot : machines à sous + rampes ── */
 .theme-section-title,
 .ramp-section-title {
   margin-top: 18px;
@@ -6137,25 +6252,35 @@ button.tap-pressed, .pause-btn.tap-pressed, .castle-pill.tap-pressed {
 }
 .theme-preview-casino {
   background:
-    radial-gradient(circle at 22% 20%, rgba(255,210,70,.30), transparent 24%),
-    radial-gradient(circle at 78% 28%, rgba(255,44,88,.24), transparent 26%),
-    repeating-linear-gradient(90deg, rgba(255,214,110,.10) 0 2px, transparent 2px 18px),
-    linear-gradient(180deg, #0b5a37, #06110c 72%);
+    radial-gradient(circle at 18% 20%, rgba(255,208,61,.42), transparent 20%),
+    radial-gradient(circle at 82% 26%, rgba(255,49,94,.36), transparent 22%),
+    repeating-linear-gradient(90deg, rgba(255,208,61,.18) 0 3px, transparent 3px 14px),
+    linear-gradient(180deg, #260012 0%, #4b0614 38%, #09020a 100%);
 }
 .theme-preview-casino::before {
-  content: 'JACKPOT';
+  content: '777 JACKPOT';
   position: absolute;
   left: 50%;
-  top: 11px;
+  top: 10px;
   transform: translateX(-50%);
-  padding: 3px 8px;
+  padding: 3px 9px;
   border-radius: 999px;
   color: #fff2a5;
-  background: linear-gradient(180deg, rgba(120,10,14,.95), rgba(35,2,4,.95));
-  border: 1px solid rgba(255,214,110,.70);
+  background: linear-gradient(180deg, rgba(255,49,94,.95), rgba(48,0,20,.98));
+  border: 1px solid rgba(255,214,110,.82);
   font-size: 9px;
-  letter-spacing: 2px;
-  box-shadow: 0 0 18px rgba(255,60,90,.24);
+  letter-spacing: 1.8px;
+  box-shadow: 0 0 20px rgba(255,49,94,.42), 0 0 34px rgba(255,208,61,.18);
+}
+.theme-preview-casino::after {
+  bottom: 15px;
+  height: 18px;
+  border-radius: 6px;
+  background:
+    linear-gradient(90deg, #ffd45f 0 8px, transparent 8px calc(100% - 8px), #ffd45f calc(100% - 8px)),
+    repeating-linear-gradient(90deg, #fff2a5 0 18px, #111 18px 28px, #ff315e 28px 46px, #111 46px 56px),
+    linear-gradient(180deg, #2a0610, #050205);
+  box-shadow: 0 0 18px rgba(255,49,94,.50), inset 0 0 0 2px rgba(255,208,61,.55);
 }
 .ramp-preview {
   background:
@@ -6201,7 +6326,7 @@ body[data-board-theme="casino_royal"] #resources span {
   box-shadow: inset 0 0 0 1px rgba(255,214,110,.08), 0 0 18px rgba(255,180,30,.08);
 }
 body[data-board-theme="casino_royal"] .title h1::after {
-  content: '  · Casino Royal';
-  color: #ffd66e;
-  text-shadow: 0 0 14px rgba(255,60,90,.35);
+  content: '  · Casino Jackpot';
+  color: #ffd45f;
+  text-shadow: 0 0 16px rgba(255,49,94,.55), 0 0 28px rgba(255,208,61,.24);
 }

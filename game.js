@@ -1,4 +1,4 @@
-// Bille de Siège — thème Casino Royal + cosmétiques plateau/billes/châteaux/rampes sans modifier le gameplay.
+// Bille de Siège — thème Casino Jackpot machines + cosmétiques plateau/billes/châteaux/rampes sans modifier le gameplay.
 (() => {
 try {
   ['bdsBootV11','bdsBootFinal','bdsBoot','bdsBootClean'].forEach(function(id){
@@ -164,22 +164,23 @@ try {
     },
     {
       id: 'casino_royal',
-      name: 'Casino Royal',
+      name: 'Casino Jackpot',
       icon: '🎰',
       cost: 80,
-      glow: 'rgba(255,210,70,.38)',
+      glow: 'rgba(255,48,96,.46)',
       palette: {
-        felt: 0x0f6b3d,
-        feltAlt: 0x0a4f30,
-        butte: 0x145c38,
-        cloth: 0x071f16,
-        rail: 0x2a0806,
-        rubber: 0x07140f,
-        floor: 0x180705,
-        wall: 0x210706,
-        accent: 0xffd45f
+        // Ambiance machine à sous / fête foraine mécanique : rouge, noir, or, néon.
+        felt: 0x2b0612,
+        feltAlt: 0x18051f,
+        butte: 0x28121e,
+        cloth: 0x08030c,
+        rail: 0x5a0b13,
+        rubber: 0x11030a,
+        floor: 0x07030a,
+        wall: 0x120411,
+        accent: 0xffd03d
       },
-      description: 'Tapis vert casino, laiton brillant, bordures sombres et ambiance jackpot.'
+      description: 'Machines à sous, néons rouges/or, mécanismes Jackpot et trappe décorative façon fête foraine.'
     }
   ];
 
@@ -259,14 +260,14 @@ try {
     { id: 'ancient_green', name: 'Pierre ancienne', cost: 170, wall: 0x6f9272, light: 0xacc8a3, dark: 0x394f39, damaged: 0x5c6d50, roof: 0x0f5b39, banner: 0x39b56a, trim: 0xb7c77a, glow: 'rgba(95,220,140,.22)' },
     { id: 'volcanic', name: 'Citadelle volcanique', cost: 210, wall: 0x4a3028, light: 0x8d5842, dark: 0x1b1110, damaged: 0x5d2b20, roof: 0xb33518, banner: 0xff6b21, trim: 0xffbd58, glow: 'rgba(255,95,35,.26)' },
     { id: 'arctic', name: 'Château arctique', cost: 240, wall: 0xbfdce4, light: 0xf4ffff, dark: 0x68848d, damaged: 0x8aa1a8, roof: 0x79e4ff, banner: 0xdafcff, trim: 0xffffff, glow: 'rgba(170,240,255,.30)' },
-    { id: 'casino_vault', name: 'Casino · Coffre-fort blindé', cost: 70, wall: 0x343942, light: 0xaeb6bf, dark: 0x11141a, damaged: 0x22262e, roof: 0x1b1f27, banner: 0xffcf55, trim: 0xffd66e, glow: 'rgba(255,214,110,.34)' },
-    { id: 'casino_palace', name: 'Casino · Palace miniature', cost: 100, wall: 0x8b1e18, light: 0xf7d58a, dark: 0x2d0908, damaged: 0x5a1712, roof: 0x101010, banner: 0xffd452, trim: 0xfff0a0, glow: 'rgba(255,60,90,.30)' }
+    { id: 'casino_vault', name: 'Casino · Machine à sous blindée', cost: 70, wall: 0x24111b, light: 0xffd75f, dark: 0x070307, damaged: 0x3a1118, roof: 0x070307, banner: 0xff315e, trim: 0xffd66e, glow: 'rgba(255,60,105,.38)' },
+    { id: 'casino_palace', name: 'Casino · Jackpot Palace mécanique', cost: 100, wall: 0x6e0712, light: 0xffe08a, dark: 0x0c0305, damaged: 0x3d0710, roof: 0x140014, banner: 0xffd452, trim: 0xfff0a0, glow: 'rgba(255,40,120,.42)' }
   ];
 
   const RAMP_SKINS = [
     { id: 'classic_wood', name: 'Rampe bois classique', icon: '🪵', cost: 0, main: 0x8a4f22, rail: 0x5a2c10, accent: 0xe8c96a, glow: 'rgba(232,201,106,.22)', roughness: 0.64, metalness: 0.02 },
-    { id: 'casino_red_carpet', name: 'Casino · Tapis rouge', icon: '♦️', cost: 30, main: 0x9c1518, rail: 0xffd66e, accent: 0xfff0a0, glow: 'rgba(255,70,70,.30)', roughness: 0.58, metalness: 0.16 },
-    { id: 'casino_gold_rail', name: 'Casino · Rail doré', icon: '🪙', cost: 50, main: 0x16100b, rail: 0xf1bd43, accent: 0xfff3a2, glow: 'rgba(255,210,80,.42)', roughness: 0.32, metalness: 0.56 }
+    { id: 'casino_red_carpet', name: 'Casino · Rampe convoyeur rouge', icon: '🎰', cost: 30, main: 0xb41222, rail: 0xffd66e, accent: 0xfff0a0, glow: 'rgba(255,70,100,.36)', roughness: 0.46, metalness: 0.22 },
+    { id: 'casino_gold_rail', name: 'Casino · Goulotte jackpot dorée', icon: '🪙', cost: 50, main: 0x15060b, rail: 0xf1bd43, accent: 0xff315e, glow: 'rgba(255,210,80,.48)', roughness: 0.28, metalness: 0.66 }
   ];
 
   // Références de progression : les objectifs doivent demander une vraie performance,
@@ -659,6 +660,7 @@ try {
     if (!existing) {
       profileState.profiles.profil_casino_test = makeCasinoTestProfile();
       profileState.activeSlots['1'] = 'profil_casino_test';
+      profileState.activeSlots['2'] = 'profil_casino_test';
       saveProfiles();
       return;
     }
@@ -666,6 +668,8 @@ try {
     existing.avatar = 'crown';
     existing.isTestProfile = true;
     existing.progress = casinoTestProgress();
+    profileState.activeSlots['1'] = 'profil_casino_test';
+    profileState.activeSlots['2'] = 'profil_casino_test';
     saveProfiles();
   }
 
@@ -1540,9 +1544,14 @@ try {
       const selectedTags = [selectedP1 ? 'J1' : '', selectedP2 ? 'J2' : ''].filter(Boolean).join(' / ');
       const skinVars = castleSkinCssVars(skin);
       const actions = shopActions('castle', skin.id, skin.cost, pr => pr.unlockedCastleSkins.includes(skin.id), player => getSelectedCastleSkinId(player) === skin.id);
-      return `
-        <div class="skin-card castle-card ${(unlockedP1 || unlockedP2) ? 'unlocked' : 'locked'} ${(selectedP1 || selectedP2) ? 'active' : ''}" style="${skinVars}">
-          <div class="skin-card-preview castle-preview">
+      const isCasinoSkin = String(skin.id || '').startsWith('casino_');
+      const castlePreviewMarkup = isCasinoSkin ? `
+            <span class="skin-preview-slot-machine" aria-hidden="true">
+              <span class="slot-marquee">777</span>
+              <span class="slot-reels"><i></i><i></i><i></i></span>
+              <span class="slot-buttons"><i></i><i></i><i></i></span>
+              <span class="slot-lever"></span>
+            </span>` : `
             <span class="skin-preview-castle-real" aria-hidden="true">
               <span class="castle-piece castle-wall castle-wall-back"></span>
               <span class="castle-piece castle-wall castle-wall-left"></span>
@@ -1553,7 +1562,11 @@ try {
               <span class="castle-piece castle-tower castle-tower-front-left"></span>
               <span class="castle-piece castle-tower castle-tower-front-right"></span>
               <span class="castle-piece castle-keep"></span>
-            </span>
+            </span>`;
+      return `
+        <div class="skin-card castle-card ${isCasinoSkin ? 'casino-castle-card' : ''} ${(unlockedP1 || unlockedP2) ? 'unlocked' : 'locked'} ${(selectedP1 || selectedP2) ? 'active' : ''}" style="${skinVars}">
+          <div class="skin-card-preview castle-preview">
+            ${castlePreviewMarkup}
           </div>
           <div class="skin-info">
             <b>${skin.name}</b>
@@ -3562,15 +3575,15 @@ try {
     setMaterialColor(mat.floor, p.floor);
     setMaterialColor(mat.wall, p.wall);
     setMaterialColor(mat.beam, p.rail);
-    setMaterialColor(mat.carpet, theme.id === 'casino_royal' ? 0x7e1010 : 0x361307);
+    setMaterialColor(mat.carpet, theme.id === 'casino_royal' ? 0x250019 : 0x361307);
     setMaterialColor(mat.brass, p.accent || 0xd5ac3e);
     setMaterialColor(mat.holeRing, p.accent || 0xe0b23d);
     setMaterialColor(mat.accentGold, p.accent || 0xffd66e);
     if (theme.id === 'casino_royal') {
       mat.brass.emissiveIntensity = 0.24;
       mat.holeRing.emissiveIntensity = 0.26;
-      scene.background = new THREE.Color(0x080403);
-      scene.fog = new THREE.Fog(0x080403, 180, 430);
+      scene.background = new THREE.Color(0x050207);
+      scene.fog = new THREE.Fog(0x050207, 165, 400);
     } else {
       mat.brass.emissiveIntensity = 0.18;
       mat.holeRing.emissiveIntensity = 0.18;
@@ -3598,6 +3611,8 @@ try {
         emissiveIntensity: skin.id.startsWith('casino_') ? 0.06 : 0.01
       });
       main.userData.rampRailMaterial = rail;
+      main.userData.rampSkinId = skin.id;
+      rail.userData.rampSkinId = skin.id;
       rampSkinMaterials[skin.id] = { main, rail };
     }
     return rampSkinMaterials[skin.id];
@@ -5751,7 +5766,146 @@ function addDamagedRoofDetails(parent, p, x, y, z, radius, central = false, crit
     [-5.6, -2.8, 0, 2.8, 5.6].forEach(z => addBox(3.45, 1.05, 1.18, x, y, z, stoneMat, parent));
   }
 
+  function isCasinoCastleSkin(player = active) {
+    return String(getSelectedCastleSkinId(player) || '').startsWith('casino_');
+  }
+
+  function isCasinoBoardTheme() {
+    return getSelectedThemeId(1) === 'casino_royal';
+  }
+
+  function addCasinoBulbs(parent, positions, radius = 0.16) {
+    const bulbMatA = new THREE.MeshBasicMaterial({ color: 0xffd04b, transparent: true, opacity: 0.92 });
+    const bulbMatB = new THREE.MeshBasicMaterial({ color: 0xff315e, transparent: true, opacity: 0.88 });
+    positions.forEach((pos, i) => {
+      const bulb = addCyl(radius, 0.08, pos.x, pos.y, pos.z, i % 2 ? bulbMatB : bulbMatA, parent, 12);
+      bulb.rotation.x = Math.PI / 2;
+      bulb.userData.casinoBulb = true;
+      bulb.userData.phase = i * 0.55;
+    });
+  }
+
+  function addCasinoSeven(parent, x, y, z, scale, faceSign = 1, material = null) {
+    const m = material || castleBannerMaterial(active);
+    const a = addBox(1.05 * scale, 0.16 * scale, 0.08, x, y + 0.45 * scale, z, m, parent);
+    const b = addBox(0.22 * scale, 0.98 * scale, 0.08, x + 0.32 * scale, y - 0.02 * scale, z, m, parent);
+    b.rotation.z = -0.42;
+    a.rotation.y = faceSign < 0 ? Math.PI : 0;
+    b.rotation.y = faceSign < 0 ? Math.PI : 0;
+  }
+
+  function addCasinoReel(parent, x, y, z, w, h, faceSign, cm, symbolIndex = 0) {
+    addBox(w, h, 0.10, x, y, z, cm.light, parent);
+    addBox(w * 0.86, h * 0.70, 0.115, x, y, z + faceSign * 0.014, mat.windowDark, parent);
+    const colors = [0xff315e, 0xffd04b, 0x35f2ff];
+    const symbolMat = new THREE.MeshBasicMaterial({ color: colors[symbolIndex % colors.length], transparent: true, opacity: 0.92 });
+    if (symbolIndex % 3 === 0) {
+      addCasinoSeven(parent, x, y - 0.02, z + faceSign * 0.08, Math.max(0.6, w * 0.42), faceSign, symbolMat);
+    } else if (symbolIndex % 3 === 1) {
+      const c = addCyl(w * 0.24, 0.08, x, y, z + faceSign * 0.08, symbolMat, parent, 18);
+      c.rotation.x = Math.PI / 2;
+      addBox(w * 0.10, h * 0.58, 0.08, x, y, z + faceSign * 0.10, symbolMat, parent);
+    } else {
+      addBox(w * 0.62, h * 0.12, 0.08, x, y, z + faceSign * 0.08, symbolMat, parent).rotation.z = 0.72;
+      addBox(w * 0.62, h * 0.12, 0.08, x, y, z + faceSign * 0.08, symbolMat, parent).rotation.z = -0.72;
+    }
+  }
+
+  function buildCasinoWall(parent, p, part, idx, x, z) {
+    const cm = getCastleSkinMaterials(p);
+    const st = castlePartMaterial(part, p);
+    const damaged = part.hp / part.max <= 0.5;
+
+    if (idx === 0 || idx === 1) {
+      const faceSign = Math.sign(z) || 1;
+      const faceZ = z + faceSign * 1.11;
+      addBox(14.2, 0.45, 3.1, 0, 0.28, z, cm.dark, parent);
+      addBox(14.0, 5.65, 2.5, 0, 2.92, z, st, parent);
+      addBox(14.55, 0.44, 2.9, 0, 5.94, z, cm.trim, parent);
+      addBox(12.4, 2.05, 0.14, 0, 3.08, faceZ, cm.dark, parent);
+      [-3.65, 0, 3.65].forEach((rx, i) => addCasinoReel(parent, rx, 3.10, faceZ + faceSign * 0.07, 2.55, 1.52, faceSign, cm, i + idx));
+      addBox(8.4, 0.68, 0.16, 0, 5.12, faceZ + faceSign * 0.08, castleBannerMaterial(p), parent);
+      [-2.05, 0, 2.05].forEach((sx, i) => addCasinoSeven(parent, sx, 5.05, faceZ + faceSign * 0.18, 0.78, faceSign, cm.trim));
+      const bulbs = [];
+      for (let i = -6; i <= 6; i++) bulbs.push({ x: i, y: 5.86, z: faceZ + faceSign * 0.13 });
+      addCasinoBulbs(parent, bulbs, 0.13);
+      if (damaged) {
+        addDamageCrack(parent, 4.5, 3.4, faceZ + faceSign * 0.16, 'z');
+        addBox(2.1, 0.16, 0.12, -4.7, 2.1, faceZ + faceSign * 0.18, mat.windowDark, parent).rotation.z = -0.5;
+      }
+    } else {
+      const faceSign = Math.sign(x) || 1;
+      const faceX = x + faceSign * 1.11;
+      addBox(2.5, 5.65, 14.0, x, 2.92, 0, st, parent);
+      addBox(2.9, 0.44, 14.55, x, 5.94, 0, cm.trim, parent);
+      [-3.8, 0, 3.8].forEach((rz, i) => {
+        const panel = addBox(0.14, 1.55, 2.48, faceX + faceSign * 0.08, 3.08, rz, cm.light, parent);
+        panel.rotation.y = Math.PI / 2;
+        addBox(0.16, 0.72, 1.65, faceX + faceSign * 0.15, 3.08, rz, mat.windowDark, parent).rotation.y = Math.PI / 2;
+        const symbol = addBox(0.18, 0.16, 1.0, faceX + faceSign * 0.22, 3.08, rz, i % 2 ? cm.trim : castleBannerMaterial(p), parent);
+        symbol.rotation.y = Math.PI / 2;
+        symbol.rotation.z = i % 2 ? 0.8 : -0.8;
+      });
+      const bulbs = [];
+      for (let i = -6; i <= 6; i++) bulbs.push({ x: faceX + faceSign * 0.16, y: 5.88, z: i });
+      addCasinoBulbs(parent, bulbs, 0.12);
+      if (damaged) addDamageCrack(parent, faceX + faceSign * 0.18, 3.2, -2.5, 'x');
+    }
+  }
+
+  function buildCasinoTower(parent, p, part, x, z, central = false) {
+    const cm = getCastleSkinMaterials(p);
+    const st = castlePartMaterial(part, p);
+    const damaged = part.hp / part.max <= 0.5;
+    const w = central ? 8.6 : 4.6;
+    const d = central ? 6.8 : 4.6;
+    const h = central ? 11.8 : 8.8;
+    const faceSign = dir(p);
+    const faceZ = z - faceSign * (d / 2 + 0.08);
+
+    addBox(w + 0.65, 0.55, d + 0.65, x, 0.28, z, cm.dark, parent);
+    addBox(w, h, d, x, h / 2 + 0.35, z, st, parent);
+    addBox(w + 0.42, 0.48, d + 0.42, x, h + 0.72, z, cm.trim, parent);
+    addBox(w * 0.88, 1.05, 0.18, x, h + 0.10, faceZ, castleBannerMaterial(p), parent);
+    [-1.9, 0, 1.9].forEach((sx, i) => addCasinoSeven(parent, x + sx * (central ? 1.05 : 0.48), h + 0.02, faceZ - faceSign * 0.08, central ? 0.72 : 0.46, -faceSign, cm.trim));
+
+    const reelW = central ? 1.78 : 1.05;
+    const reelH = central ? 2.25 : 1.38;
+    const reelY = central ? 6.65 : 5.0;
+    [-1, 0, 1].forEach((off, i) => addCasinoReel(parent, x + off * reelW * 1.25, reelY, faceZ - faceSign * 0.06, reelW, reelH, -faceSign, cm, i + (central ? 0 : 1)));
+
+    const lowerPanelY = central ? 3.45 : 2.75;
+    addBox(w * 0.72, 1.25, 0.16, x, lowerPanelY, faceZ - faceSign * 0.08, cm.dark, parent);
+    [0xff315e, 0xffd04b, 0x35f2ff].forEach((col, i) => {
+      const m = new THREE.MeshBasicMaterial({ color: col, transparent: true, opacity: 0.88 });
+      const l = addCyl(central ? 0.34 : 0.22, 0.10, x + (i - 1) * (central ? 1.55 : 0.82), lowerPanelY, faceZ - faceSign * 0.18, m, parent, 18);
+      l.rotation.x = Math.PI / 2;
+      l.userData.casinoBulb = true;
+      l.userData.phase = i * 0.7;
+    });
+
+    // Levier latéral de machine à sous : visible, mais sans influence physique/gameplay.
+    const side = p === 1 ? 1 : -1;
+    const leverX = x + side * (w / 2 + 0.78);
+    const lever = addCyl(0.11, central ? 2.0 : 1.45, leverX, central ? 5.6 : 4.65, z, cm.trim, parent, 10);
+    lever.rotation.z = side * 0.65;
+    const knob = addCyl(central ? 0.46 : 0.32, 0.30, leverX + side * (central ? 0.55 : 0.40), central ? 6.42 : 5.22, z, castleBannerMaterial(p), parent, 18);
+    knob.rotation.x = Math.PI / 2;
+
+    const bulbs = [];
+    for (let i = -2; i <= 2; i++) {
+      bulbs.push({ x: x + i * (w / 5), y: h + 1.08, z: faceZ - faceSign * 0.12 });
+    }
+    addCasinoBulbs(parent, bulbs, central ? 0.16 : 0.12);
+
+    if (damaged) {
+      addDamageCrack(parent, x + w * 0.20, central ? 6.6 : 5.0, faceZ - faceSign * 0.18, 'z');
+      addBox(w * 0.36, 0.12, 0.16, x - w * 0.18, central ? 4.5 : 3.7, faceZ - faceSign * 0.20, mat.windowDark, parent).rotation.z = 0.38;
+    }
+  }
+
   function buildCastleWall(parent, p, part, idx, x, z) {
+    if (isCasinoCastleSkin(p)) { buildCasinoWall(parent, p, part, idx, x, z); return; }
     const cm = getCastleSkinMaterials(p);
     const st = castlePartMaterial(part, p);
     const damaged = part.hp / part.max <= 0.5;
@@ -5775,6 +5929,7 @@ function addDamagedRoofDetails(parent, p, x, y, z, radius, central = false, crit
   }
 
   function buildCastleTower(parent, p, part, x, z, central = false) {
+    if (isCasinoCastleSkin(p)) { buildCasinoTower(parent, p, part, x, z, central); return; }
     const cm = getCastleSkinMaterials(p);
     const st = castlePartMaterial(part, p);
     const roofDamaged = roofIsDamaged(part);
@@ -5936,8 +6091,118 @@ function addDamagedRoofDetails(parent, p, x, y, z, radius, central = false, crit
 
   makeCastle(1); makeCastle(2);
 
+  const casinoSlotStrips = [];
+
+  function buildCasinoSlotStrip(laneX, z, playerSide = 1) {
+    const g = new THREE.Group();
+    g.position.set(laneX, 0.50, z);
+    g.visible = isCasinoBoardTheme();
+    scene.add(g);
+
+    const pitMat = new THREE.MeshStandardMaterial({ color: 0x020204, roughness: 0.82, metalness: 0.10, emissive: 0x1a0010, emissiveIntensity: 0.22 });
+    const frameMat = new THREE.MeshStandardMaterial({ color: 0xffcf4b, roughness: 0.28, metalness: 0.78, emissive: 0x1c1200, emissiveIntensity: 0.18 });
+    const shutterMat = new THREE.MeshStandardMaterial({ color: 0x8f0e1d, roughness: 0.48, metalness: 0.28, emissive: 0x220006, emissiveIntensity: 0.10 });
+    const neonMat = new THREE.MeshBasicMaterial({ color: 0xff315e, transparent: true, opacity: 0.76 });
+
+    // Grande fente transversale : visuelle uniquement pour conserver les règles actuelles.
+    addBox(CFG.laneW - 3.6, 0.16, 5.2, 0, -0.03, 0, pitMat, g);
+    addBox(CFG.laneW - 2.2, 0.20, 0.42, 0, 0.12, -2.98, frameMat, g);
+    addBox(CFG.laneW - 2.2, 0.20, 0.42, 0, 0.12,  2.98, frameMat, g);
+    addBox(0.42, 0.20, 5.9, -(CFG.laneW - 2.2) / 2, 0.12, 0, frameMat, g);
+    addBox(0.42, 0.20, 5.9,  (CFG.laneW - 2.2) / 2, 0.12, 0, frameMat, g);
+
+    const left = addBox((CFG.laneW - 4.4) / 2, 0.18, 4.55, -(CFG.laneW - 4.4) / 4, 0.18, 0, shutterMat, g);
+    const right = addBox((CFG.laneW - 4.4) / 2, 0.18, 4.55, (CFG.laneW - 4.4) / 4, 0.18, 0, shutterMat, g);
+    left.userData.slotClosedX = left.position.x;
+    right.userData.slotClosedX = right.position.x;
+    g.userData.slotLeft = left;
+    g.userData.slotRight = right;
+    g.userData.slotPlayerSide = playerSide;
+    g.userData.slotOpenMax = 4.8;
+
+    addBox(CFG.laneW - 4.8, 0.08, 0.12, 0, 0.34, 0, neonMat, g);
+    for (let i = -5; i <= 5; i++) {
+      const bulb = addCyl(0.13, 0.06, i * ((CFG.laneW - 5) / 10), 0.40, -2.65, i % 2 ? neonMat : frameMat, g, 12);
+      bulb.rotation.x = Math.PI / 2;
+      bulb.userData.casinoBulb = true;
+      bulb.userData.phase = i * 0.35;
+    }
+
+    casinoSlotStrips.push(g);
+    return g;
+  }
+
+  function buildCasinoSlotStrips() {
+    // Une fente décorative par couloir. Elle s'ouvre/se ferme comme un mécanisme de machine à sous,
+    // mais elle ne change pas les règles : aucun piège, aucun gain, aucune collision modifiée.
+    buildCasinoSlotStrip(CFG.leftX, 0, -1);
+    buildCasinoSlotStrip(CFG.rightX, 0, 1);
+  }
+
+  function animateCasinoSlotStrips() {
+    const visible = isCasinoBoardTheme();
+    casinoSlotStrips.forEach((g, idx) => {
+      g.visible = visible;
+      if (!visible) return;
+      const cycle = (_t * 0.92 + idx * 1.6) % (Math.PI * 2);
+      const openRaw = Math.max(0, Math.sin(cycle));
+      const open = openRaw * openRaw;
+      const dx = (g.userData.slotOpenMax || 4.8) * open;
+      if (g.userData.slotLeft) g.userData.slotLeft.position.x = g.userData.slotLeft.userData.slotClosedX - dx;
+      if (g.userData.slotRight) g.userData.slotRight.position.x = g.userData.slotRight.userData.slotClosedX + dx;
+      g.rotation.z = Math.sin(_t * 1.1 + idx) * 0.002;
+    });
+  }
+
+  function animateCasinoBulbs() {
+    scene.traverse(o => {
+      if (!o.userData || !o.userData.casinoBulb || !o.material) return;
+      const pulse = 0.55 + 0.45 * Math.sin(_t * 5.8 + (o.userData.phase || 0));
+      if ('opacity' in o.material) o.material.opacity = 0.54 + pulse * 0.42;
+      if (o.scale) o.scale.setScalar(0.84 + pulse * 0.20);
+    });
+  }
+
+  buildCasinoSlotStrips();
+
   /* ── Tours de défense ── */
+  function buildCasinoDefenseTowerMesh(p, t) {
+    if (t.mesh) scene.remove(t.mesh);
+    const g = new THREE.Group();
+    const cm = getCastleSkinMaterials(p);
+    const st = t.hp / t.max > 0.35 ? cm.wall : cm.damaged;
+    const damaged = t.hp / t.max <= 0.5;
+    g.position.copy(t.pos);
+    if (p === 1) g.rotation.y = Math.PI;
+
+    // Borne de machine à sous défensive : plus de tour médiévale, mais un obstacle arcade compact.
+    addBox(4.6, 0.48, 4.6, 0, 0.24, 0, cm.dark, g);
+    addBox(3.6, 7.2, 3.2, 0, 3.88, 0, st, g);
+    addBox(4.0, 0.38, 3.7, 0, 7.72, 0, cm.trim, g);
+    addBox(3.2, 0.75, 0.16, 0, 7.25, 1.70, castleBannerMaterial(p), g);
+    [-0.9, 0, 0.9].forEach((sx, i) => addCasinoSeven(g, sx, 7.18, 1.80, 0.36, 1, cm.trim));
+    [-0.95, 0, 0.95].forEach((sx, i) => addCasinoReel(g, sx, 4.95, 1.72, 0.88, 1.28, 1, cm, i));
+    addBox(2.55, 0.85, 0.15, 0, 2.85, 1.73, cm.dark, g);
+    [0xff315e, 0xffd04b, 0x35f2ff].forEach((col, i) => {
+      const lm = new THREE.MeshBasicMaterial({ color: col, transparent: true, opacity: 0.90 });
+      const lamp = addCyl(0.20, 0.09, (i - 1) * 0.72, 2.85, 1.83, lm, g, 18);
+      lamp.rotation.x = Math.PI / 2;
+      lamp.userData.casinoBulb = true;
+      lamp.userData.phase = i * 0.75;
+    });
+    const lever = addCyl(0.09, 1.35, 2.22, 4.65, 0.2, cm.trim, g, 10);
+    lever.rotation.z = 0.66;
+    const knob = addCyl(0.30, 0.22, 2.56, 5.15, 0.2, castleBannerMaterial(p), g, 18);
+    knob.rotation.x = Math.PI / 2;
+    if (damaged) {
+      addDamageCrack(g, 0.75, 4.2, 1.84, 'z');
+      addBox(1.2, 0.11, 0.14, -0.55, 3.15, 1.88, mat.windowDark, g).rotation.z = -0.45;
+    }
+    scene.add(g); t.mesh = g; return g;
+  }
+
   function towerMesh(p, t) {
+    if (isCasinoCastleSkin(p)) return buildCasinoDefenseTowerMesh(p, t);
     if (t.mesh) scene.remove(t.mesh);
     const g = new THREE.Group();
     const cm = getCastleSkinMaterials(p);
@@ -6018,6 +6283,25 @@ function addDamagedRoofDetails(parent, p, x, y, z, radius, central = false, crit
 
     const exit = addBox(width + .75, .18, 1.5, 0, RAMP.surfaceEndY, dir(attacker) * (RAMP.halfLength - .55), material, g);
     exit.rotation.x = slopeAngle;
+
+    const rampSkinId = material && material.userData ? String(material.userData.rampSkinId || '') : '';
+    if (rampSkinId.startsWith('casino_') && !ghost) {
+      const bulbA = new THREE.MeshBasicMaterial({ color: 0xffd04b, transparent: true, opacity: 0.92 });
+      const bulbB = new THREE.MeshBasicMaterial({ color: 0xff315e, transparent: true, opacity: 0.86 });
+      for (let i = -4; i <= 4; i++) {
+        const z = i * (length / 9);
+        [-1, 1].forEach((side, k) => {
+          const bulb = addCyl(0.13, 0.07, side * (width / 2 + 0.55), midY + 0.96, z, (i + k) % 2 ? bulbA : bulbB, g, 12);
+          bulb.rotation.x = Math.PI / 2;
+          bulb.userData.casinoBulb = true;
+          bulb.userData.phase = i * 0.38 + k;
+        });
+      }
+      for (let i = -2; i <= 2; i++) {
+        const cross = addBox(width * 0.78, 0.055, 0.12, 0, midY + 0.20, i * (length / 6), material.userData.rampRailMaterial || railMat, g);
+        cross.rotation.x = slopeAngle;
+      }
+    }
     return g;
   }
 
@@ -10412,7 +10696,7 @@ function spawnVictoryCelebration(report) {
     updateBallTrail();
     updateBallPulseEffect();
     updateBonusHoles(1);
-    cameraUpdate(); animateLamps(); animateHoleGlow(); updateKitAnimations();
+    cameraUpdate(); animateLamps(); animateHoleGlow(); animateCasinoSlotStrips(); animateCasinoBulbs(); updateKitAnimations();
     if (!gamePaused && dragging && canShoot) {
       const dx = dragNow.x - dragStart.x, dy = dragNow.y - dragStart.y;
       const vx = (active === 1 ? -dx : dx) * .014, vz = dir(active) * Math.abs(dy) * .024;

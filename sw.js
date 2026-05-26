@@ -1,8 +1,8 @@
-const BDS_CACHE = 'bds-casino-royal-theme-20260526-1';
+const BDS_CACHE = 'bds-casino-jackpot-machines-20260526-1';
 const BDS_FILES = [
   './index.html',
-  './style.css?v=casino-royal-theme-20260526-1',
-  './game.js?v=casino-royal-theme-20260526-1',
+  './style.css?v=casino-jackpot-machines-20260526-1',
+  './game.js?v=casino-jackpot-machines-20260526-1',
   './style.css',
   './game.js',
   './manifest.webmanifest',
