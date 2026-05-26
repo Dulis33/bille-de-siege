@@ -6319,11 +6319,12 @@ button.tap-pressed, .pause-btn.tap-pressed, .castle-pill.tap-pressed {
 body[data-board-theme="casino_royal"] #hud,
 body[data-board-theme="casino_royal"] #resources,
 body[data-board-theme="casino_royal"] #controls {
-  filter: saturate(1.08) contrast(1.04);
+  filter: saturate(1.16) contrast(1.03) brightness(1.08);
 }
 body[data-board-theme="casino_royal"] #resources span {
-  border-color: rgba(255,214,110,.36);
-  box-shadow: inset 0 0 0 1px rgba(255,214,110,.08), 0 0 18px rgba(255,180,30,.08);
+  border-color: rgba(255,214,110,.46);
+  background: linear-gradient(180deg, rgba(255,230,130,.14), rgba(80,10,28,.32));
+  box-shadow: inset 0 0 0 1px rgba(255,214,110,.14), 0 0 20px rgba(255,180,30,.13);
 }
 body[data-board-theme="casino_royal"] .title h1::after {
   content: '  · Casino Jackpot';

@@ -1,4 +1,4 @@
-// Bille de Siège — thème Casino Jackpot machines + cosmétiques plateau/billes/châteaux/rampes sans modifier le gameplay.
+// Bille de Siège — thème Casino Jackpot éclairci + plancher amovible fond→devant.
 (() => {
 try {
   ['bdsBootV11','bdsBootFinal','bdsBoot','bdsBootClean'].forEach(function(id){
@@ -167,20 +167,21 @@ try {
       name: 'Casino Jackpot',
       icon: '🎰',
       cost: 80,
-      glow: 'rgba(255,48,96,.46)',
+      glow: 'rgba(255,86,118,.56)',
       palette: {
         // Ambiance machine à sous / fête foraine mécanique : rouge, noir, or, néon.
-        felt: 0x2b0612,
-        feltAlt: 0x18051f,
-        butte: 0x28121e,
-        cloth: 0x08030c,
-        rail: 0x5a0b13,
-        rubber: 0x11030a,
-        floor: 0x07030a,
-        wall: 0x120411,
-        accent: 0xffd03d
+        // Version éclaircie : le plateau doit rester lisible sur mobile.
+        felt: 0x5a1122,
+        feltAlt: 0x3a0b34,
+        butte: 0x5b2836,
+        cloth: 0x241024,
+        rail: 0x8a1622,
+        rubber: 0x341018,
+        floor: 0x1b0a14,
+        wall: 0x2b0d21,
+        accent: 0xffd64f
       },
-      description: 'Machines à sous, néons rouges/or, mécanismes Jackpot et trappe décorative façon fête foraine.'
+      description: 'Machines à sous, néons rouges/or, mécanisme Jackpot avec plancher amovible façon fête foraine.'
     }
   ];
 
@@ -3575,18 +3576,21 @@ try {
     setMaterialColor(mat.floor, p.floor);
     setMaterialColor(mat.wall, p.wall);
     setMaterialColor(mat.beam, p.rail);
-    setMaterialColor(mat.carpet, theme.id === 'casino_royal' ? 0x250019 : 0x361307);
+    setMaterialColor(mat.carpet, theme.id === 'casino_royal' ? 0x5a1028 : 0x361307);
     setMaterialColor(mat.brass, p.accent || 0xd5ac3e);
     setMaterialColor(mat.holeRing, p.accent || 0xe0b23d);
     setMaterialColor(mat.accentGold, p.accent || 0xffd66e);
     if (theme.id === 'casino_royal') {
-      mat.brass.emissiveIntensity = 0.24;
-      mat.holeRing.emissiveIntensity = 0.26;
-      scene.background = new THREE.Color(0x050207);
-      scene.fog = new THREE.Fog(0x050207, 165, 400);
+      // Casino lisible : on garde le contraste rouge/noir/or, mais on enlève le voile noir.
+      mat.brass.emissiveIntensity = 0.34;
+      mat.holeRing.emissiveIntensity = 0.36;
+      renderer.toneMappingExposure = 1.92;
+      scene.background = new THREE.Color(0x180716);
+      scene.fog = new THREE.Fog(0x180716, 245, 620);
     } else {
       mat.brass.emissiveIntensity = 0.18;
       mat.holeRing.emissiveIntensity = 0.18;
+      renderer.toneMappingExposure = 1.54;
       scene.background = new THREE.Color(0x120b08);
       scene.fog = new THREE.Fog(0x120b08, 190, 450);
     }
@@ -6099,30 +6103,66 @@ function addDamagedRoofDetails(parent, p, x, y, z, radius, central = false, crit
     g.visible = isCasinoBoardTheme();
     scene.add(g);
 
-    const pitMat = new THREE.MeshStandardMaterial({ color: 0x020204, roughness: 0.82, metalness: 0.10, emissive: 0x1a0010, emissiveIntensity: 0.22 });
-    const frameMat = new THREE.MeshStandardMaterial({ color: 0xffcf4b, roughness: 0.28, metalness: 0.78, emissive: 0x1c1200, emissiveIntensity: 0.18 });
-    const shutterMat = new THREE.MeshStandardMaterial({ color: 0x8f0e1d, roughness: 0.48, metalness: 0.28, emissive: 0x220006, emissiveIntensity: 0.10 });
-    const neonMat = new THREE.MeshBasicMaterial({ color: 0xff315e, transparent: true, opacity: 0.76 });
+    const pitMat = new THREE.MeshStandardMaterial({
+      color: 0x030306,
+      roughness: 0.82,
+      metalness: 0.10,
+      emissive: 0x2a0012,
+      emissiveIntensity: 0.34
+    });
+    const frameMat = new THREE.MeshStandardMaterial({
+      color: 0xffd24f,
+      roughness: 0.24,
+      metalness: 0.84,
+      emissive: 0x2c1900,
+      emissiveIntensity: 0.26
+    });
+    const coverMat = new THREE.MeshStandardMaterial({
+      color: 0xd71930,
+      roughness: 0.36,
+      metalness: 0.34,
+      emissive: 0x3a0008,
+      emissiveIntensity: 0.18
+    });
+    const coverTrimMat = new THREE.MeshBasicMaterial({ color: 0xffe06a, transparent: true, opacity: 0.88 });
+    const neonMat = new THREE.MeshBasicMaterial({ color: 0xff315e, transparent: true, opacity: 0.84 });
 
     // Grande fente transversale : visuelle uniquement pour conserver les règles actuelles.
-    addBox(CFG.laneW - 3.6, 0.16, 5.2, 0, -0.03, 0, pitMat, g);
-    addBox(CFG.laneW - 2.2, 0.20, 0.42, 0, 0.12, -2.98, frameMat, g);
-    addBox(CFG.laneW - 2.2, 0.20, 0.42, 0, 0.12,  2.98, frameMat, g);
-    addBox(0.42, 0.20, 5.9, -(CFG.laneW - 2.2) / 2, 0.12, 0, frameMat, g);
-    addBox(0.42, 0.20, 5.9,  (CFG.laneW - 2.2) / 2, 0.12, 0, frameMat, g);
+    // Le couvercle est maintenant une seule plaque qui coulisse du fond vers le devant,
+    // descend sous le plateau, puis revient reboucher la fente.
+    addBox(CFG.laneW - 3.0, 0.20, 6.4, 0, -0.05, 0, pitMat, g);
+    addBox(CFG.laneW - 1.8, 0.24, 0.46, 0, 0.13, -3.52, frameMat, g);
+    addBox(CFG.laneW - 1.8, 0.24, 0.46, 0, 0.13,  3.52, frameMat, g);
+    addBox(0.46, 0.24, 6.95, -(CFG.laneW - 1.8) / 2, 0.13, 0, frameMat, g);
+    addBox(0.46, 0.24, 6.95,  (CFG.laneW - 1.8) / 2, 0.13, 0, frameMat, g);
 
-    const left = addBox((CFG.laneW - 4.4) / 2, 0.18, 4.55, -(CFG.laneW - 4.4) / 4, 0.18, 0, shutterMat, g);
-    const right = addBox((CFG.laneW - 4.4) / 2, 0.18, 4.55, (CFG.laneW - 4.4) / 4, 0.18, 0, shutterMat, g);
-    left.userData.slotClosedX = left.position.x;
-    right.userData.slotClosedX = right.position.x;
-    g.userData.slotLeft = left;
-    g.userData.slotRight = right;
-    g.userData.slotPlayerSide = playerSide;
-    g.userData.slotOpenMax = 4.8;
+    // Plaque de plancher amovible : largeur quasi complète du couloir.
+    const cover = new THREE.Group();
+    cover.position.set(0, 0.22, 0);
+    g.add(cover);
+    const plate = addBox(CFG.laneW - 4.5, 0.22, 5.65, 0, 0, 0, coverMat, cover);
+    plate.userData.casinoSlotCoverPlate = true;
+    addBox(CFG.laneW - 5.6, 0.06, 0.11, 0, 0.16, -1.72, coverTrimMat, cover);
+    addBox(CFG.laneW - 5.6, 0.06, 0.11, 0, 0.16,  1.72, coverTrimMat, cover);
+    addBox(0.12, 0.07, 5.25, -(CFG.laneW - 5.1) / 2, 0.18, 0, coverTrimMat, cover);
+    addBox(0.12, 0.07, 5.25,  (CFG.laneW - 5.1) / 2, 0.18, 0, coverTrimMat, cover);
 
-    addBox(CFG.laneW - 4.8, 0.08, 0.12, 0, 0.34, 0, neonMat, g);
+    // Languette arrière : donne l'impression que le mécanisme pousse la plaque.
+    const pusher = addBox(CFG.laneW - 5.2, 0.16, 0.34, 0, 0.24, playerSide < 0 ? 3.05 : -3.05, frameMat, g);
+    pusher.userData.casinoSlotPusher = true;
+    pusher.userData.closedZ = pusher.position.z;
+
+    g.userData.slotCover = cover;
+    g.userData.slotPusher = pusher;
+    g.userData.slotClosedZ = 0;
+    g.userData.slotClosedY = 0.22;
+    g.userData.slotTravelDir = playerSide < 0 ? -1 : 1;
+    g.userData.slotTravel = 8.2;
+    g.userData.slotDrop = 0.72;
+
+    addBox(CFG.laneW - 4.4, 0.08, 0.12, 0, 0.43, 0, neonMat, g);
     for (let i = -5; i <= 5; i++) {
-      const bulb = addCyl(0.13, 0.06, i * ((CFG.laneW - 5) / 10), 0.40, -2.65, i % 2 ? neonMat : frameMat, g, 12);
+      const bulb = addCyl(0.15, 0.065, i * ((CFG.laneW - 5) / 10), 0.46, -3.16, i % 2 ? neonMat : frameMat, g, 12);
       bulb.rotation.x = Math.PI / 2;
       bulb.userData.casinoBulb = true;
       bulb.userData.phase = i * 0.35;
@@ -6139,18 +6179,54 @@ function addDamagedRoofDetails(parent, p, x, y, z, radius, central = false, crit
     buildCasinoSlotStrip(CFG.rightX, 0, 1);
   }
 
+  function smooth01(v) {
+    const x = THREE.MathUtils.clamp(v, 0, 1);
+    return x * x * (3 - 2 * x);
+  }
+
   function animateCasinoSlotStrips() {
     const visible = isCasinoBoardTheme();
     casinoSlotStrips.forEach((g, idx) => {
       g.visible = visible;
       if (!visible) return;
-      const cycle = (_t * 0.92 + idx * 1.6) % (Math.PI * 2);
-      const openRaw = Math.max(0, Math.sin(cycle));
-      const open = openRaw * openRaw;
-      const dx = (g.userData.slotOpenMax || 4.8) * open;
-      if (g.userData.slotLeft) g.userData.slotLeft.position.x = g.userData.slotLeft.userData.slotClosedX - dx;
-      if (g.userData.slotRight) g.userData.slotRight.position.x = g.userData.slotRight.userData.slotClosedX + dx;
-      g.rotation.z = Math.sin(_t * 1.1 + idx) * 0.002;
+
+      // Cycle lisible : fermé → la plaque part du fond vers le devant → elle descend
+      // sous le plateau → elle revient reboucher.
+      const cycle = ((_t * 0.34 + idx * 0.22) % 1 + 1) % 1;
+      let move = 0;
+      let drop = 0;
+
+      if (cycle < 0.26) {
+        move = 0;
+        drop = 0;
+      } else if (cycle < 0.54) {
+        const q = smooth01((cycle - 0.26) / 0.28);
+        move = q;
+        drop = q;
+      } else if (cycle < 0.72) {
+        move = 1;
+        drop = 1;
+      } else {
+        const q = smooth01((cycle - 0.72) / 0.28);
+        move = 1 - q;
+        drop = 1 - q;
+      }
+
+      const travel = g.userData.slotTravel || 8.2;
+      const dirZ = g.userData.slotTravelDir || 1;
+      const cover = g.userData.slotCover;
+      if (cover) {
+        cover.position.z = (g.userData.slotClosedZ || 0) + dirZ * travel * move;
+        cover.position.y = (g.userData.slotClosedY || 0.22) - (g.userData.slotDrop || 0.72) * drop;
+        cover.rotation.x = -dirZ * 0.035 * drop;
+        cover.visible = drop < 0.98;
+      }
+      const pusher = g.userData.slotPusher;
+      if (pusher) {
+        pusher.position.z = (pusher.userData.closedZ || 0) + dirZ * travel * Math.min(1, move + 0.10);
+        pusher.visible = drop < 0.96;
+      }
+      g.rotation.z = Math.sin(_t * 1.1 + idx) * 0.0015;
     });
   }
 
