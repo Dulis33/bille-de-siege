@@ -1,4 +1,4 @@
-// Bille de Siège — base stable + corrections trous marqués / ressources mélangées sans régression.
+// Bille de Siège — thème Casino Royal + cosmétiques plateau/billes/châteaux/rampes sans modifier le gameplay.
 (() => {
 try {
   ['bdsBootV11','bdsBootFinal','bdsBoot','bdsBootClean'].forEach(function(id){
@@ -142,6 +142,47 @@ try {
   // Progression cosmétique : points de victoire + skins de bille.
   // Aucun achat ne modifie la puissance, la vitesse, les dégâts ou la physique.
   const PROGRESS_STORAGE_KEY = 'BDS_PROGRESS_COSMETIQUE_V1';
+  const COSMETIC_THEMES = [
+    {
+      id: 'classic',
+      name: 'Table de billard classique',
+      icon: '🎱',
+      cost: 0,
+      glow: 'rgba(255,228,138,.22)',
+      palette: {
+        felt: 0x17633d,
+        feltAlt: 0x155a37,
+        butte: 0x238453,
+        cloth: 0x0d3420,
+        rail: 0x5c2b10,
+        rubber: 0x0c2f1d,
+        floor: 0x140904,
+        wall: 0x160d08,
+        accent: 0xffd66e
+      },
+      description: 'Ambiance billard actuelle, acajou, laiton et feutre vert.'
+    },
+    {
+      id: 'casino_royal',
+      name: 'Casino Royal',
+      icon: '🎰',
+      cost: 80,
+      glow: 'rgba(255,210,70,.38)',
+      palette: {
+        felt: 0x0f6b3d,
+        feltAlt: 0x0a4f30,
+        butte: 0x145c38,
+        cloth: 0x071f16,
+        rail: 0x2a0806,
+        rubber: 0x07140f,
+        floor: 0x180705,
+        wall: 0x210706,
+        accent: 0xffd45f
+      },
+      description: 'Tapis vert casino, laiton brillant, bordures sombres et ambiance jackpot.'
+    }
+  ];
+
   const BALL_SKINS = [
     { id: 'ivory',   name: 'Ivoire nacré',       icon: '⚪', color: 0xf5ead8, cost: 0,   roughness: 0.07, metalness: 0.14, accent: 0xffffff, glow: 'rgba(255,246,224,.28)' },
     { id: 'ruby',    name: 'Rubis incandescent', icon: '🔴', color: 0xd91f35, cost: 30,  roughness: 0.14, metalness: 0.24, accent: 0xff8a5c, emissive: 0x3a0508, emissiveIntensity: 0.08, glow: 'rgba(255,54,78,.34)' },
@@ -155,7 +196,10 @@ try {
     { id: 'neon',    name: 'Néon cyan',         icon: '✨', color: 0x00f0ff, cost: 165, roughness: 0.09, metalness: 0.34, accent: 0xffffff, emissive: 0x003a40, emissiveIntensity: 0.16, glow: 'rgba(0,240,255,.42)' },
     { id: 'metal',   name: 'Bille en fer',      icon: '⚙️', color: 0x5f666b, light: 0xa3aaae, dark: 0x22272b, cost: 190, roughness: 0.42, metalness: 0.88, accent: 0xb3bcc2, emissive: 0x050607, emissiveIntensity: 0.015, glow: 'rgba(150,160,165,.26)' },
     { id: 'chrome',  name: 'Chrome argenté',   icon: '◽', color: 0xd7e0e6, light: 0xffffff, dark: 0x6f7a82, cost: 230, roughness: 0.015, metalness: 1.00, accent: 0xffffff, emissive: 0x111820, emissiveIntensity: 0.035, glow: 'rgba(235,248,255,.50)' },
-    { id: 'galaxy',  name: 'Galaxie noire',     icon: '🌌', color: 0x21103d, cost: 260, roughness: 0.08, metalness: 0.50, accent: 0xff4fd8, emissive: 0x12002c, emissiveIntensity: 0.14, glow: 'rgba(255,79,216,.32)' }
+    { id: 'galaxy',  name: 'Galaxie noire',     icon: '🌌', color: 0x21103d, cost: 260, roughness: 0.08, metalness: 0.50, accent: 0xff4fd8, emissive: 0x12002c, emissiveIntensity: 0.14, glow: 'rgba(255,79,216,.32)' },
+    { id: 'casino_black_8', name: 'Casino · Bille 8 noire', icon: '🎱', color: 0x050505, light: 0xf7f3e8, dark: 0x000000, cost: 25, roughness: 0.06, metalness: 0.18, accent: 0xffffff, emissive: 0x080808, emissiveIntensity: 0.05, glow: 'rgba(255,255,240,.24)' },
+    { id: 'casino_gold_chip', name: 'Casino · Jeton doré', icon: '🪙', color: 0xf5b52f, light: 0xfff0a0, dark: 0x8a4b00, cost: 55, roughness: 0.08, metalness: 0.82, accent: 0xfff4b0, emissive: 0x2a1600, emissiveIntensity: 0.10, glow: 'rgba(255,210,75,.44)' },
+    { id: 'casino_jackpot', name: 'Casino · Bille Jackpot', icon: '💰', color: 0xffd766, light: 0xffffff, dark: 0x9a5f00, cost: 85, roughness: 0.045, metalness: 0.92, accent: 0xff2f5f, emissive: 0x3c2100, emissiveIntensity: 0.16, glow: 'rgba(255,226,90,.58)' }
   ];
 
   const BALL_EFFECTS = [
@@ -178,6 +222,26 @@ try {
       accent: 0xffffff,
       glow: 'rgba(0,240,255,.42)',
       description: 'Aura lumineuse qui respire comme un battement de cœur.'
+    },
+    {
+      id: 'casino_coin_rain',
+      name: 'Casino · Pluie de jetons',
+      icon: '🪙',
+      cost: 60,
+      color: 0xffc83d,
+      accent: 0xfff2a6,
+      glow: 'rgba(255,205,70,.46)',
+      description: 'Étincelles dorées façon jetons gagnés.'
+    },
+    {
+      id: 'casino_jackpot_trail',
+      name: 'Casino · Traînée jackpot',
+      icon: '🎰',
+      cost: 90,
+      color: 0xffd45f,
+      accent: 0xff345d,
+      glow: 'rgba(255,225,90,.58)',
+      description: 'Traînée dorée plus brillante avec éclats rouges.'
     }
   ];
 
@@ -194,7 +258,15 @@ try {
     { id: 'white_gold', name: 'Blanc impérial', cost: 145, wall: 0xd8d3c4, light: 0xfff4d5, dark: 0x8b846f, damaged: 0xaaa18c, roof: 0xf2f0e8, banner: 0xd6a92e, trim: 0xffd667, glow: 'rgba(255,245,205,.28)' },
     { id: 'ancient_green', name: 'Pierre ancienne', cost: 170, wall: 0x6f9272, light: 0xacc8a3, dark: 0x394f39, damaged: 0x5c6d50, roof: 0x0f5b39, banner: 0x39b56a, trim: 0xb7c77a, glow: 'rgba(95,220,140,.22)' },
     { id: 'volcanic', name: 'Citadelle volcanique', cost: 210, wall: 0x4a3028, light: 0x8d5842, dark: 0x1b1110, damaged: 0x5d2b20, roof: 0xb33518, banner: 0xff6b21, trim: 0xffbd58, glow: 'rgba(255,95,35,.26)' },
-    { id: 'arctic', name: 'Château arctique', cost: 240, wall: 0xbfdce4, light: 0xf4ffff, dark: 0x68848d, damaged: 0x8aa1a8, roof: 0x79e4ff, banner: 0xdafcff, trim: 0xffffff, glow: 'rgba(170,240,255,.30)' }
+    { id: 'arctic', name: 'Château arctique', cost: 240, wall: 0xbfdce4, light: 0xf4ffff, dark: 0x68848d, damaged: 0x8aa1a8, roof: 0x79e4ff, banner: 0xdafcff, trim: 0xffffff, glow: 'rgba(170,240,255,.30)' },
+    { id: 'casino_vault', name: 'Casino · Coffre-fort blindé', cost: 70, wall: 0x343942, light: 0xaeb6bf, dark: 0x11141a, damaged: 0x22262e, roof: 0x1b1f27, banner: 0xffcf55, trim: 0xffd66e, glow: 'rgba(255,214,110,.34)' },
+    { id: 'casino_palace', name: 'Casino · Palace miniature', cost: 100, wall: 0x8b1e18, light: 0xf7d58a, dark: 0x2d0908, damaged: 0x5a1712, roof: 0x101010, banner: 0xffd452, trim: 0xfff0a0, glow: 'rgba(255,60,90,.30)' }
+  ];
+
+  const RAMP_SKINS = [
+    { id: 'classic_wood', name: 'Rampe bois classique', icon: '🪵', cost: 0, main: 0x8a4f22, rail: 0x5a2c10, accent: 0xe8c96a, glow: 'rgba(232,201,106,.22)', roughness: 0.64, metalness: 0.02 },
+    { id: 'casino_red_carpet', name: 'Casino · Tapis rouge', icon: '♦️', cost: 30, main: 0x9c1518, rail: 0xffd66e, accent: 0xfff0a0, glow: 'rgba(255,70,70,.30)', roughness: 0.58, metalness: 0.16 },
+    { id: 'casino_gold_rail', name: 'Casino · Rail doré', icon: '🪙', cost: 50, main: 0x16100b, rail: 0xf1bd43, accent: 0xfff3a2, glow: 'rgba(255,210,80,.42)', roughness: 0.32, metalness: 0.56 }
   ];
 
   // Références de progression : les objectifs doivent demander une vraie performance,
@@ -234,13 +306,21 @@ try {
       victoryPoints: 0,
       lifetimeEarned: 0,
       bestScoreToBeat: SCORE_TO_BEAT_DEFAULT,
+      unlockedThemes: ['classic'],
+      selectedTheme: 'classic',
       unlockedBallSkins: ['ivory'],
       selectedBallSkins: { '1': 'ivory', '2': 'ivory' },
       unlockedBallEffects: ['none'],
       selectedBallEffects: { '1': 'none', '2': 'none' },
       unlockedCastleSkins: ['classic'],
-      selectedCastleSkins: { '1': 'classic', '2': 'classic' }
+      selectedCastleSkins: { '1': 'classic', '2': 'classic' },
+      unlockedRampSkins: ['classic_wood'],
+      selectedRampSkins: { '1': 'classic_wood', '2': 'classic_wood' }
     };
+  }
+
+  function findTheme(id) {
+    return COSMETIC_THEMES.find(theme => theme.id === id) || COSMETIC_THEMES[0];
   }
 
   function findBallSkin(id) {
@@ -253,6 +333,10 @@ try {
 
   function findCastleSkin(id) {
     return CASTLE_SKINS.find(skin => skin.id === id) || CASTLE_SKINS[0];
+  }
+
+  function findRampSkin(id) {
+    return RAMP_SKINS.find(skin => skin.id === id) || RAMP_SKINS[0];
   }
 
   function colorToHex(value) {
@@ -292,6 +376,23 @@ try {
     return `--skin:${base};--skin-light:${light};--skin-dark:${dark};--skin-accent:${accent};--skin-glow:${glow};`;
   }
 
+  function themeCssVars(theme) {
+    const palette = theme.palette || {};
+    const felt = cssColor(palette.felt, '#17633d');
+    const rail = cssColor(palette.rail, '#5c2b10');
+    const accent = cssColor(palette.accent, '#ffd66e');
+    const glow = theme.glow || 'rgba(255,228,138,.22)';
+    return `--skin:${felt};--skin-light:${accent};--skin-dark:${rail};--skin-accent:${accent};--skin-glow:${glow};`;
+  }
+
+  function rampSkinCssVars(skin) {
+    const main = cssColor(skin.main, '#8a4f22');
+    const rail = cssColor(skin.rail, '#5a2c10');
+    const accent = cssColor(skin.accent, '#e8c96a');
+    const glow = skin.glow || 'rgba(232,201,106,.22)';
+    return `--skin:${main};--skin-light:${accent};--skin-dark:${rail};--skin-accent:${accent};--skin-glow:${glow};`;
+  }
+
   function castleSkinValue(skin, key, player = 1) {
     const playerKey = key + (player === 2 ? 'P2' : 'P1');
     return skin[playerKey] !== undefined ? skin[playerKey] : skin[key];
@@ -314,6 +415,12 @@ try {
     base.victoryPoints = Math.max(0, Number(data.victoryPoints) || 0);
     base.lifetimeEarned = Math.max(base.victoryPoints, Number(data.lifetimeEarned) || base.victoryPoints);
     base.bestScoreToBeat = Math.max(SCORE_TO_BEAT_DEFAULT, Number(data.bestScoreToBeat) || SCORE_TO_BEAT_DEFAULT);
+
+    const validThemeIds = new Set(COSMETIC_THEMES.map(theme => theme.id));
+    const unlockedThemes = Array.isArray(data.unlockedThemes) ? data.unlockedThemes.filter(id => validThemeIds.has(id)) : [];
+    base.unlockedThemes = Array.from(new Set(['classic', ...unlockedThemes]));
+    const selectedTheme = validThemeIds.has(data.selectedTheme) ? data.selectedTheme : 'classic';
+    base.selectedTheme = base.unlockedThemes.includes(selectedTheme) ? selectedTheme : 'classic';
 
     const validIds = new Set(BALL_SKINS.map(skin => skin.id));
     const unlocked = Array.isArray(data.unlockedBallSkins) ? data.unlockedBallSkins.filter(id => validIds.has(id)) : [];
@@ -343,6 +450,15 @@ try {
     ['1', '2'].forEach(playerKey => {
       const selectedId = selectedCastle[playerKey];
       base.selectedCastleSkins[playerKey] = base.unlockedCastleSkins.includes(selectedId) ? selectedId : 'classic';
+    });
+
+    const validRampIds = new Set(RAMP_SKINS.map(skin => skin.id));
+    const unlockedRamps = Array.isArray(data.unlockedRampSkins) ? data.unlockedRampSkins.filter(id => validRampIds.has(id)) : [];
+    base.unlockedRampSkins = Array.from(new Set(['classic_wood', ...unlockedRamps]));
+    const selectedRamps = data.selectedRampSkins && typeof data.selectedRampSkins === 'object' ? data.selectedRampSkins : {};
+    ['1', '2'].forEach(playerKey => {
+      const selectedId = selectedRamps[playerKey];
+      base.selectedRampSkins[playerKey] = base.unlockedRampSkins.includes(selectedId) ? selectedId : 'classic_wood';
     });
     return base;
   }
@@ -422,6 +538,34 @@ try {
   function createProfileObject(name, progressData, avatarId = DEFAULT_PROFILE_AVATAR) {
     const id = makeProfileId();
     return { id, name: cleanProfileName(name), avatar: normalizeProfileAvatar(avatarId), progress: normalizeProgress(progressData || defaultProgress()) };
+  }
+
+  function casinoTestProgress() {
+    return normalizeProgress({
+      victoryPoints: 99999,
+      lifetimeEarned: 99999,
+      bestScoreToBeat: 999,
+      unlockedThemes: COSMETIC_THEMES.map(theme => theme.id),
+      selectedTheme: 'casino_royal',
+      unlockedBallSkins: BALL_SKINS.map(skin => skin.id),
+      selectedBallSkins: { '1': 'casino_jackpot', '2': 'casino_black_8' },
+      unlockedBallEffects: BALL_EFFECTS.map(effect => effect.id),
+      selectedBallEffects: { '1': 'casino_jackpot_trail', '2': 'casino_coin_rain' },
+      unlockedCastleSkins: CASTLE_SKINS.map(skin => skin.id),
+      selectedCastleSkins: { '1': 'casino_vault', '2': 'casino_palace' },
+      unlockedRampSkins: RAMP_SKINS.map(skin => skin.id),
+      selectedRampSkins: { '1': 'casino_gold_rail', '2': 'casino_red_carpet' }
+    });
+  }
+
+  function makeCasinoTestProfile() {
+    return {
+      id: 'profil_casino_test',
+      name: 'Casino Test',
+      avatar: 'crown',
+      progress: casinoTestProgress(),
+      isTestProfile: true
+    };
   }
 
   function defaultProfileState() {
@@ -510,6 +654,23 @@ try {
     saveProfiles();
   }
 
+  function ensureCasinoTestProfile() {
+    const existing = profileState.profiles.profil_casino_test;
+    if (!existing) {
+      profileState.profiles.profil_casino_test = makeCasinoTestProfile();
+      profileState.activeSlots['1'] = 'profil_casino_test';
+      saveProfiles();
+      return;
+    }
+    existing.name = 'Casino Test';
+    existing.avatar = 'crown';
+    existing.isTestProfile = true;
+    existing.progress = casinoTestProgress();
+    saveProfiles();
+  }
+
+  ensureCasinoTestProfile();
+
   function createPlayerProfile(name, avatarId = DEFAULT_PROFILE_AVATAR) {
     const profile = createProfileObject(name, defaultProgress(), avatarId);
     profileState.profiles[profile.id] = profile;
@@ -526,6 +687,8 @@ try {
     try { applyActiveBallSkin(active); } catch (err) {}
     try { updateBallPulseColors(active); } catch (err) {}
     try { refreshCastleSkin(player); } catch (err) {}
+    try { refreshRampSkins(player); } catch (err) {}
+    if (Number(player) === 1) { try { applySelectedTheme(); } catch (err) {} }
     renderProfiles();
     renderProgression();
     renderCustomization();
@@ -575,7 +738,7 @@ try {
     const ok = window.confirm(
       'Remettre à zéro la progression des profils actifs ?\n\n' +
       names + '\n\n' +
-      'Cela supprimera les points de victoire, les couleurs de bille, les effets de bille, les couleurs de château et le score à battre de ces profils.'
+      'Cela supprimera les points de victoire, les thèmes, les skins de bille, effets de bille, skins de château, skins de rampes et le score à battre de ces profils.'
     );
     if (!ok) return;
 
@@ -592,6 +755,36 @@ try {
     try { applyActiveBallSkin(active); } catch (err) {}
     try { updateBallPulseColors(active); } catch (err) {}
     try { refreshAllCastleSkins(); } catch (err) {}
+    try { refreshAllRampSkins(); } catch (err) {}
+    try { applySelectedTheme(); } catch (err) {}
+  }
+
+  function getSelectedThemeId(player = 1) {
+    const pr = getPlayerProgress(player || 1);
+    const id = pr.selectedTheme || 'classic';
+    return pr.unlockedThemes.includes(id) ? id : 'classic';
+  }
+
+  function setSelectedTheme(player, themeId) {
+    const pr = getPlayerProgress(player || 1);
+    if (!pr.unlockedThemes.includes(themeId)) return;
+    pr.selectedTheme = themeId;
+    saveProgress();
+    if (Number(player) === 1) { try { applySelectedTheme(); } catch (err) {} }
+    renderCustomization();
+    updateMainMenuProgress();
+  }
+
+  function unlockTheme(themeId, player = 1) {
+    const theme = findTheme(themeId);
+    const pr = getPlayerProgress(player || 1);
+    if (!theme || pr.unlockedThemes.includes(theme.id)) return;
+    if (pr.victoryPoints < theme.cost) return;
+    pr.victoryPoints -= theme.cost;
+    pr.unlockedThemes.push(theme.id);
+    saveProgress();
+    renderCustomization();
+    updateMainMenuProgress();
   }
 
   function getSelectedBallSkinId(player = active) {
@@ -682,6 +875,37 @@ try {
     if (pr.victoryPoints < skin.cost) return;
     pr.victoryPoints -= skin.cost;
     pr.unlockedCastleSkins.push(skin.id);
+    saveProgress();
+    renderCustomization();
+    updateMainMenuProgress();
+  }
+
+  function getSelectedRampSkinId(player = active) {
+    const pr = getPlayerProgress(player);
+    const key = String(player || 1);
+    const legacyId = pr.selectedRampSkins && pr.selectedRampSkins[key] ? pr.selectedRampSkins[key] : null;
+    const id = pr.selectedRampSkin || legacyId || 'classic_wood';
+    return pr.unlockedRampSkins.includes(id) ? id : 'classic_wood';
+  }
+
+  function setSelectedRampSkin(player, skinId) {
+    const pr = getPlayerProgress(player);
+    if (!pr.unlockedRampSkins.includes(skinId)) return;
+    pr.selectedRampSkin = skinId;
+    pr.selectedRampSkins[String(player)] = skinId;
+    saveProgress();
+    try { refreshRampSkins(player); } catch (err) {}
+    renderCustomization();
+    updateMainMenuProgress();
+  }
+
+  function unlockRampSkin(skinId, player = active) {
+    const skin = findRampSkin(skinId);
+    const pr = getPlayerProgress(player);
+    if (!skin || pr.unlockedRampSkins.includes(skin.id)) return;
+    if (pr.victoryPoints < skin.cost) return;
+    pr.victoryPoints -= skin.cost;
+    pr.unlockedRampSkins.push(skin.id);
     saveProgress();
     renderCustomization();
     updateMainMenuProgress();
@@ -1215,7 +1439,7 @@ try {
     <div class="customization-box">
       <button class="customization-close" type="button">✕</button>
       <h2>🎨 Personnalisation</h2>
-      <p class="customization-subtitle">Points de victoire, couleurs de bille, effets de bille et couleurs de château. Aucun bonus gameplay.</p>
+      <p class="customization-subtitle">Thèmes de plateau, billes, effets, châteaux et rampes. Aucun bonus gameplay.</p>
       <div id="customizationContent"></div>
     </div>`;
   document.body.appendChild(customizationOverlay);
@@ -1231,20 +1455,43 @@ try {
     }).join('');
 
     const shopActions = (type, id, cost, unlockedFn, selectedFn) => {
+      const map = {
+        theme:  { selectName: 'data-select-theme-player', selectItem: 'data-theme', unlockName: 'data-unlock-theme', unlockPlayer: 'data-unlock-theme-player' },
+        skin:   { selectName: 'data-select-player', selectItem: 'data-skin', unlockName: 'data-unlock', unlockPlayer: 'data-unlock-player' },
+        effect: { selectName: 'data-select-effect-player', selectItem: 'data-effect', unlockName: 'data-unlock-effect', unlockPlayer: 'data-unlock-effect-player' },
+        castle: { selectName: 'data-select-castle-player', selectItem: 'data-castle-skin', unlockName: 'data-unlock-castle', unlockPlayer: 'data-unlock-castle-player' },
+        ramp:   { selectName: 'data-select-ramp-player', selectItem: 'data-ramp-skin', unlockName: 'data-unlock-ramp', unlockPlayer: 'data-unlock-ramp-player' }
+      }[type];
       return [1, 2].map(player => {
         const pr = getPlayerProgress(player);
         const unlocked = unlockedFn(pr);
         const selected = selectedFn(player);
         if (unlocked) {
-          const dataName = type === 'skin' ? 'data-select-player' : type === 'effect' ? 'data-select-effect-player' : 'data-select-castle-player';
-          const dataItem = type === 'skin' ? 'data-skin' : type === 'effect' ? 'data-effect' : 'data-castle-skin';
-          return `<button class="custom-select ${selected ? 'selected' : ''}" ${dataName}="${player}" ${dataItem}="${id}">J${player}${selected ? ' ✓' : ''}</button>`;
+          return `<button class="custom-select ${selected ? 'selected' : ''}" ${map.selectName}="${player}" ${map.selectItem}="${id}">J${player}${selected ? ' ✓' : ''}</button>`;
         }
-        const unlockName = type === 'skin' ? 'data-unlock' : type === 'effect' ? 'data-unlock-effect' : 'data-unlock-castle';
-        const unlockPlayer = type === 'skin' ? 'data-unlock-player' : type === 'effect' ? 'data-unlock-effect-player' : 'data-unlock-castle-player';
-        return `<button class="custom-unlock" ${unlockName}="${id}" ${unlockPlayer}="${player}" ${pr.victoryPoints >= cost ? '' : 'disabled'}>J${player} débloquer — ${cost} pts</button>`;
+        return `<button class="custom-unlock" ${map.unlockName}="${id}" ${map.unlockPlayer}="${player}" ${pr.victoryPoints >= cost ? '' : 'disabled'}>J${player} débloquer — ${cost} pts</button>`;
       }).join('');
     };
+
+    const themeCards = COSMETIC_THEMES.map(theme => {
+      const selectedP1 = getSelectedThemeId(1) === theme.id;
+      const selectedP2 = getSelectedThemeId(2) === theme.id;
+      const unlockedP1 = getPlayerProgress(1).unlockedThemes.includes(theme.id);
+      const unlockedP2 = getPlayerProgress(2).unlockedThemes.includes(theme.id);
+      const selectedTags = [selectedP1 ? 'J1' : '', selectedP2 ? 'J2' : ''].filter(Boolean).join(' / ');
+      const themeVars = themeCssVars(theme);
+      const actions = shopActions('theme', theme.id, theme.cost, pr => pr.unlockedThemes.includes(theme.id), player => getSelectedThemeId(player) === theme.id);
+      return `
+        <div class="skin-card theme-card ${(unlockedP1 || unlockedP2) ? 'unlocked' : 'locked'} ${(selectedP1 || selectedP2) ? 'active' : ''}" style="${themeVars}">
+          <div class="skin-card-preview theme-preview ${theme.id === 'casino_royal' ? 'theme-preview-casino' : ''}"><span class="theme-preview-icon">${theme.icon}</span></div>
+          <div class="skin-info">
+            <b>${theme.name}</b>
+            <small>${selectedTags || (theme.cost === 0 ? 'Gratuit' : theme.cost + ' points de victoire')}</small>
+            <em>${theme.description || ''}</em>
+          </div>
+          <div class="skin-actions">${actions}</div>
+        </div>`;
+    }).join('');
 
     const skinCards = BALL_SKINS.map(skin => {
       const selectedP1 = getSelectedBallSkinId(1) === skin.id;
@@ -1316,6 +1563,25 @@ try {
         </div>`;
     }).join('');
 
+    const rampCards = RAMP_SKINS.map(skin => {
+      const selectedP1 = getSelectedRampSkinId(1) === skin.id;
+      const selectedP2 = getSelectedRampSkinId(2) === skin.id;
+      const unlockedP1 = getPlayerProgress(1).unlockedRampSkins.includes(skin.id);
+      const unlockedP2 = getPlayerProgress(2).unlockedRampSkins.includes(skin.id);
+      const selectedTags = [selectedP1 ? 'J1' : '', selectedP2 ? 'J2' : ''].filter(Boolean).join(' / ');
+      const skinVars = rampSkinCssVars(skin);
+      const actions = shopActions('ramp', skin.id, skin.cost, pr => pr.unlockedRampSkins.includes(skin.id), player => getSelectedRampSkinId(player) === skin.id);
+      return `
+        <div class="skin-card ramp-card ${(unlockedP1 || unlockedP2) ? 'unlocked' : 'locked'} ${(selectedP1 || selectedP2) ? 'active' : ''}" style="${skinVars}">
+          <div class="skin-card-preview ramp-preview"><span class="skin-preview-ramp"></span></div>
+          <div class="skin-info">
+            <b>${skin.name}</b>
+            <small>${selectedTags || (skin.cost === 0 ? 'Gratuit' : skin.cost + ' points de victoire')}</small>
+          </div>
+          <div class="skin-actions">${actions}</div>
+        </div>`;
+    }).join('');
+
     customizationContent.innerHTML = `
       <div class="profile-wallet-grid">${playerWallets}</div>
       <div class="scoreboard-panel">
@@ -1324,7 +1590,12 @@ try {
         <div class="scoreboard-row"><span>J2 ${getProfileName(2)}</span><b>${Math.max(SCORE_TO_BEAT_DEFAULT, getPlayerProgress(2).bestScoreToBeat || SCORE_TO_BEAT_DEFAULT)} pts</b></div>
         <small>Le bonus record est ajouté aux points gagnés du profil concerné, mais il ne compte pas dans le nouveau score à battre.</small>
       </div>
-      <div class="custom-note">Les personnalisations sont propres à chaque profil. Elles changent uniquement l’apparence : couleurs, châteaux et effets visuels. Même vitesse, même puissance, même physique.</div>
+      <div class="custom-note">Les personnalisations sont propres à chaque profil. Elles changent uniquement l’apparence : thèmes, billes, effets, châteaux et rampes. Même vitesse, même puissance, même physique.</div>
+      <div class="skin-table-title theme-section-title">
+        <b>Thèmes de plateau</b>
+        <small>Le thème sélectionné par J1 habille le plateau global.</small>
+      </div>
+      <div class="skin-grid theme-grid">${themeCards}</div>
       <div class="skin-table-title">
         <b>Couleurs de bille</b>
         <small>Chaque profil débloque ses propres couleurs.</small>
@@ -1339,7 +1610,12 @@ try {
         <b>Couleurs de château</b>
         <small>Modifie les murs, toits, fanions et tours de défense.</small>
       </div>
-      <div class="skin-grid castle-grid">${castleCards}</div>`;
+      <div class="skin-grid castle-grid">${castleCards}</div>
+      <div class="skin-table-title ramp-section-title">
+        <b>Skins de rampes</b>
+        <small>Change seulement le matériau des rampes construites.</small>
+      </div>
+      <div class="skin-grid ramp-grid">${rampCards}</div>`;
 
     customizationContent.querySelectorAll('[data-unlock]').forEach(btn => {
       btn.onclick = () => unlockBallSkin(btn.dataset.unlock, Number(btn.dataset.unlockPlayer || active));
@@ -1358,6 +1634,18 @@ try {
     });
     customizationContent.querySelectorAll('[data-select-castle-player]').forEach(btn => {
       btn.onclick = () => setSelectedCastleSkin(Number(btn.dataset.selectCastlePlayer), btn.dataset.castleSkin);
+    });
+    customizationContent.querySelectorAll('[data-unlock-theme]').forEach(btn => {
+      btn.onclick = () => unlockTheme(btn.dataset.unlockTheme, Number(btn.dataset.unlockThemePlayer || 1));
+    });
+    customizationContent.querySelectorAll('[data-select-theme-player]').forEach(btn => {
+      btn.onclick = () => setSelectedTheme(Number(btn.dataset.selectThemePlayer || 1), btn.dataset.theme);
+    });
+    customizationContent.querySelectorAll('[data-unlock-ramp]').forEach(btn => {
+      btn.onclick = () => unlockRampSkin(btn.dataset.unlockRamp, Number(btn.dataset.unlockRampPlayer || active));
+    });
+    customizationContent.querySelectorAll('[data-select-ramp-player]').forEach(btn => {
+      btn.onclick = () => setSelectedRampSkin(Number(btn.dataset.selectRampPlayer || active), btn.dataset.rampSkin);
     });
   }
 
@@ -1476,7 +1764,7 @@ try {
     <div class="profiles-box">
       <button class="profiles-close" type="button">✕</button>
       <h2>👤 Profils joueurs</h2>
-      <p class="profiles-subtitle">Choisis le profil utilisé par J1 et J2. Chaque profil garde ses propres points, skins et score à battre.</p>
+      <p class="profiles-subtitle">Choisis le profil utilisé par J1 et J2. Chaque profil garde ses propres points, thèmes, skins et score à battre.</p>
       <div id="profilesContent"></div>
     </div>`;
   document.body.appendChild(profilesOverlay);
@@ -3253,6 +3541,73 @@ try {
   };
   const mudMat = new THREE.MeshBasicMaterial({ color: 0x2a1608, transparent: true, opacity: 0.46, side: THREE.DoubleSide });
   const mudEdgeMat = new THREE.MeshBasicMaterial({ color: 0x5b3515, transparent: true, opacity: 0.62, side: THREE.DoubleSide });
+
+  function setMaterialColor(material, color) {
+    if (!material || !material.color || color === undefined) return;
+    material.color.setHex(Number(color) >>> 0);
+    material.needsUpdate = true;
+  }
+
+  function applySelectedTheme(player = 1) {
+    const theme = findTheme(getSelectedThemeId(player));
+    const p = theme.palette || {};
+    try { document.body.dataset.boardTheme = theme.id; } catch (err) {}
+    setMaterialColor(mat.felt, p.felt);
+    setMaterialColor(mat.feltAlt, p.feltAlt);
+    setMaterialColor(mat.butte, p.butte);
+    setMaterialColor(mat.cloth, p.cloth);
+    setMaterialColor(mat.rail, p.rail);
+    setMaterialColor(mat.wood, p.rail);
+    setMaterialColor(mat.rubber, p.rubber);
+    setMaterialColor(mat.floor, p.floor);
+    setMaterialColor(mat.wall, p.wall);
+    setMaterialColor(mat.beam, p.rail);
+    setMaterialColor(mat.carpet, theme.id === 'casino_royal' ? 0x7e1010 : 0x361307);
+    setMaterialColor(mat.brass, p.accent || 0xd5ac3e);
+    setMaterialColor(mat.holeRing, p.accent || 0xe0b23d);
+    setMaterialColor(mat.accentGold, p.accent || 0xffd66e);
+    if (theme.id === 'casino_royal') {
+      mat.brass.emissiveIntensity = 0.24;
+      mat.holeRing.emissiveIntensity = 0.26;
+      scene.background = new THREE.Color(0x080403);
+      scene.fog = new THREE.Fog(0x080403, 180, 430);
+    } else {
+      mat.brass.emissiveIntensity = 0.18;
+      mat.holeRing.emissiveIntensity = 0.18;
+      scene.background = new THREE.Color(0x120b08);
+      scene.fog = new THREE.Fog(0x120b08, 190, 450);
+    }
+  }
+
+  const rampSkinMaterials = {};
+  function getRampSkinMaterials(player = active) {
+    const skin = findRampSkin(getSelectedRampSkinId(player));
+    if (!rampSkinMaterials[skin.id]) {
+      const rail = new THREE.MeshStandardMaterial({
+        color: skin.rail,
+        roughness: Math.max(0.18, (skin.roughness || 0.58) - 0.16),
+        metalness: Math.min(0.95, (skin.metalness || 0.04) + 0.22),
+        emissive: new THREE.Color(0x120800),
+        emissiveIntensity: skin.id.startsWith('casino_') ? 0.10 : 0.02
+      });
+      const main = new THREE.MeshStandardMaterial({
+        color: skin.main,
+        roughness: skin.roughness ?? 0.64,
+        metalness: skin.metalness ?? 0.02,
+        emissive: new THREE.Color(skin.id === 'casino_red_carpet' ? 0x260303 : 0x060300),
+        emissiveIntensity: skin.id.startsWith('casino_') ? 0.06 : 0.01
+      });
+      main.userData.rampRailMaterial = rail;
+      rampSkinMaterials[skin.id] = { main, rail };
+    }
+    return rampSkinMaterials[skin.id];
+  }
+
+  function getRampMainMaterial(player = active) {
+    return getRampSkinMaterials(player).main;
+  }
+
+  applySelectedTheme(1);
 
   const castleSkinMaterials = {};
 
@@ -5648,7 +6003,7 @@ function addDamagedRoofDetails(parent, p, x, y, z, radius, central = false, crit
 
     const length = RAMP.length;
     const slopeAngle = -dir(attacker) * Math.atan2(RAMP.surfaceEndY - RAMP.surfaceStartY, RAMP.length);
-    const railMat = ghost ? material : mat.wood;
+    const railMat = ghost ? material : ((material && material.userData && material.userData.rampRailMaterial) ? material.userData.rampRailMaterial : mat.wood);
     const midY = (RAMP.surfaceStartY + RAMP.surfaceEndY) / 2;
 
     const main = addBox(width, .34, length, 0, midY, 0, material, g);
@@ -5672,6 +6027,28 @@ function addDamagedRoofDetails(parent, p, x, y, z, radius, central = false, crit
 
   function createSideRampVisual(attacker, sideIndex = 0, material, ghost = false) {
     return createRampVisualAt(attacker, sideRampPosition(attacker, sideIndex), material, ghost, SIDE_RIDGE.width);
+  }
+
+  function refreshRampSkins(player = active) {
+    if (!Array.isArray(players) || !players[player - 1]) return;
+    const pl = players[player - 1];
+    (pl.sideRamps || []).forEach(r => {
+      if (!r.built || !r.mesh) return;
+      scene.remove(r.mesh);
+      r.mesh = createSideRampVisual(player, r.sideIndex, getRampMainMaterial(player), false);
+      scene.add(r.mesh);
+    });
+    (pl.ramps || []).forEach((r, slot) => {
+      if (!r.built || !r.mesh) return;
+      scene.remove(r.mesh);
+      r.mesh = createRampVisual(player, slot, getRampMainMaterial(player), false);
+      scene.add(r.mesh);
+    });
+  }
+
+  function refreshAllRampSkins() {
+    refreshRampSkins(1);
+    refreshRampSkins(2);
   }
 
   function focusCameraOnRampArea(attacker, slot) {
@@ -5915,7 +6292,7 @@ function addDamagedRoofDetails(parent, p, x, y, z, radius, central = false, crit
     const r = sideList[sideSlot];
     r.built = true; r.hp = r.max; r.usedThisShot = false;
     if (r.ghost) { scene.remove(r.ghost); r.ghost = null; }
-    const g = createSideRampVisual(p, r.sideIndex, mat.ramp, false);
+    const g = createSideRampVisual(p, r.sideIndex, getRampMainMaterial(p), false);
     scene.add(g); r.mesh = g;
     focusCameraOnSideRampArea(p, r.sideIndex);
     updateHUD();
@@ -5934,7 +6311,7 @@ function addDamagedRoofDetails(parent, p, x, y, z, radius, central = false, crit
     if (!pay(pl.res, cost)) { showToast('Ressources insuffisantes'); return; }
     const r = pl.ramps[slot]; r.built = true; r.hp = r.max; r.usedThisShot = false;
     if (r.ghost) { scene.remove(r.ghost); r.ghost = null; }
-    const g = createRampVisual(p, slot, mat.ramp, false);
+    const g = createRampVisual(p, slot, getRampMainMaterial(p), false);
     scene.add(g); r.mesh = g;
     focusCameraOnRampArea(p, slot);
     updateHUD();
@@ -6010,14 +6387,16 @@ function addDamagedRoofDetails(parent, p, x, y, z, radius, central = false, crit
 
   function updateBallPulseColors(player = active) {
     if (!ballPulseAura) return;
+    const effect = findBallEffect(getSelectedBallEffectId(player));
     const skin = findBallSkin(getSelectedBallSkinId(player));
-    const color = skin.accent !== undefined ? skin.accent : skin.color;
+    const color = effect.id !== 'none' && effect.color !== undefined ? effect.color : (skin.accent !== undefined ? skin.accent : skin.color);
     ballPulseAura.material.color.setHex(color);
   }
 
   function updateBallPulseEffect() {
     const effectId = getSelectedBallEffectId(active);
-    const pulseActive = gameStarted && !gamePaused && effectId === 'pulse';
+    const casinoGlow = effectId === 'casino_coin_rain' || effectId === 'casino_jackpot_trail';
+    const pulseActive = gameStarted && !gamePaused && (effectId === 'pulse' || casinoGlow);
     if (!pulseActive) {
       ballPulseAura.visible = false;
       ballPulseAura.material.opacity = 0;
@@ -6025,13 +6404,14 @@ function addDamagedRoofDetails(parent, p, x, y, z, radius, central = false, crit
       return;
     }
 
-    const beat = (Math.sin(_t * 6.2) + 1) * 0.5;
-    const softBeat = Math.pow(beat, 2.2);
-    const size = 1.02 + softBeat * 0.34;
+    const beat = (Math.sin(_t * (casinoGlow ? 8.4 : 6.2)) + 1) * 0.5;
+    const softBeat = Math.pow(beat, casinoGlow ? 1.6 : 2.2);
+    const speedBoost = Math.min(1, velocity.length() / 0.9);
+    const size = 1.02 + softBeat * (casinoGlow ? 0.22 : 0.34) + speedBoost * 0.12;
     ballPulseAura.visible = true;
     ballPulseAura.scale.setScalar(size);
-    ballPulseAura.material.opacity = 0.10 + softBeat * 0.24;
-    ballLight.intensity = 0.55 + softBeat * 0.55;
+    ballPulseAura.material.opacity = casinoGlow ? (0.12 + softBeat * 0.18 + speedBoost * 0.08) : (0.10 + softBeat * 0.24);
+    ballLight.intensity = casinoGlow ? (0.65 + softBeat * 0.42 + speedBoost * 0.28) : (0.55 + softBeat * 0.55);
   }
 
   // Traînée cosmétique de bille : purement visuelle, aucun effet sur la physique.
@@ -6076,6 +6456,9 @@ function addDamagedRoofDetails(parent, p, x, y, z, radius, central = false, crit
   applyActiveBallSkin(active);
 
   function getBallTrailColor(player = active) {
+    const effect = findBallEffect(getSelectedBallEffectId(player));
+    if (effect.id === 'casino_coin_rain') return effect.color;
+    if (effect.id === 'casino_jackpot_trail') return 0xffd45f;
     const skin = findBallSkin(getSelectedBallSkinId(player));
     return skin.accent !== undefined ? skin.accent : skin.color;
   }
@@ -6201,7 +6584,10 @@ function addDamagedRoofDetails(parent, p, x, y, z, radius, central = false, crit
 
     const baseCol  = new THREE.Color(getBallTrailColor(active));
     const brightCol = baseCol.clone().lerp(new THREE.Color(0xffffff), sFull * 0.28);
-    const sparkCol  = baseCol.clone().lerp(new THREE.Color(0xffffff), 0.45 + sFull * 0.15);
+    const effectId = getSelectedBallEffectId(active);
+    const sparkCol  = effectId === 'casino_jackpot_trail'
+      ? new THREE.Color(0xff345d).lerp(new THREE.Color(0xfff0a0), 0.30 + sFull * 0.20)
+      : baseCol.clone().lerp(new THREE.Color(0xffffff), 0.45 + sFull * 0.15);
 
     const maxVisible = BALL_TRAIL_COUNT - 1;
 
