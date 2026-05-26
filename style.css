@@ -6331,3 +6331,24 @@ body[data-board-theme="casino_royal"] .title h1::after {
   color: #ffd45f;
   text-shadow: 0 0 16px rgba(255,49,94,.55), 0 0 28px rgba(255,208,61,.24);
 }
+
+/* Casino Jackpot : lecture volontairement plus claire, moins billard/noir. */
+body[data-board-theme="casino_royal"] {
+  --wood: #7a2038;
+  --wood-light: #c43b52;
+  --wood-mid: #9c2c46;
+  --brass: #ffd84f;
+  --brass-light: #fff0a0;
+  --brass-dim: #c48a1e;
+  --glass: rgba(62, 18, 42, 0.78);
+  --glass-border: rgba(255, 216, 80, .62);
+}
+body[data-board-theme="casino_royal"] #game {
+  background: #7b2f52 !important;
+  filter: saturate(1.55) contrast(1.03) brightness(1.26) !important;
+}
+body[data-board-theme="casino_royal"] #hud,
+body[data-board-theme="casino_royal"] #resources,
+body[data-board-theme="casino_royal"] footer#controls {
+  background: linear-gradient(180deg, rgba(122, 32, 56, .82), rgba(68, 18, 48, .58), transparent) !important;
+}

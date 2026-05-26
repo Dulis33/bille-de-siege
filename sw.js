@@ -1,8 +1,8 @@
-const BDS_CACHE = 'bds-casino-light-slotfloor-20260526-1';
+const BDS_CACHE = 'bds-casino-bright-ghost-resources-20260526-1';
 const BDS_FILES = [
   './index.html',
-  './style.css?v=casino-light-slotfloor-20260526-1',
-  './game.js?v=casino-light-slotfloor-20260526-1',
+  './style.css?v=casino-bright-ghost-resources-20260526-1',
+  './game.js?v=casino-bright-ghost-resources-20260526-1',
   './style.css',
   './game.js',
   './manifest.webmanifest',

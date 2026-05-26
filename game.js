@@ -1,4 +1,4 @@
-// Bille de Siège — thème Casino Jackpot éclairci + plancher amovible fond→devant.
+// Bille de Siège — thème Casino Jackpot clair + fantômes/ressources thématiques.
 (() => {
 try {
   ['bdsBootV11','bdsBootFinal','bdsBoot','bdsBootClean'].forEach(function(id){
@@ -169,17 +169,17 @@ try {
       cost: 80,
       glow: 'rgba(255,86,118,.56)',
       palette: {
-        // Ambiance machine à sous / fête foraine mécanique : rouge, noir, or, néon.
-        // Version éclaircie : le plateau doit rester lisible sur mobile.
-        felt: 0x5a1122,
-        feltAlt: 0x3a0b34,
-        butte: 0x5b2836,
-        cloth: 0x241024,
-        rail: 0x8a1622,
-        rubber: 0x341018,
-        floor: 0x1b0a14,
-        wall: 0x2b0d21,
-        accent: 0xffd64f
+        // Ambiance machine à sous / fête foraine mécanique : rouge, rose, or, néon.
+        // Version claire : on sort volontairement du noir/billard pour une vraie lecture mobile.
+        felt: 0xb83a46,
+        feltAlt: 0x9d3278,
+        butte: 0xc95766,
+        cloth: 0x7b2f52,
+        rail: 0xe13a50,
+        rubber: 0x8d2738,
+        floor: 0x56233d,
+        wall: 0x733052,
+        accent: 0xffe36f
       },
       description: 'Machines à sous, néons rouges/or, mécanisme Jackpot avec plancher amovible façon fête foraine.'
     }
@@ -890,6 +890,9 @@ try {
     const key = String(player || 1);
     const legacyId = pr.selectedRampSkins && pr.selectedRampSkins[key] ? pr.selectedRampSkins[key] : null;
     const id = pr.selectedRampSkin || legacyId || 'classic_wood';
+    if (getSelectedThemeId(player) === 'casino_royal' && id === 'classic_wood' && pr.unlockedRampSkins.includes('casino_gold_rail')) {
+      return 'casino_gold_rail';
+    }
     return pr.unlockedRampSkins.includes(id) ? id : 'classic_wood';
   }
 
@@ -3581,19 +3584,33 @@ try {
     setMaterialColor(mat.holeRing, p.accent || 0xe0b23d);
     setMaterialColor(mat.accentGold, p.accent || 0xffd66e);
     if (theme.id === 'casino_royal') {
-      // Casino lisible : on garde le contraste rouge/noir/or, mais on enlève le voile noir.
-      mat.brass.emissiveIntensity = 0.34;
-      mat.holeRing.emissiveIntensity = 0.36;
-      renderer.toneMappingExposure = 1.92;
-      scene.background = new THREE.Color(0x180716);
-      scene.fog = new THREE.Fog(0x180716, 245, 620);
+      // Casino Jackpot clair : on assume des couleurs de fête foraine lisibles,
+      // avec un léger auto-éclairage pour éviter l'effet couloir noir sur mobile.
+      mat.brass.emissiveIntensity = 0.52;
+      mat.holeRing.emissiveIntensity = 0.56;
+      [mat.felt, mat.feltAlt, mat.slope, mat.slopeTop, mat.cloth, mat.floor, mat.wall, mat.rail, mat.wood].forEach(m => {
+        if (!m || !m.emissive) return;
+        m.emissive.setHex(0x2b0614);
+        m.emissiveIntensity = 0.16;
+      });
+      if (mat.floor && mat.floor.emissive) mat.floor.emissiveIntensity = 0.24;
+      if (mat.cloth && mat.cloth.emissive) mat.cloth.emissiveIntensity = 0.20;
+      renderer.toneMappingExposure = 2.38;
+      scene.background = new THREE.Color(0x42162f);
+      scene.fog = new THREE.Fog(0x42162f, 520, 1150);
     } else {
       mat.brass.emissiveIntensity = 0.18;
       mat.holeRing.emissiveIntensity = 0.18;
+      [mat.felt, mat.feltAlt, mat.slope, mat.slopeTop, mat.cloth, mat.floor, mat.wall, mat.rail, mat.wood].forEach(m => {
+        if (!m || !m.emissive) return;
+        m.emissive.setHex(0x000000);
+        m.emissiveIntensity = 0;
+      });
       renderer.toneMappingExposure = 1.54;
       scene.background = new THREE.Color(0x120b08);
       scene.fog = new THREE.Fog(0x120b08, 190, 450);
     }
+    try { updateResourceHudTheme(); } catch (err) {}
   }
 
   const rampSkinMaterials = {};
@@ -3624,6 +3641,36 @@ try {
 
   function getRampMainMaterial(player = active) {
     return getRampSkinMaterials(player).main;
+  }
+
+  const rampGhostSkinMaterials = {};
+  function makeRampGhostMaterial(color, opacity = 0.42, emissive = 0x000000, emissiveIntensity = 0.10, metalness = 0.10) {
+    return new THREE.MeshStandardMaterial({
+      color,
+      transparent: true,
+      opacity,
+      roughness: 0.42,
+      metalness,
+      emissive: new THREE.Color(emissive),
+      emissiveIntensity,
+      depthWrite: false
+    });
+  }
+
+  function getRampGhostMainMaterial(player = active) {
+    const skin = findRampSkin(getSelectedRampSkinId(player));
+    const key = skin.id + '_ghost';
+    if (!rampGhostSkinMaterials[key]) {
+      const main = makeRampGhostMaterial(skin.main || 0x88ddaa, skin.id.startsWith('casino_') ? 0.52 : 0.34, skin.id.startsWith('casino_') ? 0x5a0012 : 0x002a16, skin.id.startsWith('casino_') ? 0.34 : 0.10, skin.metalness || 0.12);
+      const rail = makeRampGhostMaterial(skin.rail || skin.accent || 0xaaffcf, skin.id.startsWith('casino_') ? 0.72 : 0.46, skin.id.startsWith('casino_') ? 0x4a2a00 : 0x002a16, skin.id.startsWith('casino_') ? 0.46 : 0.14, Math.min(0.82, (skin.metalness || 0.12) + 0.22));
+      main.userData.rampRailMaterial = rail;
+      main.userData.rampSkinId = skin.id;
+      main.userData.isGhostRampSkin = true;
+      rail.userData.rampSkinId = skin.id;
+      rail.userData.isGhostRampSkin = true;
+      rampGhostSkinMaterials[key] = { main, rail };
+    }
+    return rampGhostSkinMaterials[key].main;
   }
 
   applySelectedTheme(1);
@@ -4086,8 +4133,50 @@ function shadeHexColor(color, amount) {
   // Les ressources changent à chaque tour, mais les pièges et les trous découverts restent stables.
   const completedHoleRows = [new Set(), new Set()];
   const RESOURCE_TYPES = ['stone', 'wood', 'gold'];
-  const RESOURCE_ICONS = { stone: '🪨', wood: '🪵', gold: '🪙', relic: '🏺' };
-  const RESOURCE_NAMES = { stone: 'pierre', wood: 'bois', gold: 'or', relic: 'relique' };
+  const RESOURCE_ICONS_CLASSIC = { stone: '🪨', wood: '🪵', gold: '🪙', relic: '🏺' };
+  const RESOURCE_ICONS_CASINO  = { stone: '7️⃣', wood: '🍒', gold: '⭐', relic: '🪙' };
+  const RESOURCE_NAMES_CLASSIC = { stone: 'pierre', wood: 'bois', gold: 'or', relic: 'relique' };
+  const RESOURCE_NAMES_CASINO  = { stone: 'sept', wood: 'cerise', gold: 'jackpot', relic: 'jeton' };
+  const RESOURCE_HUD_CLASSIC   = { stone: 'Pierres', wood: 'Bois', gold: 'Or', relic: 'Reliques' };
+  const RESOURCE_HUD_CASINO    = { stone: 'Sept', wood: 'Cerises', gold: 'Jackpots', relic: 'Jetons' };
+
+  function casinoResourceMode() {
+    try { return isCasinoBoardTheme(); } catch (err) { return false; }
+  }
+
+  function currentResourceIcon(type) {
+    return (casinoResourceMode() ? RESOURCE_ICONS_CASINO : RESOURCE_ICONS_CLASSIC)[type] || '✨';
+  }
+
+  function currentResourceName(type) {
+    return (casinoResourceMode() ? RESOURCE_NAMES_CASINO : RESOURCE_NAMES_CLASSIC)[type] || type;
+  }
+
+  function currentResourceHudName(type) {
+    return (casinoResourceMode() ? RESOURCE_HUD_CASINO : RESOURCE_HUD_CLASSIC)[type] || type;
+  }
+
+  const RESOURCE_ICONS = new Proxy({}, { get: (_, key) => currentResourceIcon(String(key)) });
+  const RESOURCE_NAMES = new Proxy({}, { get: (_, key) => currentResourceName(String(key)) });
+
+  function updateResourceHudTheme() {
+    const entries = [['stone', UI.stone], ['wood', UI.wood], ['gold', UI.gold], ['relic', UI.relic]];
+    entries.forEach(([type, valueEl]) => {
+      const span = valueEl && valueEl.parentElement;
+      if (!span) return;
+      if (span.firstChild && span.firstChild.nodeType === Node.TEXT_NODE) span.firstChild.nodeValue = currentResourceIcon(type) + ' ';
+      const tail = valueEl.nextSibling;
+      if (tail && tail.nodeType === Node.TEXT_NODE) tail.nodeValue = ' ' + currentResourceHudName(type);
+    });
+  }
+
+  function resourceStockText(res) {
+    return `${res.stone} ${currentResourceIcon('stone')} ${currentResourceHudName('stone').toLowerCase()} · ${res.wood} ${currentResourceIcon('wood')} ${currentResourceHudName('wood').toLowerCase()} · ${res.gold || 0} ${currentResourceIcon('gold')} ${currentResourceHudName('gold').toLowerCase()} · ${res.relic || 0} ${currentResourceIcon('relic')} ${currentResourceHudName('relic').toLowerCase()}`;
+  }
+
+  function resourceCostText(cost) {
+    return Object.entries(cost || {}).map(([k, v]) => v + ' ' + currentResourceIcon(k)).join(' ');
+  }
   const RELIC_HOLES_PER_SIDE = 4;
   const RELIC_MARKET_GOLD_VALUE = 5;
   const BONUS_HOLE_CAPTURE_R = HOLE_R + CFG.ballR * 0.52;
@@ -4206,8 +4295,11 @@ function shadeHexColor(color, amount) {
 
   function holeRewardLabel(reward) {
     return Object.entries(reward || {}).map(([type, amount]) => {
-      const name = RESOURCE_NAMES[type] || type;
-      return amount + ' ' + name + (type === 'stone' && amount > 1 ? 's' : '');
+      const name = currentResourceName(type);
+      const plural = casinoResourceMode()
+        ? (amount > 1 && !String(name).endsWith('s') ? name + 's' : name)
+        : (type === 'stone' && amount > 1 ? name + 's' : name);
+      return amount + ' ' + plural;
     }).join(' + ');
   }
 
@@ -5771,7 +5863,7 @@ function addDamagedRoofDetails(parent, p, x, y, z, radius, central = false, crit
   }
 
   function isCasinoCastleSkin(player = active) {
-    return String(getSelectedCastleSkinId(player) || '').startsWith('casino_');
+    return getSelectedThemeId(player) === 'casino_royal' || String(getSelectedCastleSkinId(player) || '').startsWith('casino_');
   }
 
   function isCasinoBoardTheme() {
@@ -6344,7 +6436,9 @@ function addDamagedRoofDetails(parent, p, x, y, z, radius, central = false, crit
 
     const length = RAMP.length;
     const slopeAngle = -dir(attacker) * Math.atan2(RAMP.surfaceEndY - RAMP.surfaceStartY, RAMP.length);
-    const railMat = ghost ? material : ((material && material.userData && material.userData.rampRailMaterial) ? material.userData.rampRailMaterial : mat.wood);
+    const railMat = (material && material.userData && material.userData.rampRailMaterial)
+      ? material.userData.rampRailMaterial
+      : (ghost ? material : mat.wood);
     const midY = (RAMP.surfaceStartY + RAMP.surfaceEndY) / 2;
 
     const main = addBox(width, .34, length, 0, midY, 0, material, g);
@@ -6361,9 +6455,9 @@ function addDamagedRoofDetails(parent, p, x, y, z, radius, central = false, crit
     exit.rotation.x = slopeAngle;
 
     const rampSkinId = material && material.userData ? String(material.userData.rampSkinId || '') : '';
-    if (rampSkinId.startsWith('casino_') && !ghost) {
-      const bulbA = new THREE.MeshBasicMaterial({ color: 0xffd04b, transparent: true, opacity: 0.92 });
-      const bulbB = new THREE.MeshBasicMaterial({ color: 0xff315e, transparent: true, opacity: 0.86 });
+    if (rampSkinId.startsWith('casino_')) {
+      const bulbA = new THREE.MeshBasicMaterial({ color: 0xffd04b, transparent: true, opacity: ghost ? 0.54 : 0.92 });
+      const bulbB = new THREE.MeshBasicMaterial({ color: 0xff315e, transparent: true, opacity: ghost ? 0.50 : 0.86 });
       for (let i = -4; i <= 4; i++) {
         const z = i * (length / 9);
         [-1, 1].forEach((side, k) => {
@@ -6536,14 +6630,14 @@ function addDamagedRoofDetails(parent, p, x, y, z, radius, central = false, crit
       (pl.sideRamps || []).forEach(sideRamp => {
         if (sideRamp.ghost) { scene.remove(sideRamp.ghost); sideRamp.ghost = null; }
         if (!sideRamp.built) {
-          const g = createSideRampVisual(player, sideRamp.sideIndex, mat.ghost, true);
+          const g = createSideRampVisual(player, sideRamp.sideIndex, getRampGhostMainMaterial(player), true);
           scene.add(g); sideRamp.ghost = g;
         }
       });
       pl.ramps.forEach((r, slot) => {
         if (r.ghost) { scene.remove(r.ghost); r.ghost = null; }
         if (r.unlocked && !r.built) {
-          const g = createRampVisual(player, slot, mat.ghost, true);
+          const g = createRampVisual(player, slot, getRampGhostMainMaterial(player), true);
           scene.add(g); r.ghost = g;
         }
       });
@@ -7185,7 +7279,7 @@ function addDamagedRoofDetails(parent, p, x, y, z, radius, central = false, crit
   }
 
   function resourceIcon(type) {
-    return { stone: '🪨', wood: '🪵', gold: '🪙', relic: '🏺' }[type] || '✨';
+    return currentResourceIcon(type);
   }
 
   function resourceClass(type) {
@@ -7684,7 +7778,7 @@ function addDamagedRoofDetails(parent, p, x, y, z, radius, central = false, crit
   function refreshRepairChoice() {
     const res = players[active - 1].res;
     const candidates = randomRepairCandidates(active);
-    repairStock.innerHTML = `Joueur ${active} — ${res.stone} 🪨 pierre(s) · ${res.wood} 🪵 bois · ${res.gold || 0} 🪙 or · ${res.relic || 0} 🏺 relique(s)<br>${candidates.length} structure(s) réparable(s)`;
+    repairStock.innerHTML = `Joueur ${active} — ${resourceStockText(res)}<br>${candidates.length} structure(s) réparable(s)`;
     repairActions.innerHTML = '';
 
     REPAIR_COST_OPTIONS.forEach(option => {
@@ -9467,7 +9561,42 @@ function spawnVictoryCelebration(report) {
     return { ok: true, slot, x: px, z: pz };
   }
 
+  function createCasinoTowerPreviewMesh(player, x, z) {
+    const g = new THREE.Group();
+    g.position.set(x, 0.1, z);
+    if (player === 1) g.rotation.y = Math.PI;
+
+    const bodyMat = new THREE.MeshStandardMaterial({ color: 0xff315e, transparent: true, opacity: 0.48, roughness: 0.38, metalness: 0.34, emissive: 0x4a0011, emissiveIntensity: 0.34, depthWrite: false });
+    const darkMat = new THREE.MeshStandardMaterial({ color: 0x3b0b22, transparent: true, opacity: 0.46, roughness: 0.58, metalness: 0.12, emissive: 0x16000a, emissiveIntensity: 0.24, depthWrite: false });
+    const trimMat = new THREE.MeshStandardMaterial({ color: 0xffe36f, transparent: true, opacity: 0.72, roughness: 0.22, metalness: 0.82, emissive: 0x3a2200, emissiveIntensity: 0.46, depthWrite: false });
+    const reelMat = new THREE.MeshStandardMaterial({ color: 0xfff0a6, transparent: true, opacity: 0.66, roughness: 0.18, metalness: 0.10, emissive: 0x2a1a00, emissiveIntensity: 0.26, depthWrite: false });
+    const symbolMats = [0xff315e, 0xffd04b, 0x35f2ff].map(col => new THREE.MeshBasicMaterial({ color: col, transparent: true, opacity: 0.78, depthWrite: false }));
+
+    addBox(4.8, 0.42, 4.8, 0, 0.21, 0, darkMat, g);
+    addBox(3.6, 7.0, 3.2, 0, 3.75, 0, bodyMat, g);
+    addBox(4.1, 0.42, 3.8, 0, 7.45, 0, trimMat, g);
+    addBox(3.1, 0.78, 0.13, 0, 6.95, 1.70, trimMat, g);
+    [-0.95, 0, 0.95].forEach((sx, i) => {
+      addBox(0.82, 1.12, 0.10, sx, 4.68, 1.75, reelMat, g);
+      addCasinoSeven(g, sx, 4.65, 1.88, 0.32, 1, symbolMats[i]);
+    });
+    const lever = addCyl(0.08, 1.22, 2.22, 4.45, 0.18, trimMat, g, 10);
+    lever.rotation.z = 0.66;
+    const knob = addCyl(0.29, 0.22, 2.52, 4.92, 0.18, symbolMats[0], g, 18);
+    knob.rotation.x = Math.PI / 2;
+    const ring = new THREE.Mesh(
+      new THREE.TorusGeometry(2.75, 0.09, 8, 54),
+      new THREE.MeshBasicMaterial({ color: 0xffe36f, transparent: true, opacity: 0.86, depthWrite: false })
+    );
+    ring.rotation.x = Math.PI / 2;
+    ring.position.y = 0.25;
+    g.add(ring);
+    scene.add(g);
+    return g;
+  }
+
   function createTowerPreviewMesh(player, x, z) {
+    if (isCasinoCastleSkin(player) || isCasinoBoardTheme()) return createCasinoTowerPreviewMesh(player, x, z);
     const g = new THREE.Group();
     g.position.set(x, 0.1, z);
     const bodyMat = new THREE.MeshStandardMaterial({ color: 0x9deec4, transparent: true, opacity: 0.46, roughness: 0.6, metalness: 0.0 });
@@ -9875,7 +10004,7 @@ function spawnVictoryCelebration(report) {
     const res = players[active-1].res;
     const sale = isMarketSaleActive();
     const marketLimitReached = marketTradeUsedThisTurn;
-    marketStock.innerHTML = `Joueur ${active} — ${res.stone} 🪨 pierre(s) · ${res.wood} 🪵 bois · ${res.gold || 0} 🪙 or · ${res.relic || 0} 🏺 relique(s)<br>` +
+    marketStock.innerHTML = `Joueur ${active} — ${resourceStockText(res)}<br>` +
       (sale
         ? '<b class="market-sale-label">🏷️ Solde active : taux améliorés. 1 seul échange marché ce tour.</b>'
         : '<span class="market-normal-label">Taux normal. 1 seul échange marché ce tour.</span>');
@@ -9887,7 +10016,11 @@ function spawnVictoryCelebration(report) {
       btn.className = 'market-trade' + (sale ? ' sale' : '');
       const canTrade = canUseMarket() && !marketLimitReached && (res[trade.from] || 0) >= trade.cost;
       btn.disabled = !canTrade;
-      btn.innerHTML = `<strong>${trade.cost} ${trade.fromIcon}</strong><span>→</span><strong>${trade.gain} ${trade.toIcon}</strong><small>${trade.cost} ${trade.fromLabel} contre ${trade.gain} ${trade.toLabel}</small>`;
+      const fromIcon = currentResourceIcon(trade.from);
+      const toIcon = currentResourceIcon(trade.to);
+      const fromLabel = currentResourceName(trade.from);
+      const toLabel = currentResourceName(trade.to);
+      btn.innerHTML = `<strong>${trade.cost} ${fromIcon}</strong><span>→</span><strong>${trade.gain} ${toIcon}</strong><small>${trade.cost} ${fromLabel} contre ${trade.gain} ${toLabel}</small>`;
       btn.onclick = () => doMarketTrade(trade);
       marketActions.appendChild(btn);
     });
@@ -10011,7 +10144,7 @@ function spawnVictoryCelebration(report) {
   if (mainCustomize) mainCustomize.onclick = () => openCustomization();
 
   function costTxt(cost) {
-    return Object.entries(cost || {}).map(([k, v]) => v + ' ' + ({ stone: '🪨', wood: '🪵', gold: '🪙', relic: '🏺' }[k] || k)).join(' ');
+    return resourceCostText(cost);
   }
 
   function openCastle(p) {
@@ -10083,6 +10216,7 @@ function spawnVictoryCelebration(report) {
   function updateHUD() {
     const r = players[active-1].res;
     UI.stone.textContent = r.stone; UI.wood.textContent = r.wood; UI.gold.textContent = r.gold || 0; if (UI.relic) UI.relic.textContent = r.relic || 0;
+    updateResourceHudTheme();
     const aiTurn = isAITurn();
     UI.p1Card.classList.toggle('dim', active !== 1);
     UI.p2Card.classList.toggle('dim', active !== 2);
