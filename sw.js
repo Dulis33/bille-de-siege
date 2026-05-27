@@ -1,8 +1,8 @@
-const BDS_CACHE = 'bds-casino-contrast-slotfall-ui-20260526-1';
+const BDS_CACHE = 'bds-bright-boards-no-overhead-lamps-20260527-1';
 const BDS_FILES = [
   './index.html',
-  './style.css?v=bds-casino-contrast-slotfall-ui-20260526-1',
-  './game.js?v=bds-casino-contrast-slotfall-ui-20260526-1',
+  './style.css?v=bds-bright-boards-no-overhead-lamps-20260527-1',
+  './game.js?v=bds-bright-boards-no-overhead-lamps-20260527-1',
   './style.css',
   './game.js',
   './manifest.webmanifest',

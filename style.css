@@ -6450,3 +6450,917 @@ body[data-board-theme="casino_royal"] footer#controls .buttons button {
   background: linear-gradient(180deg, rgba(36,84,154,.92), rgba(30,52,100,.88)) !important;
   box-shadow: 0 8px 18px rgba(28,38,84,.24), inset 0 1px 0 rgba(255,255,255,.18) !important;
 }
+
+
+/* bds-casino-real-slot-style-20260526-1 : refonte visuelle casino machine à sous.
+   Charte : ivoire lisible + rouge laqué + or doux + noir brillant. Plus de bleu/turquoise/vert fluo. */
+body[data-board-theme="casino_royal"] {
+  --wood: #2b0b14 !important;
+  --wood-light: #c63a32 !important;
+  --wood-mid: #8e1c22 !important;
+  --brass: #ffcf4d !important;
+  --brass-light: #fff0a8 !important;
+  --brass-dim: #b56a18 !important;
+  --casino-red: #b51f2a !important;
+  --casino-red-dark: #3a0b14 !important;
+  --casino-cream: #f8e2ab !important;
+  --casino-ivory: #fff4cf !important;
+  --casino-black: #19080d !important;
+  --glass: rgba(43, 11, 20, 0.72) !important;
+  --glass-border: rgba(255, 207, 77, .82) !important;
+}
+body[data-board-theme="casino_royal"] #game {
+  background: radial-gradient(circle at 50% 28%, #ffcf6a 0%, #d13f36 42%, #4c1020 100%) !important;
+  filter: saturate(1.02) contrast(1.10) brightness(1.04) !important;
+}
+body[data-board-theme="casino_royal"] #hud {
+  background:
+    linear-gradient(90deg, rgba(255,207,77,.16), transparent 20%, transparent 80%, rgba(255,207,77,.16)),
+    linear-gradient(180deg, rgba(72,13,27,.96), rgba(28,8,14,.92)) !important;
+  border: 1px solid rgba(255,207,77,.72) !important;
+  color: #fff4cf !important;
+  box-shadow: 0 10px 26px rgba(25,8,13,.34), inset 0 -2px 0 rgba(255,207,77,.20) !important;
+}
+body[data-board-theme="casino_royal"] .title h1::after {
+  content: '  · Machine à sous' !important;
+  color: #ffcf4d !important;
+  text-shadow: 0 0 10px rgba(255,207,77,.42) !important;
+}
+body[data-board-theme="casino_royal"] .title h1,
+body[data-board-theme="casino_royal"] .title p {
+  color: #fff4cf !important;
+  text-shadow: 0 2px 0 #23070d, 0 0 12px rgba(255,207,77,.35) !important;
+}
+body[data-board-theme="casino_royal"] #resources {
+  background: linear-gradient(180deg, #fff4cf, #f4c96a) !important;
+  color: #25070c !important;
+  border: 2px solid #8e1c22 !important;
+  box-shadow: 0 8px 22px rgba(45,10,18,.28), inset 0 1px 0 rgba(255,255,255,.75) !important;
+}
+body[data-board-theme="casino_royal"] #resources span {
+  color: #25070c !important;
+  background: linear-gradient(180deg, #fff8dc, #ffd76b) !important;
+  border: 1px solid rgba(142,28,34,.52) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.70), 0 1px 0 rgba(255,207,77,.22) !important;
+}
+body[data-board-theme="casino_royal"] #resources b {
+  color: #8e1c22 !important;
+  text-shadow: 0 1px 0 rgba(255,255,255,.7), 0 0 8px rgba(255,207,77,.38) !important;
+}
+body[data-board-theme="casino_royal"] .player-card,
+body[data-board-theme="casino_royal"] .castle-pill,
+body[data-board-theme="casino_royal"] .pause-btn,
+body[data-board-theme="casino_royal"] footer#controls .buttons button {
+  color: #fff4cf !important;
+  background: linear-gradient(180deg, #c83a34, #8e1c22 52%, #3a0b14) !important;
+  border: 1px solid rgba(255,207,77,.72) !important;
+  box-shadow: 0 7px 18px rgba(33,8,14,.28), inset 0 1px 0 rgba(255,255,255,.18), inset 0 -2px 0 rgba(0,0,0,.22) !important;
+}
+body[data-board-theme="casino_royal"] footer#controls {
+  background: linear-gradient(180deg, rgba(255,244,207,.22), rgba(58,11,20,.88)) !important;
+  border-top: 1px solid rgba(255,207,77,.60) !important;
+  color: #fff4cf !important;
+}
+body[data-board-theme="casino_royal"] #toast,
+body[data-board-theme="casino_royal"] #eventBanner,
+body[data-board-theme="casino_royal"] #bigFx:not(.victory),
+body[data-board-theme="casino_royal"] .battle-notice,
+body[data-board-theme="casino_royal"] .turn-card,
+body[data-board-theme="casino_royal"] .shot-recap-card,
+body[data-board-theme="casino_royal"] .world-action-card {
+  background:
+    linear-gradient(90deg, rgba(255,207,77,.18), transparent 18%, transparent 82%, rgba(255,207,77,.18)),
+    linear-gradient(180deg, #fff4cf 0%, #f4ca6a 42%, #b51f2a 43%, #4a0e1b 100%) !important;
+  color: #22070d !important;
+  border: 3px solid #ffcf4d !important;
+  border-radius: 18px !important;
+  box-shadow: 0 16px 40px rgba(40,8,16,.38), 0 0 20px rgba(255,207,77,.34), inset 0 1px 0 rgba(255,255,255,.72) !important;
+}
+body[data-board-theme="casino_royal"] #toast::before,
+body[data-board-theme="casino_royal"] #toast::after {
+  color: #ffcf4d !important;
+  text-shadow: 0 0 6px rgba(255,207,77,.55) !important;
+}
+body[data-board-theme="casino_royal"] #bigFx:not(.victory) strong,
+body[data-board-theme="casino_royal"] .battle-notice strong,
+body[data-board-theme="casino_royal"] .turn-card h2,
+body[data-board-theme="casino_royal"] .shot-recap-head b,
+body[data-board-theme="casino_royal"] .world-action-card b,
+body[data-board-theme="casino_royal"] #eventBanner b {
+  color: #8e1c22 !important;
+  text-shadow: 0 1px 0 rgba(255,255,255,.75), 0 0 8px rgba(255,207,77,.38) !important;
+}
+body[data-board-theme="casino_royal"] #bigFx:not(.victory) span,
+body[data-board-theme="casino_royal"] .battle-notice span,
+body[data-board-theme="casino_royal"] .turn-card p,
+body[data-board-theme="casino_royal"] .shot-recap-row,
+body[data-board-theme="casino_royal"] .world-action-card span,
+body[data-board-theme="casino_royal"] #eventBanner span {
+  color: #24070c !important;
+}
+body[data-board-theme="casino_royal"] .shot-recap-row {
+  background: rgba(255,244,207,.70) !important;
+  border: 1px solid rgba(142,28,34,.28) !important;
+}
+body[data-board-theme="casino_royal"] #turnOverlay {
+  background: rgba(37,7,13,.42) !important;
+}
+body[data-board-theme="casino_royal"] .screen-burst.jackpot,
+body[data-board-theme="casino_royal"] #momentBanner.jackpot {
+  border-color: #ffcf4d !important;
+  background: linear-gradient(180deg, #fff4cf, #f6c85c 46%, #aa1d27) !important;
+  color: #26070d !important;
+}
+
+
+/* ════════════════════════════════════════════════════════════════
+   CASINO NORMAL ROOM — pièce claire, éclairage normal, couleurs harmonieuses
+   Version sobre : aucune couleur fluo, pas de rouge massif, pas de fond agressif.
+   ════════════════════════════════════════════════════════════════ */
+
+body[data-board-theme="casino_royal"] {
+  --casino-room-wall: #d8c7ad;
+  --casino-room-wood: #8b5a38;
+  --casino-room-dark: #3a2721;
+  --casino-room-panel: rgba(255, 245, 226, .94);
+  --casino-room-panel-2: rgba(232, 214, 184, .96);
+  --casino-room-line: rgba(142, 92, 52, .42);
+  --casino-room-gold: #c99a45;
+  --casino-room-gold-soft: #e5c47a;
+  --casino-room-burgundy: #6a3738;
+  --casino-room-red: #a84a42;
+  --casino-room-text: #2b211a;
+  background:
+    radial-gradient(circle at 50% 22%, rgba(255,245,220,.42), transparent 38%),
+    linear-gradient(180deg, #d8c7ad 0%, #b9946d 100%) !important;
+}
+
+/* Le canvas Three.js gère le vrai décor ; ici on évite tout filtre agressif. */
+body[data-board-theme="casino_royal"] #game {
+  filter: none !important;
+  background: #d8c7ad !important;
+  box-shadow: none !important;
+}
+
+/* Cadre très discret autour de la zone de jeu, façon meuble dans une pièce. */
+body[data-board-theme="casino_royal"]::before {
+  content: "";
+  position: fixed;
+  inset: 0 0 152px 0;
+  pointer-events: none;
+  z-index: 4;
+  border: 6px solid rgba(110, 70, 42, .34);
+  box-shadow:
+    inset 0 0 0 2px rgba(230, 195, 125, .30),
+    inset 0 0 55px rgba(70, 45, 25, .20);
+}
+
+/* Quelques ampoules chaudes, sobres, pas fête foraine criarde. */
+body[data-board-theme="casino_royal"]::after {
+  content: "";
+  position: fixed;
+  inset: 9px 10px 160px 10px;
+  pointer-events: none;
+  z-index: 5;
+  opacity: .42;
+  background:
+    radial-gradient(circle 4px at 8% 1%, rgba(255,230,155,.75), transparent 70%),
+    radial-gradient(circle 4px at 18% 1%, rgba(255,230,155,.58), transparent 70%),
+    radial-gradient(circle 4px at 28% 1%, rgba(255,230,155,.72), transparent 70%),
+    radial-gradient(circle 4px at 38% 1%, rgba(255,230,155,.58), transparent 70%),
+    radial-gradient(circle 4px at 48% 1%, rgba(255,230,155,.75), transparent 70%),
+    radial-gradient(circle 4px at 58% 1%, rgba(255,230,155,.58), transparent 70%),
+    radial-gradient(circle 4px at 68% 1%, rgba(255,230,155,.72), transparent 70%),
+    radial-gradient(circle 4px at 78% 1%, rgba(255,230,155,.58), transparent 70%),
+    radial-gradient(circle 4px at 88% 1%, rgba(255,230,155,.75), transparent 70%);
+}
+
+body[data-board-theme="casino_royal"] #hud {
+  background:
+    linear-gradient(180deg, rgba(255,245,226,.97) 0%, rgba(225,205,174,.94) 100%) !important;
+  border-bottom: 1px solid rgba(142, 92, 52, .42) !important;
+  box-shadow: 0 5px 18px rgba(64, 42, 28, .22) !important;
+  color: var(--casino-room-text) !important;
+}
+
+body[data-board-theme="casino_royal"] .title h1 {
+  color: #4a2f24 !important;
+  letter-spacing: 3px !important;
+  text-shadow: 0 1px 0 rgba(255,255,255,.65), 0 3px 8px rgba(90,60,38,.22) !important;
+}
+
+body[data-board-theme="casino_royal"] .title small,
+body[data-board-theme="casino_royal"] #turnLabel,
+body[data-board-theme="casino_royal"] #phaseLabel {
+  color: #5f4938 !important;
+}
+
+body[data-board-theme="casino_royal"] .player-card {
+  background:
+    linear-gradient(145deg, rgba(255,247,232,.96) 0%, rgba(228,207,176,.95) 100%) !important;
+  border: 1px solid rgba(142,92,52,.38) !important;
+  box-shadow: 0 5px 18px rgba(64,42,28,.22), inset 0 1px 0 rgba(255,255,255,.75) !important;
+  color: var(--casino-room-text) !important;
+}
+
+body[data-board-theme="casino_royal"] .player-card b {
+  color: #6a3738 !important;
+}
+
+body[data-board-theme="casino_royal"] .player-card small {
+  color: #6d5948 !important;
+}
+
+body[data-board-theme="casino_royal"] .medal.red,
+body[data-board-theme="casino_royal"] .medal.blue {
+  background: radial-gradient(circle at 35% 35%, #f0d79e, #b68245) !important;
+  border-color: rgba(106,55,56,.40) !important;
+  color: #2b211a !important;
+  box-shadow: inset 0 1px 3px rgba(255,255,255,.45), 0 2px 8px rgba(60,35,20,.22) !important;
+}
+
+body[data-board-theme="casino_royal"] #resources {
+  background: linear-gradient(180deg, #fff1cf 0%, #e7c681 100%) !important;
+  color: #2b211a !important;
+  border: 1px solid rgba(106,55,56,.42) !important;
+  box-shadow: 0 6px 18px rgba(64,42,28,.22), inset 0 1px 0 rgba(255,255,255,.65) !important;
+}
+
+body[data-board-theme="casino_royal"] #resources span {
+  background: rgba(255,250,235,.62) !important;
+  border: 1px solid rgba(106,55,56,.22) !important;
+  color: #2b211a !important;
+}
+
+body[data-board-theme="casino_royal"] footer#controls {
+  background:
+    linear-gradient(0deg, rgba(55,38,29,.95) 0%, rgba(95,65,45,.88) 78%, transparent 100%) !important;
+  border-top: 1px solid rgba(224,190,124,.36) !important;
+  box-shadow: 0 -5px 18px rgba(64,42,28,.30) !important;
+}
+
+body[data-board-theme="casino_royal"] .buttons button,
+body[data-board-theme="casino_royal"] .pause-btn {
+  background:
+    linear-gradient(180deg, #f6e0aa 0%, #c99a45 58%, #8a5a32 100%) !important;
+  color: #2b211a !important;
+  border: 1px solid rgba(255,238,190,.70) !important;
+  text-shadow: 0 1px 0 rgba(255,255,255,.42) !important;
+  box-shadow: 0 4px 12px rgba(38,24,16,.28), inset 0 1px 0 rgba(255,255,255,.44) !important;
+}
+
+body[data-board-theme="casino_royal"] .buttons button:hover,
+body[data-board-theme="casino_royal"] .pause-btn:hover {
+  filter: brightness(1.05) saturate(1.02) !important;
+}
+
+body[data-board-theme="casino_royal"] #phaseBanner,
+body[data-board-theme="casino_royal"] #eventBanner,
+body[data-board-theme="casino_royal"] #turnTimer {
+  background: linear-gradient(180deg, rgba(255,245,226,.97), rgba(225,205,174,.96)) !important;
+  border: 1px solid rgba(142,92,52,.42) !important;
+  color: #2b211a !important;
+  box-shadow: 0 7px 22px rgba(64,42,28,.25), inset 0 1px 0 rgba(255,255,255,.72) !important;
+}
+
+body[data-board-theme="casino_royal"] #toast,
+body[data-board-theme="casino_royal"] .battle-notice,
+body[data-board-theme="casino_royal"] .turn-card,
+body[data-board-theme="casino_royal"] .shot-recap-card,
+body[data-board-theme="casino_royal"] .world-action-card,
+body[data-board-theme="casino_royal"] #bigFx:not(.victory) {
+  background:
+    linear-gradient(180deg, rgba(255,248,232,.98) 0%, rgba(232,212,180,.98) 100%) !important;
+  border: 1.5px solid rgba(142,92,52,.45) !important;
+  border-radius: 18px !important;
+  color: #2b211a !important;
+  box-shadow: 0 18px 44px rgba(48,30,18,.30), inset 0 1px 0 rgba(255,255,255,.72) !important;
+}
+
+body[data-board-theme="casino_royal"] .turn-card h2,
+body[data-board-theme="casino_royal"] .shot-recap-head b,
+body[data-board-theme="casino_royal"] .world-action-card b,
+body[data-board-theme="casino_royal"] .battle-notice strong {
+  color: #6a3738 !important;
+  text-shadow: 0 1px 0 rgba(255,255,255,.65) !important;
+}
+
+body[data-board-theme="casino_royal"] .turn-card p,
+body[data-board-theme="casino_royal"] .shot-recap-row,
+body[data-board-theme="casino_royal"] .world-action-card span,
+body[data-board-theme="casino_royal"] .battle-notice span {
+  color: #2b211a !important;
+}
+
+body[data-board-theme="casino_royal"] .shot-recap-row {
+  background: rgba(255,250,235,.62) !important;
+  border: 1px solid rgba(142,92,52,.20) !important;
+}
+
+body[data-board-theme="casino_royal"] #turnOverlay {
+  background: rgba(56, 38, 26, .28) !important;
+}
+
+
+/* ════════════════════════════════════════════════════════════════
+   CASINO HARMONY LOUNGE — couleurs plus classes et lisibles
+   Override final : champagne, noyer, bordeaux discret, laiton doux.
+   ════════════════════════════════════════════════════════════════ */
+body[data-board-theme="casino_royal"] {
+  --casino-wall: #b9a486;
+  --casino-wood: #6f452a;
+  --casino-walnut: #3b211b;
+  --casino-burgundy: #5a2028;
+  --casino-burgundy-soft: #7c3038;
+  --casino-gold: #d1a14e;
+  --casino-gold-soft: #edcf84;
+  --casino-champagne: #ead7aa;
+  --casino-panel: rgba(246, 232, 204, .95);
+  --casino-text: #2a1b14;
+  background:
+    radial-gradient(circle at 50% 18%, rgba(255,238,200,.34), transparent 34%),
+    linear-gradient(180deg, #b9a486 0%, #8c6745 100%) !important;
+}
+
+body[data-board-theme="casino_royal"] #game {
+  background: #b9a486 !important;
+  filter: saturate(.96) contrast(1.04) brightness(.98) !important;
+  box-shadow: none !important;
+}
+
+body[data-board-theme="casino_royal"]::before {
+  content: "";
+  position: fixed;
+  inset: 0 0 152px 0;
+  pointer-events: none;
+  z-index: 4;
+  border: 6px solid rgba(59, 33, 27, .42);
+  box-shadow:
+    inset 0 0 0 2px rgba(209,161,78,.30),
+    inset 0 0 52px rgba(42,24,15,.22) !important;
+}
+
+body[data-board-theme="casino_royal"]::after {
+  content: "";
+  position: fixed;
+  inset: 9px 10px 160px 10px;
+  pointer-events: none;
+  z-index: 5;
+  opacity: .34;
+  background:
+    radial-gradient(circle 4px at 8% 1%, rgba(237,207,132,.72), transparent 70%),
+    radial-gradient(circle 4px at 18% 1%, rgba(237,207,132,.52), transparent 70%),
+    radial-gradient(circle 4px at 28% 1%, rgba(237,207,132,.70), transparent 70%),
+    radial-gradient(circle 4px at 38% 1%, rgba(237,207,132,.52), transparent 70%),
+    radial-gradient(circle 4px at 48% 1%, rgba(237,207,132,.74), transparent 70%),
+    radial-gradient(circle 4px at 58% 1%, rgba(237,207,132,.52), transparent 70%),
+    radial-gradient(circle 4px at 68% 1%, rgba(237,207,132,.70), transparent 70%),
+    radial-gradient(circle 4px at 78% 1%, rgba(237,207,132,.52), transparent 70%),
+    radial-gradient(circle 4px at 88% 1%, rgba(237,207,132,.72), transparent 70%);
+}
+
+body[data-board-theme="casino_royal"] #hud {
+  background:
+    linear-gradient(180deg, rgba(246,232,204,.96), rgba(224,199,158,.92)) !important;
+  border-bottom: 1px solid rgba(90,32,40,.38) !important;
+  box-shadow: 0 6px 18px rgba(42,24,15,.24) !important;
+  color: var(--casino-text) !important;
+}
+
+body[data-board-theme="casino_royal"] .title h1 {
+  color: #3b211b !important;
+  letter-spacing: 3px !important;
+  text-shadow: 0 1px 0 rgba(255,255,255,.55), 0 3px 9px rgba(50,30,18,.20) !important;
+}
+body[data-board-theme="casino_royal"] .title h1::after {
+  color: var(--casino-gold) !important;
+  text-shadow: none !important;
+}
+body[data-board-theme="casino_royal"] .title small,
+body[data-board-theme="casino_royal"] #turnLabel,
+body[data-board-theme="casino_royal"] #phaseLabel {
+  color: #6d4f38 !important;
+}
+
+body[data-board-theme="casino_royal"] .player-card {
+  background: linear-gradient(145deg, rgba(246,232,204,.96), rgba(210,181,133,.94)) !important;
+  border: 1px solid rgba(90,32,40,.34) !important;
+  box-shadow: 0 5px 17px rgba(42,24,15,.24), inset 0 1px 0 rgba(255,255,255,.62) !important;
+  color: var(--casino-text) !important;
+}
+body[data-board-theme="casino_royal"] .player-card b { color: var(--casino-burgundy) !important; }
+body[data-board-theme="casino_royal"] .player-card small { color: #654a36 !important; }
+
+body[data-board-theme="casino_royal"] .medal.red,
+body[data-board-theme="casino_royal"] .medal.blue {
+  background: radial-gradient(circle at 34% 32%, #edcf84, #b8873d) !important;
+  border-color: rgba(90,32,40,.36) !important;
+  color: #2a1b14 !important;
+  box-shadow: inset 0 1px 3px rgba(255,255,255,.42), 0 2px 8px rgba(42,24,15,.22) !important;
+}
+
+body[data-board-theme="casino_royal"] #resources {
+  background: linear-gradient(180deg, #f3dfad 0%, #d3aa5d 100%) !important;
+  color: #2a1b14 !important;
+  border: 1px solid rgba(90,32,40,.45) !important;
+  box-shadow: 0 6px 18px rgba(42,24,15,.24), inset 0 1px 0 rgba(255,255,255,.52) !important;
+}
+body[data-board-theme="casino_royal"] #resources span {
+  background: rgba(255,246,222,.60) !important;
+  border: 1px solid rgba(90,32,40,.22) !important;
+  color: #2a1b14 !important;
+}
+
+body[data-board-theme="casino_royal"] footer#controls {
+  background: linear-gradient(0deg, rgba(49,29,22,.96) 0%, rgba(83,51,35,.88) 78%, transparent 100%) !important;
+  border-top: 1px solid rgba(209,161,78,.42) !important;
+  box-shadow: 0 -6px 18px rgba(42,24,15,.32) !important;
+}
+
+body[data-board-theme="casino_royal"] .buttons button,
+body[data-board-theme="casino_royal"] .pause-btn,
+body[data-board-theme="casino_royal"] .castle-pill {
+  background: linear-gradient(180deg, #e8c875 0%, #b9823e 55%, #5a2028 100%) !important;
+  color: #fff0cf !important;
+  border: 1px solid rgba(238,211,130,.72) !important;
+  text-shadow: 0 1px 2px rgba(40,20,10,.55) !important;
+  box-shadow: 0 5px 14px rgba(42,24,15,.30), inset 0 1px 0 rgba(255,255,255,.34) !important;
+}
+body[data-board-theme="casino_royal"] .buttons button:hover,
+body[data-board-theme="casino_royal"] .pause-btn:hover,
+body[data-board-theme="casino_royal"] .castle-pill:hover {
+  filter: brightness(1.05) saturate(1.04) !important;
+}
+
+body[data-board-theme="casino_royal"] #phaseBanner,
+body[data-board-theme="casino_royal"] #eventBanner,
+body[data-board-theme="casino_royal"] #turnTimer {
+  background: linear-gradient(180deg, rgba(246,232,204,.97), rgba(219,193,152,.96)) !important;
+  border: 1px solid rgba(90,32,40,.36) !important;
+  color: #2a1b14 !important;
+  box-shadow: 0 7px 22px rgba(42,24,15,.25), inset 0 1px 0 rgba(255,255,255,.62) !important;
+}
+
+body[data-board-theme="casino_royal"] #toast,
+body[data-board-theme="casino_royal"] .battle-notice,
+body[data-board-theme="casino_royal"] .turn-card,
+body[data-board-theme="casino_royal"] .shot-recap-card,
+body[data-board-theme="casino_royal"] .world-action-card,
+body[data-board-theme="casino_royal"] #bigFx:not(.victory) {
+  background: linear-gradient(180deg, rgba(248,236,211,.98) 0%, rgba(219,193,152,.98) 100%) !important;
+  border: 1.5px solid rgba(90,32,40,.42) !important;
+  border-radius: 18px !important;
+  color: #2a1b14 !important;
+  box-shadow: 0 18px 44px rgba(42,24,15,.32), inset 0 1px 0 rgba(255,255,255,.62) !important;
+}
+body[data-board-theme="casino_royal"] .turn-card h2,
+body[data-board-theme="casino_royal"] .shot-recap-head b,
+body[data-board-theme="casino_royal"] .world-action-card b,
+body[data-board-theme="casino_royal"] .battle-notice strong {
+  color: var(--casino-burgundy) !important;
+  text-shadow: 0 1px 0 rgba(255,255,255,.55) !important;
+}
+body[data-board-theme="casino_royal"] .turn-card p,
+body[data-board-theme="casino_royal"] .shot-recap-row,
+body[data-board-theme="casino_royal"] .world-action-card span,
+body[data-board-theme="casino_royal"] .battle-notice span {
+  color: #2a1b14 !important;
+}
+body[data-board-theme="casino_royal"] .shot-recap-row {
+  background: rgba(255,246,222,.58) !important;
+  border: 1px solid rgba(90,32,40,.18) !important;
+}
+body[data-board-theme="casino_royal"] #turnOverlay { background: rgba(49,29,22,.26) !important; }
+
+
+/* ════════════════════════════════════════════════════════════════
+   2026-05-27 — Nettoyage résolution + récap stylé + chrono visible
+   ════════════════════════════════════════════════════════════════ */
+#turnTimer,
+.pause-btn {
+  position: fixed !important;
+  top: calc(var(--ui-top-h) + 10px) !important;
+  bottom: auto !important;
+  z-index: 96 !important;
+}
+#turnTimer {
+  left: 12px !important;
+  right: auto !important;
+  min-width: 122px !important;
+  height: 44px !important;
+  padding: 8px 14px !important;
+  border-radius: 18px !important;
+  border: 1px solid rgba(255,236,196,.65) !important;
+  background: linear-gradient(180deg, rgba(66,42,22,.92), rgba(26,18,12,.96)) !important;
+  box-shadow: 0 0 0 1px rgba(255,215,145,.16), 0 10px 26px rgba(0,0,0,.42), 0 0 22px rgba(255,205,110,.18) !important;
+}
+#turnTimer span { font-size: 15px !important; color: #ffe8a9 !important; }
+#turnTimer b {
+  font-size: 28px !important;
+  min-width: 34px !important;
+  color: #fff7df !important;
+  text-shadow: 0 1px 0 rgba(0,0,0,.35), 0 0 16px rgba(255,212,96,.14) !important;
+}
+#turnTimer small {
+  font-size: 11px !important;
+  color: rgba(255,239,196,.92) !important;
+  letter-spacing: 1.2px !important;
+}
+.pause-btn {
+  left: auto !important;
+  right: 12px !important;
+  min-height: 42px !important;
+  padding: 8px 13px !important;
+  border-radius: 18px !important;
+  font-size: 14px !important;
+}
+/* Event banner: on garde le placement d'origine, pas de grand panneau vertical. */
+.turn-recap-stack {
+  display: grid;
+  gap: 14px;
+  margin-top: 10px;
+}
+.turn-progression-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 24px;
+  border: 1px solid rgba(216,181,124,.62);
+  background:
+    linear-gradient(180deg, rgba(246,236,214,.98), rgba(233,215,184,.96));
+  box-shadow: 0 16px 42px rgba(74,42,18,.18), inset 0 1px 0 rgba(255,255,255,.45);
+}
+.turn-progression-card::before {
+  content: '';
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 7px;
+  background: linear-gradient(180deg, #f2d58a, #cf9b3c);
+}
+.turn-progress-head {
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  gap: 6px 12px;
+  align-items: center;
+  padding: 14px 16px 8px 18px;
+}
+.turn-progress-head > span {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(circle at 30% 30%, #fff4c4, #deb55f 72%, #8f6622 100%);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.55), 0 8px 18px rgba(132,86,22,.18);
+  font-size: 23px;
+  grid-row: span 2;
+}
+.turn-progress-head b {
+  font-size: 17px;
+  letter-spacing: 2.2px;
+  text-transform: uppercase;
+  color: #5f2b1d;
+}
+.turn-progress-head small {
+  color: rgba(95,43,29,.76);
+  font-size: 12px;
+}
+.turn-progress-chips {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  padding: 0 16px 12px;
+}
+.turn-progress-chip,
+.turn-progress-row,
+.turn-progress-total,
+.turn-progress-foot {
+  border-radius: 16px;
+  background: rgba(255,249,236,.82);
+  border: 1px solid rgba(215,187,135,.55);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.5);
+}
+.turn-progress-chip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 12px;
+  font-size: 13px;
+  color: #623426;
+}
+.turn-progress-chip b,
+.turn-progress-row b,
+.turn-progress-total b {
+  color: #6d1f24;
+  font-size: 18px;
+  white-space: nowrap;
+}
+.turn-progress-list {
+  display: grid;
+  gap: 8px;
+  padding: 0 16px 16px;
+}
+.turn-progress-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 11px 13px;
+  color: #5f2f20;
+}
+.turn-progress-row span,
+.turn-progress-total span { display: grid; gap: 2px; }
+.turn-progress-row small {
+  color: rgba(95,47,32,.72);
+  font-size: 11px;
+}
+.turn-progress-row.muted { opacity: .80; }
+.turn-progress-total {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 14px;
+  background: linear-gradient(180deg, rgba(255,244,210,.95), rgba(238,221,181,.96));
+}
+.turn-progress-foot {
+  padding: 11px 13px;
+  color: rgba(77,45,30,.86);
+  font-size: 12px;
+  line-height: 1.4;
+}
+.turn-progress-foot b { color: #6d1f24; }
+.turn-seq {
+  opacity: 0;
+  transform: translateY(10px) scale(.985);
+  animation: turnSeqIn .42s cubic-bezier(.2,.9,.25,1) forwards;
+  animation-delay: var(--d, 0s);
+}
+@keyframes turnSeqIn {
+  from { opacity: 0; transform: translateY(10px) scale(.985); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@media (max-width: 700px) {
+  #turnTimer {
+    min-width: 112px !important;
+    height: 40px !important;
+    padding: 7px 12px !important;
+  }
+  #turnTimer b { font-size: 25px !important; }
+  .pause-btn {
+    min-height: 40px !important;
+    padding: 7px 11px !important;
+    font-size: 13px !important;
+  }
+  .turn-progress-head { padding: 12px 12px 8px 14px; }
+  .turn-progress-head > span { width: 40px; height: 40px; font-size: 21px; }
+  .turn-progress-head b { font-size: 15px; letter-spacing: 1.7px; }
+  .turn-progress-chips { grid-template-columns: 1fr 1fr; padding: 0 12px 10px; gap: 7px; }
+  .turn-progress-chip,
+  .turn-progress-row,
+  .turn-progress-total,
+  .turn-progress-foot { border-radius: 14px; }
+  .turn-progress-chip { padding: 9px 10px; font-size: 12px; }
+  .turn-progress-chip b,
+  .turn-progress-row b,
+  .turn-progress-total b { font-size: 16px; }
+  .turn-progress-list { padding: 0 12px 12px; gap: 7px; }
+  .turn-progress-row,
+  .turn-progress-total { padding: 10px 11px; }
+}
+
+
+/* ════════════════════════════════════════════════════════════════
+   bds-clean-recap-classy-casino-20260527-1 — Casino classe + résolution dégagée
+   ════════════════════════════════════════════════════════════════ */
+body[data-board-theme="casino_royal"] {
+  --casino-cream: #f1dfbc;
+  --casino-wall: #c9b79d;
+  --casino-walnut: #3f2117;
+  --casino-walnut-dark: #1b0f0b;
+  --casino-emerald: #1f6b55;
+  --casino-emerald-dark: #123c32;
+  --casino-burgundy: #7a2e2a;
+  --casino-gold: #d7b36a;
+  --casino-gold-light: #f2d993;
+  --casino-ink: #2a1811;
+}
+body[data-board-theme="casino_royal"] #hud {
+  background: linear-gradient(180deg, rgba(241,223,188,.98), rgba(203,183,150,.94)) !important;
+  border-bottom: 1px solid rgba(63,33,23,.34) !important;
+  box-shadow: 0 5px 18px rgba(40,24,14,.24) !important;
+}
+body[data-board-theme="casino_royal"] .title h1 {
+  color: #2a1811 !important;
+  text-shadow: 0 1px 0 rgba(255,247,226,.70), 0 3px 10px rgba(65,35,18,.20) !important;
+}
+body[data-board-theme="casino_royal"] #resources {
+  background: linear-gradient(180deg, #f7e9c6 0%, #ddc07b 100%) !important;
+  border: 1px solid rgba(63,33,23,.42) !important;
+  color: var(--casino-ink) !important;
+}
+body[data-board-theme="casino_royal"] footer#controls {
+  background: linear-gradient(0deg, rgba(31,15,11,.97) 0%, rgba(63,33,23,.90) 78%, transparent 100%) !important;
+  border-top: 1px solid rgba(215,179,106,.45) !important;
+}
+body[data-board-theme="casino_royal"] .buttons button,
+body[data-board-theme="casino_royal"] .castle-pill {
+  background: linear-gradient(180deg, #9b3d36 0%, #7a2e2a 48%, #3f2117 100%) !important;
+  color: #fff2cf !important;
+  border: 1px solid rgba(242,217,147,.72) !important;
+}
+body[data-board-theme="casino_royal"] .buttons button:disabled {
+  opacity: .46 !important;
+  filter: saturate(.7) !important;
+}
+/* Chrono + pause dégagés de la ligne de tir */
+#turnTimer,
+.pause-btn {
+  position: fixed !important;
+  bottom: auto !important;
+  top: calc(env(safe-area-inset-top, 0px) + 142px) !important;
+  z-index: 104 !important;
+}
+#turnTimer {
+  left: auto !important;
+  right: 12px !important;
+  transform: none !important;
+  min-width: 118px !important;
+  height: 46px !important;
+  padding: 8px 14px !important;
+  border-radius: 18px !important;
+  border: 2px solid rgba(242,217,147,.82) !important;
+  background: linear-gradient(180deg, rgba(31,15,11,.96), rgba(63,33,23,.96)) !important;
+  box-shadow: 0 0 0 1px rgba(255,244,200,.14), 0 10px 26px rgba(0,0,0,.42), 0 0 24px rgba(215,179,106,.18) !important;
+}
+#turnTimer b {
+  font-size: 29px !important;
+  min-width: 36px !important;
+  color: #fff4d8 !important;
+  text-shadow: 0 1px 0 rgba(0,0,0,.35), 0 0 16px rgba(255,220,120,.22) !important;
+}
+#turnTimer span,
+#turnTimer small { color: #f2d993 !important; }
+.pause-btn {
+  left: 12px !important;
+  right: auto !important;
+  min-height: 46px !important;
+  padding: 8px 14px !important;
+  border-radius: 18px !important;
+  background: linear-gradient(180deg, #f2d993, #d7b36a 54%, #7a2e2a 100%) !important;
+  color: #24140d !important;
+  border: 2px solid rgba(255,240,190,.72) !important;
+  box-shadow: 0 10px 26px rgba(0,0,0,.36), inset 0 1px 0 rgba(255,255,255,.45) !important;
+}
+/* Recentrage plus premium du récap */
+.turn-recap-stack { gap: 16px !important; }
+.turn-progression-card {
+  border-color: rgba(215,179,106,.72) !important;
+  background: linear-gradient(180deg, rgba(248,238,214,.98), rgba(226,207,174,.97)) !important;
+}
+.turn-progress-head b,
+.turn-progress-row b,
+.turn-progress-total b { color: #7a2e2a !important; }
+@media (max-width: 700px) {
+  #turnTimer, .pause-btn { top: calc(env(safe-area-inset-top, 0px) + 132px) !important; }
+  #turnTimer { min-width: 104px !important; height: 42px !important; padding: 6px 11px !important; }
+  #turnTimer b { font-size: 25px !important; min-width: 31px !important; }
+  .pause-btn { min-height: 42px !important; padding: 7px 12px !important; font-size: 13px !important; }
+}
+
+
+/* Correction 2026-05-27 — ne pas étirer la bannière d'événement */
+#eventBanner {
+  top: auto !important;
+}
+body[data-board-theme="casino_royal"] #eventBanner {
+  top: auto !important;
+}
+
+/* ════════════════════════════════════════════════════════════════
+   EVENT INTRO RESTORE — grande annonce début de tour + petit bandeau
+   ════════════════════════════════════════════════════════════════ */
+#turnEventIntro {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 9800 !important;
+  display: grid !important;
+  place-items: center !important;
+  padding: max(18px, env(safe-area-inset-top, 0px)) 16px max(18px, env(safe-area-inset-bottom, 0px)) !important;
+  pointer-events: none !important;
+  opacity: 0 !important;
+  transform: scale(.985) !important;
+  transition: opacity .22s ease, transform .24s ease !important;
+  background: radial-gradient(circle at 50% 40%, rgba(255,224,132,.16), transparent 35%), rgba(8, 5, 2, .22) !important;
+  backdrop-filter: blur(3px) saturate(1.05) !important;
+  -webkit-backdrop-filter: blur(3px) saturate(1.05) !important;
+}
+#turnEventIntro.hidden { display: none !important; }
+#turnEventIntro.show {
+  opacity: 1 !important;
+  transform: scale(1) !important;
+  pointer-events: auto !important;
+}
+#turnEventIntro .turn-event-card {
+  width: min(88vw, 460px) !important;
+  border-radius: 28px !important;
+  padding: 22px 22px 20px !important;
+  text-align: center !important;
+  overflow: hidden !important;
+  border: 2px solid rgba(235, 196, 105, .82) !important;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(255, 235, 166, .42), transparent 44%),
+    linear-gradient(180deg, rgba(255, 244, 218, .98), rgba(226, 200, 154, .97)) !important;
+  box-shadow:
+    0 22px 72px rgba(0,0,0,.48),
+    0 0 34px rgba(235,196,105,.25),
+    inset 0 1px 0 rgba(255,255,255,.78) !important;
+  color: #2c1a10 !important;
+  animation: turnEventCardIn .34s cubic-bezier(.18,1.1,.24,1) both !important;
+}
+#turnEventIntro .turn-event-card::before,
+#turnEventIntro .turn-event-card::after {
+  content: "◆";
+  position: absolute;
+  color: rgba(215, 179, 106, .9);
+  font-size: 14px;
+}
+#turnEventIntro .turn-event-card::before { left: 18px; top: 14px; }
+#turnEventIntro .turn-event-card::after { right: 18px; bottom: 14px; }
+#turnEventIntro .turn-event-kicker {
+  margin: 0 auto 10px !important;
+  width: fit-content !important;
+  max-width: 100% !important;
+  padding: 6px 14px !important;
+  border-radius: 999px !important;
+  color: #fff3ca !important;
+  background: linear-gradient(180deg, #7a2e2a, #3f2117) !important;
+  border: 1px solid rgba(242,217,147,.72) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.16), 0 6px 18px rgba(63,33,23,.22) !important;
+  font-weight: 900 !important;
+  letter-spacing: 1.5px !important;
+  text-transform: uppercase !important;
+  font-size: 12px !important;
+}
+#turnEventIntro h2 {
+  margin: 0 0 10px !important;
+  font-family: Georgia, 'Times New Roman', serif !important;
+  font-size: clamp(28px, 8vw, 48px) !important;
+  line-height: .96 !important;
+  letter-spacing: 4px !important;
+  text-transform: uppercase !important;
+  color: #6d1f24 !important;
+  text-shadow: 0 1px 0 rgba(255,255,255,.70), 0 8px 22px rgba(80,36,18,.20) !important;
+}
+#turnEventIntro p {
+  margin: 0 auto 13px !important;
+  max-width: 34ch !important;
+  color: #3a2114 !important;
+  font-size: clamp(15px, 4.5vw, 19px) !important;
+  line-height: 1.28 !important;
+  font-weight: 800 !important;
+}
+#turnEventIntro small {
+  display: block !important;
+  margin: 0 auto !important;
+  color: rgba(58,33,20,.74) !important;
+  font-size: 12px !important;
+  line-height: 1.35 !important;
+}
+body[data-board-theme="casino_royal"] #turnEventIntro .turn-event-card {
+  border-color: rgba(218, 178, 92, .88) !important;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(255, 234, 160, .48), transparent 46%),
+    linear-gradient(180deg, #fff0c2 0%, #dfc48c 55%, #c6a160 100%) !important;
+}
+body[data-board-theme="casino_royal"] #turnEventIntro .turn-event-kicker {
+  background: linear-gradient(180deg, #d2aa5d, #806030 54%, #42261a) !important;
+  color: #24140d !important;
+  border-color: rgba(255,242,192,.85) !important;
+}
+body[data-board-theme="casino_royal"] #turnEventIntro h2 { color: #6a2a22 !important; }
+@keyframes turnEventCardIn {
+  from { opacity: 0; transform: translateY(22px) scale(.88); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@media (max-width: 520px) {
+  #turnEventIntro .turn-event-card { width: min(90vw, 360px) !important; padding: 18px 16px 17px !important; border-radius: 24px !important; }
+  #turnEventIntro .turn-event-kicker { font-size: 10px !important; letter-spacing: 1.1px !important; }
+  #turnEventIntro h2 { letter-spacing: 2.5px !important; }
+}
+
+
+/* ════════════════════════════════════════════════════════════════
+   bds-bright-boards-no-overhead-lamps-20260527-1 — lisibilité plateaux + suppression lumières décoratives
+   ════════════════════════════════════════════════════════════════ */
+#game {
+  filter: brightness(1.12) saturate(1.04) contrast(1.02) !important;
+}
+body[data-board-theme="casino_royal"] #game {
+  filter: brightness(1.14) saturate(1.03) contrast(1.02) !important;
+}
+/* Pas de guirlandes/cadres lumineux parasites par-dessus le canvas. */
+body[data-board-theme="casino_royal"]::before,
+body[data-board-theme="casino_royal"]::after {
+  display: none !important;
+}

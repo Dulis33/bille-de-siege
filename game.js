@@ -1,4 +1,4 @@
-// Bille de Siège — Casino contrasté + grande fente jouable + UI thématique.
+// Bille de Siège — Casino machine à sous : nouvelle direction visuelle propre.
 (() => {
 try {
   ['bdsBootV11','bdsBootFinal','bdsBoot','bdsBootClean'].forEach(function(id){
@@ -151,7 +151,7 @@ try {
       glow: 'rgba(255,228,138,.22)',
       palette: {
         felt: 0x17633d,
-        feltAlt: 0x155a37,
+        feltAlt: 0x17633d,
         butte: 0x238453,
         cloth: 0x0d3420,
         rail: 0x5c2b10,
@@ -164,25 +164,25 @@ try {
     },
     {
       id: 'casino_royal',
-      name: 'Casino Jackpot',
+      name: 'Casino Salon Jackpot',
       icon: '🎰',
       cost: 80,
-      glow: 'rgba(255,214,102,.42)',
+      glow: 'rgba(202,156,74,.24)',
       palette: {
-        // Casino machine à sous lisible : piste bleu-roi, rails ivoire/or,
-        // sol caramel. Contraste fort sans rouge dominant, sans vert fluo,
-        // sans surexposition blanche.
-        felt: 0x315f9f,
-        feltAlt: 0x244a86,
-        butte: 0xf0b84a,
-        cloth: 0x2b558d,
-        rail: 0xf5d27a,
-        rubber: 0xffe294,
-        floor: 0xb8793d,
-        wall: 0x7a4327,
-        accent: 0xffd66e
+        // Casino salon harmonieux : piste champagne satinée, rails noyer,
+        // extérieur parquet miel, murs taupe et détails bordeaux/laiton.
+        // Objectif : plus de contraste, moins de blanc, moins d'orange, rendu plus classe.
+        felt: 0xd0b47a,
+        feltAlt: 0xd0b47a,
+        butte: 0x9a642f,
+        cloth: 0x4a2227,
+        rail: 0x4a2b22,
+        rubber: 0x3a1720,
+        floor: 0xffffff,
+        wall: 0xffffff,
+        accent: 0xd1a14e
       },
-      description: 'Machines à sous vintage : bleu-roi, ivoire, caramel, or et ampoules jackpot.'
+      description: 'Salon casino harmonieux : champagne, noyer, bordeaux discret et laiton.'
     }
   ];
 
@@ -262,14 +262,14 @@ try {
     { id: 'ancient_green', name: 'Pierre ancienne', cost: 170, wall: 0x6f9272, light: 0xacc8a3, dark: 0x394f39, damaged: 0x5c6d50, roof: 0x0f5b39, banner: 0x39b56a, trim: 0xb7c77a, glow: 'rgba(95,220,140,.22)' },
     { id: 'volcanic', name: 'Citadelle volcanique', cost: 210, wall: 0x4a3028, light: 0x8d5842, dark: 0x1b1110, damaged: 0x5d2b20, roof: 0xb33518, banner: 0xff6b21, trim: 0xffbd58, glow: 'rgba(255,95,35,.26)' },
     { id: 'arctic', name: 'Château arctique', cost: 240, wall: 0xbfdce4, light: 0xf4ffff, dark: 0x68848d, damaged: 0x8aa1a8, roof: 0x79e4ff, banner: 0xdafcff, trim: 0xffffff, glow: 'rgba(170,240,255,.30)' },
-    { id: 'casino_vault', name: 'Casino · Machine à sous vintage', cost: 70, wall: 0xf2c45f, light: 0xffefd0, dark: 0x2b2f72, damaged: 0xb46b2d, roof: 0x203b77, banner: 0xf2b541, trim: 0xffdf82, glow: 'rgba(255,198,80,.34)' },
-    { id: 'casino_palace', name: 'Casino · Jackpot Palace vintage', cost: 100, wall: 0xf6d37a, light: 0xffffe8, dark: 0x234d8f, damaged: 0xc47a32, roof: 0x1f6f9f, banner: 0xe5af3f, trim: 0xffe08b, glow: 'rgba(255,205,96,.36)' }
+    { id: 'casino_vault', name: 'Casino · Machine à sous prestige', cost: 70, wall: 0xb8ab8e, light: 0xe9debf, dark: 0x7a6b55, damaged: 0x8e7a60, roof: 0xbda36b, roofP1: 0x8f2a2a, roofP2: 0x2d4f9a, banner: 0xa07f3e, bannerP1: 0xb73434, bannerP2: 0x3869d2, trim: 0xf0d58f, glow: 'rgba(225,190,112,.26)' },
+    { id: 'casino_palace', name: 'Casino · Coffre-fort jackpot', cost: 100, wall: 0xbfb296, light: 0xf1e4c7, dark: 0x81705a, damaged: 0x958266, roof: 0xc5aa72, roofP1: 0x8f2a2a, roofP2: 0x2d4f9a, banner: 0xa68846, bannerP1: 0xb73434, bannerP2: 0x3869d2, trim: 0xf5db95, glow: 'rgba(230,195,118,.28)' }
   ];
 
   const RAMP_SKINS = [
     { id: 'classic_wood', name: 'Rampe bois classique', icon: '🪵', cost: 0, main: 0x8a4f22, rail: 0x5a2c10, accent: 0xe8c96a, glow: 'rgba(232,201,106,.22)', roughness: 0.64, metalness: 0.02 },
-    { id: 'casino_red_carpet', name: 'Casino · Convoyeur machine', icon: '🎰', cost: 30, main: 0x2f6fb2, rail: 0xffd26a, accent: 0xfff1b0, glow: 'rgba(255,205,90,.30)', roughness: 0.46, metalness: 0.22 },
-    { id: 'casino_gold_rail', name: 'Casino · Goulotte jackpot', icon: '🪙', cost: 50, main: 0xf0b84a, rail: 0x24549a, accent: 0xfff0a6, glow: 'rgba(255,220,100,.38)', roughness: 0.34, metalness: 0.42 }
+    { id: 'casino_red_carpet', name: 'Casino · Convoyeur prestige', icon: '🎰', cost: 30, main: 0x1f6b55, rail: 0x452319, accent: 0xf0d27a, glow: 'rgba(209,161,78,.18)', roughness: 0.56, metalness: 0.08 },
+    { id: 'casino_gold_rail', name: 'Casino · Goulotte laiton', icon: '🪙', cost: 50, main: 0x2b211a, rail: 0xd7b36a, accent: 0xf2d37e, glow: 'rgba(209,161,78,.22)', roughness: 0.36, metalness: 0.42 }
   ];
 
   // Références de progression : les objectifs doivent demander une vraie performance,
@@ -771,12 +771,28 @@ try {
     return pr.unlockedThemes.includes(id) ? id : 'classic';
   }
 
+  function getBoardThemeId() {
+    // Le plateau est global : le thème actif du joueur 1 pilote la salle, les couloirs,
+    // les structures thématiques et les rampes. Cela évite qu'un skin casino reste
+    // affiché sur le plateau classique si un profil avait encore ce skin sélectionné.
+    return getSelectedThemeId(1);
+  }
+
+  function isCasinoId(id) {
+    return String(id || '').startsWith('casino_');
+  }
+
   function setSelectedTheme(player, themeId) {
     const pr = getPlayerProgress(player || 1);
     if (!pr.unlockedThemes.includes(themeId)) return;
     pr.selectedTheme = themeId;
     saveProgress();
-    if (Number(player) === 1) { try { applySelectedTheme(); } catch (err) {} }
+    if (Number(player) === 1) {
+      try { applySelectedTheme(); } catch (err) {}
+      try { refreshAllCastleSkins(); } catch (err) {}
+      try { refreshAllRampSkins(); } catch (err) {}
+      try { updateTowerGhosts(); } catch (err) {}
+    }
     renderCustomization();
     updateMainMenuProgress();
   }
@@ -859,8 +875,26 @@ try {
     const pr = getPlayerProgress(player);
     const key = String(player || 1);
     const legacyId = pr.selectedCastleSkins && pr.selectedCastleSkins[key] ? pr.selectedCastleSkins[key] : null;
-    const id = pr.selectedCastleSkin || legacyId || 'classic';
-    return pr.unlockedCastleSkins.includes(id) ? id : 'classic';
+    let id = pr.selectedCastleSkin || legacyId || 'classic';
+    if (!pr.unlockedCastleSkins.includes(id)) id = 'classic';
+
+    const boardTheme = getBoardThemeId();
+
+    // Consolidation thème/skin : les skins casino ne s'appliquent que sur le plateau casino.
+    // Sur la table de billard, on force un vrai château/tours classiques même si le profil
+    // a gardé un skin casino sélectionné en mémoire.
+    if (boardTheme !== 'casino_royal' && isCasinoId(id)) return 'classic';
+
+    // Sur le plateau casino, si aucun skin casino n'est sélectionné, on prend un skin casino
+    // par défaut pour éviter le mélange château médiéval + salle casino.
+    if (boardTheme === 'casino_royal' && !isCasinoId(id)) {
+      const fallback = Number(player) === 2 && pr.unlockedCastleSkins.includes('casino_palace')
+        ? 'casino_palace'
+        : 'casino_vault';
+      if (pr.unlockedCastleSkins.includes(fallback)) return fallback;
+    }
+
+    return id;
   }
 
   function setSelectedCastleSkin(player, skinId) {
@@ -890,11 +924,15 @@ try {
     const pr = getPlayerProgress(player);
     const key = String(player || 1);
     const legacyId = pr.selectedRampSkins && pr.selectedRampSkins[key] ? pr.selectedRampSkins[key] : null;
-    const id = pr.selectedRampSkin || legacyId || 'classic_wood';
-    if (getSelectedThemeId(player) === 'casino_royal' && id === 'classic_wood' && pr.unlockedRampSkins.includes('casino_gold_rail')) {
+    let id = pr.selectedRampSkin || legacyId || 'classic_wood';
+    if (!pr.unlockedRampSkins.includes(id)) id = 'classic_wood';
+
+    const boardTheme = getBoardThemeId();
+    if (boardTheme !== 'casino_royal' && isCasinoId(id)) return 'classic_wood';
+    if (boardTheme === 'casino_royal' && !isCasinoId(id) && pr.unlockedRampSkins.includes('casino_gold_rail')) {
       return 'casino_gold_rail';
     }
-    return pr.unlockedRampSkins.includes(id) ? id : 'classic_wood';
+    return id;
   }
 
   function setSelectedRampSkin(player, skinId) {
@@ -957,6 +995,108 @@ try {
       }
     }
     return { points, lines };
+  }
+
+
+  function cloneStatsSnapshot(stats) {
+    return JSON.parse(JSON.stringify(stats || {}));
+  }
+
+  function projectionLineKey(line) {
+    return [line && line.label, line && line.points, Array.isArray(line && line.reached) ? line.reached.join(',') : '', line && line.value].join('|');
+  }
+
+  let turnProgressSnapshots = [null, null];
+
+  function captureTurnProgressSnapshot(player = active) {
+    const stats = cloneStatsSnapshot(matchStats[player - 1]);
+    turnProgressSnapshots[player - 1] = {
+      stats,
+      projection: calculateVictoryPointsForStats(stats, false)
+    };
+  }
+
+  function buildTurnProgressData(player = active) {
+    const before = turnProgressSnapshots[player - 1] || { stats: {}, projection: { points: 0, lines: [] } };
+    const currentStats = cloneStatsSnapshot(matchStats[player - 1]);
+    const projection = calculateVictoryPointsForStats(currentStats, false);
+    const seen = new Set((before.projection.lines || []).map(projectionLineKey));
+    const unlocked = (projection.lines || []).filter(line => !seen.has(projectionLineKey(line)));
+    const delta = Math.max(0, (projection.points || 0) - ((before.projection && before.projection.points) || 0));
+    const statDelta = {
+      damage: Math.max(0, (currentStats.damage || 0) - ((before.stats && before.stats.damage) || 0)),
+      resources: Math.max(0, (currentStats.resources || 0) - ((before.stats && before.stats.resources) || 0)),
+      holesHit: Math.max(0, (currentStats.holesHit || 0) - ((before.stats && before.stats.holesHit) || 0)),
+      combos: Math.max(0, (currentStats.combos || 0) - ((before.stats && before.stats.combos) || 0)),
+      relicsFound: Math.max(0, (currentStats.relicsFound || 0) - ((before.stats && before.stats.relicsFound) || 0)),
+      structures: Math.max(0, ((currentStats.partsDestroyed || 0) + (currentStats.towersDestroyed || 0)) - (((before.stats && before.stats.partsDestroyed) || 0) + ((before.stats && before.stats.towersDestroyed) || 0)))
+    };
+    return {
+      delta,
+      unlocked,
+      projectionPoints: projection.points || 0,
+      currentStats,
+      statDelta,
+      wallet: Number((getPlayerProgress(player) || {}).victoryPoints) || 0
+    };
+  }
+
+  function buildTurnProgressHtml(player = active) {
+    const data = buildTurnProgressData(player);
+    const chips = [
+      { icon: '💥', label: 'Dégâts', value: data.statDelta.damage },
+      { icon: '💰', label: 'Ressources', value: data.statDelta.resources },
+      { icon: '🕳️', label: 'Trous', value: data.statDelta.holesHit },
+      { icon: '🔥', label: 'Combos', value: data.statDelta.combos },
+      { icon: '🏺', label: 'Reliques', value: data.statDelta.relicsFound },
+      { icon: '🧱', label: 'Structures', value: data.statDelta.structures }
+    ];
+    let delay = 0.04;
+    const chipHtml = chips.map(chip => {
+      const html = `<div class="turn-progress-chip turn-seq" style="--d:${delay.toFixed(2)}s"><span>${chip.icon} ${chip.label}</span><b>+${chip.value}</b></div>`;
+      delay += 0.06;
+      return html;
+    }).join('');
+    const lineHtml = data.unlocked.length
+      ? data.unlocked.map(line => {
+          const reached = Array.isArray(line.reached) && line.reached.length ? ` · palier ${line.reached.join(', ')}` : '';
+          const html = `<div class="turn-progress-row turn-seq" style="--d:${delay.toFixed(2)}s"><span>${line.label}<small>${line.value}${reached}</small></span><b>+${line.points} PV</b></div>`;
+          delay += 0.07;
+          return html;
+        }).join('')
+      : `<div class="turn-progress-row muted turn-seq" style="--d:${delay.toFixed(2)}s"><span>Aucun nouveau palier ce tour<small>Continue pour débloquer plus de points.</small></span><b>+0 PV</b></div>`;
+    delay += 0.08;
+    const totalHtml = `<div class="turn-progress-total turn-seq" style="--d:${delay.toFixed(2)}s"><span>Progression du tour</span><b>+${data.delta} PV</b></div>`;
+    delay += 0.08;
+    const footHtml = `<div class="turn-progress-foot turn-seq" style="--d:${delay.toFixed(2)}s">Projection actuelle fin de partie : <b>+${data.projectionPoints} PV</b> · Profil : <b>${data.wallet} PV</b></div>`;
+    const rowCount = chips.length + Math.max(1, data.unlocked.length) + 2;
+    const html = `
+      <div class="turn-progression-card">
+        <div class="turn-progress-head"><span>⭐</span><b>Progression du tour</b><small>Tu vois en direct ce que ce lancer t'apporte.</small></div>
+        <div class="turn-progress-chips">${chipHtml}</div>
+        <div class="turn-progress-list">${lineHtml}${totalHtml}${footHtml}</div>
+      </div>`;
+    return { html, rowCount };
+  }
+
+  function buildRichTurnRecapHtml(items, player = active) {
+    const progress = buildTurnProgressHtml(player);
+    return {
+      html: `<div class="turn-recap-stack">${buildShotRecapHtml(items)}${progress.html}</div>`,
+      rowCount: (items && items.length ? items.length : 1) + progress.rowCount
+    };
+  }
+
+  function shouldSuppressActionText() {
+    return !gameOver && phase === 'attack' && shotStarted && !turnLocked;
+  }
+
+
+  function clearLiveResolutionTexts() {
+    try { hideBigMessage(); } catch (err) {}
+    try { if (hypeMeter) hypeMeter.classList.remove('show'); } catch (err) {}
+    try { if (momentBanner) momentBanner.classList.remove('show'); } catch (err) {}
+    try { document.querySelectorAll('#battleNoticeStack, .screen-burst, .fx-float').forEach(node => node.remove()); } catch (err) {}
   }
 
   function awardVictoryPoints(winner) {
@@ -3141,6 +3281,7 @@ try {
   }
 
   function setHype(points = 0, label = '', variant = 'gold') {
+    if (shouldSuppressActionText()) return;
     hypeScore = THREE.MathUtils.clamp(hypeScore + points, 0, 100);
     if (!hypeMeter) return;
     hypeMeter.className = 'show ' + variant;
@@ -3159,6 +3300,7 @@ try {
   }
 
   function showMomentBanner(title, text = '', variant = 'gold', duration = 1750) {
+    if (shouldSuppressActionText()) return;
     if (!momentBanner || (turnOverlay && turnOverlay.classList && turnOverlay.classList.contains('show'))) return;
     if (momentBannerTitle) momentBannerTitle.textContent = title;
     if (momentBannerText) momentBannerText.innerHTML = text;
@@ -3226,6 +3368,42 @@ try {
   eventBanner.className = 'hidden';
   document.body.appendChild(eventBanner);
 
+  // Grande annonce d'événement au début du tour : visible seulement au déclenchement,
+  // puis le petit bandeau persistant reste en place. Elle ne s'affiche jamais pendant
+  // la résolution d'un lancer, pour garder la bille entièrement visible.
+  const turnEventIntro = document.createElement('div');
+  turnEventIntro.id = 'turnEventIntro';
+  turnEventIntro.className = 'hidden';
+  document.body.appendChild(turnEventIntro);
+
+  function hideTurnEventIntro() {
+    if (!turnEventIntro) return;
+    turnEventIntro.classList.remove('show');
+    clearTimeout(turnEventIntro._timer);
+    turnEventIntro._timer = setTimeout(() => {
+      if (!turnEventIntro.classList.contains('show')) turnEventIntro.className = 'hidden';
+    }, 260);
+  }
+
+  function showTurnEventIntro(ev) {
+    if (!turnEventIntro || !ev || setupMode || gameOver || shotStarted) return;
+    clearTimeout(turnEventIntro._timer);
+    turnEventIntro.className = 'show';
+    const icon = ev.icon || '🎲';
+    const title = ev.title || 'Événement';
+    const desc = ev.desc || ev.short || '';
+    const short = ev.short || 'Effet spécial actif';
+    turnEventIntro.innerHTML = `
+      <div class="turn-event-card">
+        <div class="turn-event-kicker">${icon} Événement du tour</div>
+        <h2>${title}</h2>
+        <p>${desc}</p>
+        <small>${short} · Le bandeau reste affiché pendant la manche.</small>
+      </div>`;
+    turnEventIntro.onclick = hideTurnEventIntro;
+    turnEventIntro._timer = setTimeout(hideTurnEventIntro, 3300);
+  }
+
   // File d'attente des messages courts : évite les superpositions avec les gros effets et les overlays.
   const toastQueue = [];
   let toastBusy = false;
@@ -3289,8 +3467,8 @@ try {
 
   /* ── Scene ── */
   const scene = new THREE.Scene();
-  scene.background = new THREE.Color(0x102015); // rendu plus vivant, moins terne
-  scene.fog = new THREE.FogExp2(0x0b2818, 0.00235);
+  scene.background = new THREE.Color(0x203428); // scène plus claire et lisible
+  scene.fog = new THREE.FogExp2(0x183522, 0.00115);
 
   const camera = new THREE.PerspectiveCamera(54, innerWidth / (innerHeight - VIEW_BOTTOM_RESERVED), 0.1, 900);
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: false, powerPreference: 'high-performance' });
@@ -3300,7 +3478,7 @@ try {
   renderer.shadowMap.enabled = false;
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.54;
+  renderer.toneMappingExposure = 1.78;
 
   window.addEventListener('resize', () => {
     renderer.setSize(innerWidth, innerHeight - VIEW_BOTTOM_RESERVED);
@@ -3310,9 +3488,9 @@ try {
 
   /* ── Éclairage style salle de billard ── */
   // Ambiance renforcée : on garde l'atmosphère billard, mais le plateau reste lisible.
-  scene.add(new THREE.AmbientLight(0xfff3df, 1.58));
+  scene.add(new THREE.AmbientLight(0xfff6e8, 2.28));
 
-  const keyLight = new THREE.DirectionalLight(0xffe7c0, 1.72);
+  const keyLight = new THREE.DirectionalLight(0xffefd6, 2.35);
   keyLight.position.set(-14, 58, 38);
   keyLight.castShadow = false;
   scene.add(keyLight);
@@ -3340,13 +3518,14 @@ try {
     scene.add(cone);
   }
 
-  // Lampes sur chaque couloir, plusieurs positions
-  [-16.5, 16.5].forEach(x => {
-    [-45, 65].forEach(z => addTableLamp(x, z));
-  });
+  // Lampes décoratives au-dessus du plateau désactivées : elles gênaient la vue.
+  // On garde uniquement l'éclairage global propre et lisible.
+  // [-16.5, 16.5].forEach(x => {
+  //   [-45, 65].forEach(z => addTableLamp(x, z));
+  // });
 
   // Remplissage doux pour déboucher les ombres sans tuer le style billard.
-  const fillLight = new THREE.HemisphereLight(0xffe8b8, 0x164a2a, 0.98);
+  const fillLight = new THREE.HemisphereLight(0xfff0dc, 0x2b5737, 1.42);
   scene.add(fillLight);
 
 
@@ -3465,20 +3644,122 @@ try {
     }, 12, 16);
   }
 
+
+  function makeRoomFloorTexture(seed) {
+    const rnd = seededRandom(seed);
+    return makeCanvasTexture(192, (ctx, size) => {
+      // Parquet noyer/miel : plus classe, moins orange, plus contrasté.
+      ctx.fillStyle = '#7a5438';
+      ctx.fillRect(0, 0, size, size);
+      const plankH = 18;
+      for (let y = 0; y < size; y += plankH) {
+        const warm = 92 + Math.floor(rnd() * 34);
+        ctx.fillStyle = `rgba(${warm + 46},${warm + 15},${warm - 10},.18)`;
+        ctx.fillRect(0, y, size, plankH - 1);
+        ctx.strokeStyle = 'rgba(54,30,18,.38)';
+        ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.moveTo(0, y + .5); ctx.lineTo(size, y + .5); ctx.stroke();
+        let offset = Math.floor(rnd() * 48);
+        for (let x = -offset; x < size; x += 44 + Math.floor(rnd() * 28)) {
+          ctx.strokeStyle = 'rgba(48,26,15,.30)';
+          ctx.beginPath(); ctx.moveTo(x, y + 1); ctx.lineTo(x, y + plankH - 2); ctx.stroke();
+        }
+      }
+      for (let i = 0; i < 480; i++) {
+        const x = rnd() * size, y = rnd() * size;
+        ctx.strokeStyle = rnd() > .5 ? 'rgba(226,176,105,.055)' : 'rgba(38,20,12,.070)';
+        ctx.lineWidth = .45 + rnd() * .85;
+        ctx.beginPath();
+        ctx.moveTo(x, y);
+        ctx.lineTo(x + 9 + rnd() * 22, y + (rnd() - .5) * 2.4);
+        ctx.stroke();
+      }
+      const grad = ctx.createRadialGradient(size*.45, size*.34, 1, size*.5, size*.5, size*.88);
+      grad.addColorStop(0, 'rgba(238,192,126,.12)');
+      grad.addColorStop(0.55, 'rgba(130,82,48,.02)');
+      grad.addColorStop(1, 'rgba(42,22,12,.18)');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, size, size);
+    }, 12, 18);
+  }
+
+  function makeRoomWallTexture(seed) {
+    const rnd = seededRandom(seed);
+    return makeCanvasTexture(160, (ctx, size) => {
+      // Mur taupe/champagne, moins blanc, plus salon chic.
+      const g = ctx.createLinearGradient(0, 0, 0, size);
+      g.addColorStop(0, '#c4b093');
+      g.addColorStop(.55, '#b49a78');
+      g.addColorStop(1, '#9f805e');
+      ctx.fillStyle = g;
+      ctx.fillRect(0, 0, size, size);
+      for (let x = 0; x < size; x += 20) {
+        ctx.fillStyle = 'rgba(82,52,32,.070)';
+        ctx.fillRect(x, 0, 1, size);
+        ctx.fillStyle = 'rgba(255,235,195,.045)';
+        ctx.fillRect(x + 9, 0, 1, size);
+      }
+      // Liserés horizontaux type panneaux muraux.
+      for (let y = 26; y < size; y += 52) {
+        ctx.fillStyle = 'rgba(78,45,28,.10)';
+        ctx.fillRect(0, y, size, 1);
+        ctx.fillStyle = 'rgba(255,235,190,.055)';
+        ctx.fillRect(0, y + 2, size, 1);
+      }
+      for (let i = 0; i < 240; i++) {
+        const v = 155 + Math.floor(rnd() * 50);
+        ctx.fillStyle = `rgba(${v},${v-18},${v-42},${.022 + rnd()*.035})`;
+        ctx.fillRect(rnd()*size, rnd()*size, 1 + rnd()*2, 1 + rnd()*2);
+      }
+    }, 6, 6);
+  }
+
+  function makeWarmWoodTexture(seed, repeatX = 3, repeatY = 14) {
+    const rnd = seededRandom(seed);
+    return makeCanvasTexture(144, (ctx, size) => {
+      const g = ctx.createLinearGradient(0, 0, size, 0);
+      g.addColorStop(0, '#331a14');
+      g.addColorStop(.30, '#563026');
+      g.addColorStop(.58, '#704331');
+      g.addColorStop(1, '#2b1712');
+      ctx.fillStyle = g;
+      ctx.fillRect(0, 0, size, size);
+      for (let y = -18; y < size + 18; y += 5 + rnd()*5) {
+        ctx.strokeStyle = rnd() > .58 ? 'rgba(255,210,150,.075)' : 'rgba(55,25,10,.13)';
+        ctx.lineWidth = .8 + rnd()*2.0;
+        ctx.beginPath();
+        for (let x = -8; x <= size + 8; x += 10) {
+          const yy = y + Math.sin((x + rnd()*20) * .055) * (1.2 + rnd()*2.0);
+          if (x <= -8) ctx.moveTo(x, yy); else ctx.lineTo(x, yy);
+        }
+        ctx.stroke();
+      }
+      const shine = ctx.createLinearGradient(0, 0, size, size);
+      shine.addColorStop(0, 'rgba(255,220,170,.00)');
+      shine.addColorStop(.52, 'rgba(255,220,170,.06)');
+      shine.addColorStop(1, 'rgba(255,220,170,.00)');
+      ctx.fillStyle = shine;
+      ctx.fillRect(0, 0, size, size);
+    }, repeatX, repeatY);
+  }
+
   const gfxTex = {
     felt: makeFeltTexture('#17633d', 7123, 5.6, 30),
-    feltAlt: makeFeltTexture('#155a37', 8129, 5.6, 30),
+    feltAlt: makeFeltTexture('#17633d', 8129, 5.6, 30),
     butte: makeFeltTexture('#238453', 9021, 2.2, 2.2),
     rail: makeWoodTexture(4401, 1.2, 14),
     wood: makeWoodTexture(4402, 1.5, 8),
     floor: makeDarkFloorTexture(2209),
     stone: makeStoneTexture(7107, 2.4, 2.4),
     stoneDark: makeStoneTexture(7108, 2.0, 2.0),
-    casinoLane: makeFeltTexture('#315f9f', 91231, 5.6, 30),
-    casinoLaneAlt: makeFeltTexture('#244a86', 91232, 5.6, 30),
-    casinoButte: makeFeltTexture('#f0b84a', 91233, 2.2, 2.2),
-    casinoCloth: makeFeltTexture('#2b558d', 91234, 5.0, 30),
-    casinoFloor: makeFeltTexture('#b8793d', 91235, 18, 18)
+    casinoLane: makeFeltTexture('#d0b47a', 91231, 5.6, 30),
+    casinoLaneAlt: makeFeltTexture('#d0b47a', 91232, 5.6, 30),
+    casinoButte: makeFeltTexture('#9a642f', 91233, 2.2, 2.2),
+    casinoCloth: makeFeltTexture('#4a2227', 91234, 5.0, 30),
+    casinoFloor: makeRoomFloorTexture(91235),
+    casinoWall: makeRoomWallTexture(91236),
+    casinoRail: makeWarmWoodTexture(91237, 1.2, 14),
+    casinoWood: makeWarmWoodTexture(91238, 1.5, 8)
   };
 
   /* ── Matériaux Billard ── */
@@ -3582,19 +3863,23 @@ try {
   }
 
   function applySelectedTheme(player = 1) {
-    const theme = findTheme(getSelectedThemeId(player));
+    const theme = findTheme(getBoardThemeId());
     const p = theme.palette || {};
     const casinoTheme = theme.id === 'casino_royal';
     try { document.body.dataset.boardTheme = theme.id; } catch (err) {}
     setMaterialMap(mat.felt, casinoTheme ? gfxTex.casinoLane : gfxTex.felt);
-    setMaterialMap(mat.feltAlt, casinoTheme ? gfxTex.casinoLaneAlt : gfxTex.feltAlt);
+    setMaterialMap(mat.feltAlt, casinoTheme ? gfxTex.casinoLane : gfxTex.felt);
     setMaterialMap(mat.butte, casinoTheme ? gfxTex.casinoButte : gfxTex.butte);
     setMaterialMap(mat.slope, casinoTheme ? gfxTex.casinoLane : gfxTex.felt);
     setMaterialMap(mat.slopeTop, casinoTheme ? gfxTex.casinoButte : gfxTex.butte);
     setMaterialMap(mat.cloth, casinoTheme ? gfxTex.casinoCloth : gfxTex.feltAlt);
     setMaterialMap(mat.floor, casinoTheme ? gfxTex.casinoFloor : gfxTex.floor);
+    setMaterialMap(mat.wall, casinoTheme ? gfxTex.casinoWall : gfxTex.wood);
+    setMaterialMap(mat.rail, casinoTheme ? gfxTex.casinoRail : gfxTex.rail);
+    setMaterialMap(mat.wood, casinoTheme ? gfxTex.casinoWood : gfxTex.wood);
+    setMaterialMap(mat.beam, casinoTheme ? gfxTex.casinoRail : gfxTex.rail);
     setMaterialColor(mat.felt, p.felt);
-    setMaterialColor(mat.feltAlt, p.feltAlt);
+    setMaterialColor(mat.feltAlt, p.felt);
     setMaterialColor(mat.butte, p.butte);
     setMaterialColor(mat.cloth, p.cloth);
     setMaterialColor(mat.rail, p.rail);
@@ -3603,26 +3888,39 @@ try {
     setMaterialColor(mat.floor, p.floor);
     setMaterialColor(mat.wall, p.wall);
     setMaterialColor(mat.beam, p.rail);
-    setMaterialColor(mat.carpet, theme.id === 'casino_royal' ? 0x244a86 : 0x361307);
+    setMaterialColor(mat.carpet, theme.id === 'casino_royal' ? 0x6f3b3a : 0x361307);
     setMaterialColor(mat.brass, p.accent || 0xd5ac3e);
     setMaterialColor(mat.holeRing, p.accent || 0xe0b23d);
     setMaterialColor(mat.accentGold, p.accent || 0xffd66e);
     if (theme.id === 'casino_royal') {
-      // Casino contrasté : pistes bleu-roi lisibles, rails ivoire/or, fond caramel.
-      // On évite volontairement le filtre fluo et le blanc brûlé.
-      mat.brass.emissiveIntensity = 0.26;
-      mat.holeRing.emissiveIntensity = 0.28;
+      // Casino salon harmonieux : contraste propre, pas fluo, pas blanc cramé.
+      mat.brass.emissiveIntensity = 0.08;
+      mat.holeRing.emissiveIntensity = 0.10;
       [mat.felt, mat.feltAlt, mat.slope, mat.slopeTop, mat.cloth, mat.floor, mat.wall, mat.rail, mat.wood].forEach(m => {
         if (!m || !m.emissive) return;
-        m.emissive.setHex(0x050914);
-        m.emissiveIntensity = 0.025;
+        m.emissive.setHex(0x000000);
+        m.emissiveIntensity = 0;
       });
-      if (mat.floor && mat.floor.emissive) mat.floor.emissiveIntensity = 0.018;
-      if (mat.cloth && mat.cloth.emissive) mat.cloth.emissiveIntensity = 0.026;
-      if (mat.felt && mat.felt.emissive) mat.felt.emissiveIntensity = 0.018;
-      renderer.toneMappingExposure = 1.42;
-      scene.background = new THREE.Color(0xc58a4a);
-      scene.fog = new THREE.Fog(0xc58a4a, 620, 1350);
+      if (mat.floor) { mat.floor.roughness = 0.66; mat.floor.metalness = 0.0; mat.floor.needsUpdate = true; }
+      if (mat.wall) { mat.wall.roughness = 0.88; mat.wall.metalness = 0.0; mat.wall.needsUpdate = true; }
+      if (mat.rail) { mat.rail.roughness = 0.58; mat.rail.metalness = 0.02; mat.rail.needsUpdate = true; }
+      if (mat.wood) { mat.wood.roughness = 0.62; mat.wood.metalness = 0.02; mat.wood.needsUpdate = true; }
+      if (mat.rubber) { mat.rubber.roughness = 0.82; mat.rubber.metalness = 0.02; mat.rubber.needsUpdate = true; }
+      setMaterialColor(mat.bannerR, 0x5a2028);
+      setMaterialColor(mat.bannerB, 0x8c6a3a);
+      setMaterialColor(mat.accentEmerald, 0xb58b46);
+      setMaterialColor(mat.accentRed, 0x7c3038);
+      setMaterialColor(mat.accentBlue, 0x5b3f35);
+      renderer.toneMappingExposure = 1.36;
+      scene.background = new THREE.Color(0xd4c4a7);
+      scene.fog = new THREE.Fog(0xd4c4a7, 720, 1550);
+      try {
+        keyLight.color.setHex(0xfff1d8);
+        keyLight.intensity = 1.92;
+        fillLight.color.setHex(0xffead0);
+        fillLight.groundColor.setHex(0x8a6746);
+        fillLight.intensity = 1.08;
+      } catch (err) {}
     } else {
       mat.brass.emissiveIntensity = 0.18;
       mat.holeRing.emissiveIntensity = 0.18;
@@ -3631,9 +3929,19 @@ try {
         m.emissive.setHex(0x000000);
         m.emissiveIntensity = 0;
       });
-      renderer.toneMappingExposure = 1.54;
+      renderer.toneMappingExposure = 1.78;
       scene.background = new THREE.Color(0x120b08);
       scene.fog = new THREE.Fog(0x120b08, 190, 450);
+      setMaterialColor(mat.accentEmerald, 0x42ffb0);
+      setMaterialColor(mat.accentRed, 0xff5a48);
+      setMaterialColor(mat.accentBlue, 0x5d8dff);
+      try {
+        keyLight.color.setHex(0xffefd6);
+        keyLight.intensity = 2.35;
+        fillLight.color.setHex(0xfff0dc);
+        fillLight.groundColor.setHex(0x2b5737);
+        fillLight.intensity = 1.42;
+      } catch (err) {}
     }
     try { updateResourceHudTheme(); } catch (err) {}
   }
@@ -3723,7 +4031,18 @@ function shadeHexColor(color, amount) {
     const skin = findCastleSkin(getSelectedCastleSkinId(player));
     const key = skin.id + '_p' + player;
     if (!castleSkinMaterials[key]) {
-      castleSkinMaterials[key] = {
+      const casinoSkin = String(skin.id || '').startsWith('casino_');
+      castleSkinMaterials[key] = casinoSkin ? {
+        // Casino : rendu métal champagne, légèrement doré, beaucoup moins noir.
+        wall: makeCastleMat(materialColorByPlayer(skin, 'wall', player), 0.34, 0.46),
+        light: makeCastleMat(materialColorByPlayer(skin, 'light', player), 0.24, 0.58),
+        dark: makeCastleMat(materialColorByPlayer(skin, 'dark', player), 0.42, 0.38),
+        damaged: makeCastleMat(materialColorByPlayer(skin, 'damaged', player), 0.56, 0.34),
+        roof: makeCastleMat(materialColorByPlayer(skin, 'roof', player), 0.30, 0.62),
+        roofDamaged: makeCastleMat(shadeHexColor(materialColorByPlayer(skin, 'roof', player), -44), 0.54, 0.34),
+        banner: makeCastleMat(materialColorByPlayer(skin, 'banner', player), 0.48, 0.20),
+        trim: makeCastleMat(materialColorByPlayer(skin, 'trim', player), 0.18, 0.76),
+      } : {
         wall: makeCastleMat(materialColorByPlayer(skin, 'wall', player), 0.82, 0.04),
         light: makeCastleMat(materialColorByPlayer(skin, 'light', player), 0.76, 0.05),
         dark: makeCastleMat(materialColorByPlayer(skin, 'dark', player), 0.92, 0.02),
@@ -5888,16 +6207,18 @@ function addDamagedRoofDetails(parent, p, x, y, z, radius, central = false, crit
   }
 
   function isCasinoCastleSkin(player = active) {
-    return getSelectedThemeId(player) === 'casino_royal' || String(getSelectedCastleSkinId(player) || '').startsWith('casino_');
+    // La géométrie des structures dépend du thème global du plateau, pas du skin mémorisé.
+    // Plateau classique = château/tours classiques. Plateau casino = machines/coffre-fort.
+    return getBoardThemeId() === 'casino_royal';
   }
 
   function isCasinoBoardTheme() {
-    return getSelectedThemeId(1) === 'casino_royal';
+    return getBoardThemeId() === 'casino_royal';
   }
 
   function addCasinoBulbs(parent, positions, radius = 0.16) {
-    const bulbMatA = new THREE.MeshBasicMaterial({ color: 0xffd04b, transparent: true, opacity: 0.92 });
-    const bulbMatB = new THREE.MeshBasicMaterial({ color: 0xff315e, transparent: true, opacity: 0.88 });
+    const bulbMatA = new THREE.MeshBasicMaterial({ color: 0xf1c86a, transparent: true, opacity: 0.72 });
+    const bulbMatB = new THREE.MeshBasicMaterial({ color: 0xffe5a8, transparent: true, opacity: 0.64 });
     positions.forEach((pos, i) => {
       const bulb = addCyl(radius, 0.08, pos.x, pos.y, pos.z, i % 2 ? bulbMatB : bulbMatA, parent, 12);
       bulb.rotation.x = Math.PI / 2;
@@ -5918,7 +6239,7 @@ function addDamagedRoofDetails(parent, p, x, y, z, radius, central = false, crit
   function addCasinoReel(parent, x, y, z, w, h, faceSign, cm, symbolIndex = 0) {
     addBox(w, h, 0.10, x, y, z, cm.light, parent);
     addBox(w * 0.86, h * 0.70, 0.115, x, y, z + faceSign * 0.014, mat.windowDark, parent);
-    const colors = [0xff315e, 0xffd04b, 0x35f2ff];
+    const colors = [0xb84d45, 0xd6a448, 0xf2d9a0];
     const symbolMat = new THREE.MeshBasicMaterial({ color: colors[symbolIndex % colors.length], transparent: true, opacity: 0.92 });
     if (symbolIndex % 3 === 0) {
       addCasinoSeven(parent, x, y - 0.02, z + faceSign * 0.08, Math.max(0.6, w * 0.42), faceSign, symbolMat);
@@ -5942,7 +6263,8 @@ function addDamagedRoofDetails(parent, p, x, y, z, radius, central = false, crit
       const faceZ = z + faceSign * 1.11;
       addBox(14.2, 0.45, 3.1, 0, 0.28, z, cm.dark, parent);
       addBox(14.0, 5.65, 2.5, 0, 2.92, z, st, parent);
-      addBox(14.55, 0.44, 2.9, 0, 5.94, z, cm.trim, parent);
+      addBox(14.55, 0.44, 2.9, 0, 5.94, z, cm.roof, parent);
+      addBox(14.75, 0.12, 3.08, 0, 6.24, z, cm.trim, parent);
       addBox(12.4, 2.05, 0.14, 0, 3.08, faceZ, cm.dark, parent);
       [-3.65, 0, 3.65].forEach((rx, i) => addCasinoReel(parent, rx, 3.10, faceZ + faceSign * 0.07, 2.55, 1.52, faceSign, cm, i + idx));
       addBox(8.4, 0.68, 0.16, 0, 5.12, faceZ + faceSign * 0.08, castleBannerMaterial(p), parent);
@@ -5958,7 +6280,8 @@ function addDamagedRoofDetails(parent, p, x, y, z, radius, central = false, crit
       const faceSign = Math.sign(x) || 1;
       const faceX = x + faceSign * 1.11;
       addBox(2.5, 5.65, 14.0, x, 2.92, 0, st, parent);
-      addBox(2.9, 0.44, 14.55, x, 5.94, 0, cm.trim, parent);
+      addBox(2.9, 0.44, 14.55, x, 5.94, 0, cm.roof, parent);
+      addBox(3.08, 0.12, 14.75, x, 6.24, 0, cm.trim, parent);
       [-3.8, 0, 3.8].forEach((rz, i) => {
         const panel = addBox(0.14, 1.55, 2.48, faceX + faceSign * 0.08, 3.08, rz, cm.light, parent);
         panel.rotation.y = Math.PI / 2;
@@ -5986,7 +6309,8 @@ function addDamagedRoofDetails(parent, p, x, y, z, radius, central = false, crit
 
     addBox(w + 0.65, 0.55, d + 0.65, x, 0.28, z, cm.dark, parent);
     addBox(w, h, d, x, h / 2 + 0.35, z, st, parent);
-    addBox(w + 0.42, 0.48, d + 0.42, x, h + 0.72, z, cm.trim, parent);
+    addBox(w + 0.42, 0.48, d + 0.42, x, h + 0.72, z, cm.roof, parent);
+    addBox(w + 0.62, 0.14, d + 0.62, x, h + 1.03, z, cm.trim, parent);
     addBox(w * 0.88, 1.05, 0.18, x, h + 0.10, faceZ, castleBannerMaterial(p), parent);
     [-1.9, 0, 1.9].forEach((sx, i) => addCasinoSeven(parent, x + sx * (central ? 1.05 : 0.48), h + 0.02, faceZ - faceSign * 0.08, central ? 0.72 : 0.46, -faceSign, cm.trim));
 
@@ -5997,7 +6321,7 @@ function addDamagedRoofDetails(parent, p, x, y, z, radius, central = false, crit
 
     const lowerPanelY = central ? 3.45 : 2.75;
     addBox(w * 0.72, 1.25, 0.16, x, lowerPanelY, faceZ - faceSign * 0.08, cm.dark, parent);
-    [0xff315e, 0xffd04b, 0x35f2ff].forEach((col, i) => {
+    [0xa58a63, 0xc9b07c, 0xf1e0b5].forEach((col, i) => {
       const m = new THREE.MeshBasicMaterial({ color: col, transparent: true, opacity: 0.88 });
       const l = addCyl(central ? 0.34 : 0.22, 0.10, x + (i - 1) * (central ? 1.55 : 0.82), lowerPanelY, faceZ - faceSign * 0.18, m, parent, 18);
       l.rotation.x = Math.PI / 2;
@@ -6221,28 +6545,28 @@ function addDamagedRoofDetails(parent, p, x, y, z, radius, central = false, crit
     scene.add(g);
 
     const pitMat = new THREE.MeshStandardMaterial({
-      color: 0x09071a,
-      roughness: 0.92,
-      metalness: 0.05,
-      emissive: 0x03020b,
-      emissiveIntensity: 0.08
+      color: 0x141011,
+      roughness: 0.96,
+      metalness: 0.02,
+      emissive: 0x000000,
+      emissiveIntensity: 0.0
     });
     const frameMat = new THREE.MeshStandardMaterial({
-      color: 0xf3c45d,
-      roughness: 0.34,
-      metalness: 0.42,
-      emissive: 0x241400,
-      emissiveIntensity: 0.08
+      color: 0xd1a14e,
+      roughness: 0.42,
+      metalness: 0.26,
+      emissive: 0x000000,
+      emissiveIntensity: 0.0
     });
     const coverMat = new THREE.MeshStandardMaterial({
-      color: 0x2f6fb2,
-      roughness: 0.38,
-      metalness: 0.24,
-      emissive: 0x020915,
-      emissiveIntensity: 0.035
+      color: 0xc8a16d,
+      roughness: 0.58,
+      metalness: 0.05,
+      emissive: 0x000000,
+      emissiveIntensity: 0.0
     });
-    const coverTrimMat = new THREE.MeshBasicMaterial({ color: 0xffe7a0, transparent: true, opacity: 0.82 });
-    const neonMat = new THREE.MeshBasicMaterial({ color: 0xffe28a, transparent: true, opacity: 0.72 });
+    const coverTrimMat = new THREE.MeshBasicMaterial({ color: 0x4a2227, transparent: true, opacity: 0.86 });
+    const neonMat = new THREE.MeshBasicMaterial({ color: 0xe4c06b, transparent: true, opacity: 0.52 });
 
     // Grande fente transversale jouable.
     // Le couvercle est une seule plaque. Il s'ouvre toujours vers le château,
@@ -6379,12 +6703,13 @@ function addDamagedRoofDetails(parent, p, x, y, z, radius, central = false, crit
     // Borne de machine à sous défensive : plus de tour médiévale, mais un obstacle arcade compact.
     addBox(4.6, 0.48, 4.6, 0, 0.24, 0, cm.dark, g);
     addBox(3.6, 7.2, 3.2, 0, 3.88, 0, st, g);
-    addBox(4.0, 0.38, 3.7, 0, 7.72, 0, cm.trim, g);
+    addBox(4.0, 0.38, 3.7, 0, 7.72, 0, cm.roof, g);
+    addBox(4.18, 0.12, 3.88, 0, 8.00, 0, cm.trim, g);
     addBox(3.2, 0.75, 0.16, 0, 7.25, 1.70, castleBannerMaterial(p), g);
     [-0.9, 0, 0.9].forEach((sx, i) => addCasinoSeven(g, sx, 7.18, 1.80, 0.36, 1, cm.trim));
     [-0.95, 0, 0.95].forEach((sx, i) => addCasinoReel(g, sx, 4.95, 1.72, 0.88, 1.28, 1, cm, i));
     addBox(2.55, 0.85, 0.15, 0, 2.85, 1.73, cm.dark, g);
-    [0xff315e, 0xffd04b, 0x35f2ff].forEach((col, i) => {
+    [0xa58a63, 0xc9b07c, 0xf1e0b5].forEach((col, i) => {
       const lm = new THREE.MeshBasicMaterial({ color: col, transparent: true, opacity: 0.90 });
       const lamp = addCyl(0.20, 0.09, (i - 1) * 0.72, 2.85, 1.83, lm, g, 18);
       lamp.rotation.x = Math.PI / 2;
@@ -7200,6 +7525,7 @@ function addDamagedRoofDetails(parent, p, x, y, z, radius, central = false, crit
   }
 
   function floatText(html, pos = ball.position, variant = 'neutral') {
+    if (shouldSuppressActionText()) return;
     const p = worldToScreen(pos);
     const node = document.createElement('div');
     node.className = 'fx-float ' + variant;
@@ -7216,6 +7542,7 @@ function addDamagedRoofDetails(parent, p, x, y, z, radius, central = false, crit
   }
 
   function bigMessage(title, text = '', variant = 'gold', duration = 1900) {
+    if (shouldSuppressActionText() && variant !== 'victory') return;
     // Si un écran de transition/récap/victoire est déjà ouvert, on n'ajoute pas un second panneau au centre.
     if (turnOverlay.classList.contains('show') && variant !== 'victory') {
       showToast(title + (text ? '<br>' + text : ''));
@@ -7231,6 +7558,7 @@ function addDamagedRoofDetails(parent, p, x, y, z, radius, central = false, crit
   }
 
   function battleNotice(title, text = '', variant = 'damage', duration = 2200) {
+    if (shouldSuppressActionText()) return;
     let stack = document.getElementById('battleNoticeStack');
     if (!stack) {
       stack = document.createElement('div');
@@ -7263,10 +7591,14 @@ function addDamagedRoofDetails(parent, p, x, y, z, radius, central = false, crit
   }
 
   function showShotTitle(title, text = '', variant = 'combo', pos = ball.position, duration = 2300) {
+    if (shouldSuppressActionText()) return;
+    if (variant === 'combo' || variant === 'second') return;
     bigMessage(title, text, variant, duration);
-    battleNotice(title, text, variant, Math.max(2500, duration + 400));
-    if (pos && pos.clone) {
-      floatText(title.replace(/\s+/g, '<br>'), pos.clone().add(new THREE.Vector3(0, 2.4, 0)), variant);
+    if (!shouldSuppressActionText()) {
+      battleNotice(title, text, variant, Math.max(2500, duration + 400));
+      if (pos && pos.clone) {
+        floatText(title.replace(/\s+/g, '<br>'), pos.clone().add(new THREE.Vector3(0, 2.4, 0)), variant);
+      }
     }
   }
 
@@ -7287,6 +7619,7 @@ function addDamagedRoofDetails(parent, p, x, y, z, radius, central = false, crit
   }
 
   function showAIIntent(plan, label) {
+    if (shouldSuppressActionText()) return;
     const txt = label || aiIntentLabel(plan && plan.type);
     battleNotice('🤖 INTENTION IA', txt, 'ai-intent', 3200);
     bigMessage('INTENTION IA', '🤖 ' + txt, 'second', 1550);
@@ -7400,6 +7733,7 @@ function addDamagedRoofDetails(parent, p, x, y, z, radius, central = false, crit
   }
 
   function screenBurst(title, html = '', variant = 'gain', duration = 1700) {
+    if (shouldSuppressActionText()) return;
     if (!fxLayer) return;
     const node = document.createElement('div');
     node.className = 'screen-burst ' + variant;
@@ -7440,6 +7774,7 @@ function addDamagedRoofDetails(parent, p, x, y, z, radius, central = false, crit
     const big = total >= 12;
     const mid = total >= 8 || Object.keys(reward || {}).length >= 2;
     spawnRewardConfetti(reward, fromWorldPos, big ? 1.55 : (mid ? 1.18 : 0.92));
+    if (shouldSuppressActionText()) return;
     if (big) {
       screenBurst('GROS BUTIN !', html, 'jackpot', 2100);
       battleNotice('PLUIE DE RESSOURCES', html.replace(/<br>/g, ' · '), 'jackpot', 2800);
@@ -7566,18 +7901,19 @@ function addDamagedRoofDetails(parent, p, x, y, z, radius, central = false, crit
     if (!activeTurnEvent || setupMode || gameOver) {
       eventBanner.className = 'hidden';
       eventBanner.innerHTML = '';
+      hideTurnEventIntro();
       return;
     }
-    eventBanner.className = flash ? 'show flash' : 'show';
+    eventBanner.className = flash ? 'show flash' : 'show compact';
     eventBanner.innerHTML = '<b>' + activeTurnEvent.icon + ' ' + activeTurnEvent.title + '</b><span>' + activeTurnEvent.desc + '</span>';
     if (flash) {
       playRandomSfx('event', 'confirm', 1.05);
-      showMomentBanner(activeTurnEvent.icon + ' ÉVÉNEMENT !', activeTurnEvent.desc, 'combo', 2400);
+      showTurnEventIntro(activeTurnEvent);
       pulseScreen('gold');
       clearTimeout(eventBanner._flashTimer);
       eventBanner._flashTimer = setTimeout(() => {
         if (activeTurnEvent && !setupMode && !gameOver) eventBanner.className = 'show compact';
-      }, 3200);
+      }, 3300);
     }
   }
 
@@ -8913,6 +9249,7 @@ function addDamagedRoofDetails(parent, p, x, y, z, radius, central = false, crit
     aiRememberShot(memoryPlan);
     canShoot = false;
     shotStarted = true;
+    clearLiveResolutionTexts();
     secondShotReady = false;
     pauseTurnTimer();
     const label = plan.type === 'classicRamp' ? 'vers rampe château'
@@ -9043,6 +9380,7 @@ function addDamagedRoofDetails(parent, p, x, y, z, radius, central = false, crit
     }
 
     statForPlayer(active).turns++;
+    captureTurnProgressSnapshot(active);
     secondShotReady = false;
     rerollHoleRewards();
     turnLocked = false;
@@ -9130,7 +9468,7 @@ function addDamagedRoofDetails(parent, p, x, y, z, radius, central = false, crit
     showToast('Attaque<br>Marché, seconde bille et rampes d’accès disponibles ici');
   }
 
-  function showTurnPause(title, text) {
+  function showTurnPause(title, text, duration = 5200) {
     if (gameOver) return;
     stopTurnTimer(true);
     turnLocked = true; dragging = false; canShoot = false; velocity.set(0, 0, 0);
@@ -9138,13 +9476,17 @@ function addDamagedRoofDetails(parent, p, x, y, z, radius, central = false, crit
     turnOverlay.classList.remove('victory-mode');
     turnTitle.textContent = title; turnText.innerHTML = text;
     turnOverlay.classList.add('show');
+    let advanced = false;
     const advanceAfterPause = () => {
-      if (gameOver) return;
+      if (advanced || gameOver) return;
       if (gamePaused) { setTimeout(advanceAfterPause, 500); return; }
+      advanced = true;
       turnOverlay.classList.remove('show');
+      turnOverlay.onclick = null;
       active = enemy(active); resetDefenseCamera(); startTurnChoice();
     };
-    setTimeout(advanceAfterPause, 3600);
+    turnOverlay.onclick = () => advanceAfterPause();
+    setTimeout(advanceAfterPause, duration);
   }
 
   function medalForPlayerStats(s, winner) {
@@ -9510,7 +9852,9 @@ function spawnVictoryCelebration(report) {
 
     const recapItems = compactTurnSummary(turnSummary);
     const recapType = classifyShotRecap(recapItems);
-    const gains = buildShotRecapHtml(recapItems);
+    const recapRich = buildRichTurnRecapHtml(recapItems, active);
+    const gains = recapRich.html;
+    const recapDuration = Math.max(4400, Math.min(7600, 3600 + recapRich.rowCount * 220));
 
     const debrisToShow = Array.isArray(shotCreatedDebris)
       ? shotCreatedDebris.filter(d => d && d.mesh)
@@ -9521,12 +9865,12 @@ function spawnVictoryCelebration(report) {
       hideBigMessage();
       const wait = DEBRIS_FOCUS_DURATION + 220;
       setTimeout(() => {
-        if (!gameOver) showTurnPause(recapType.icon + ' ' + recapType.title, gains);
+        if (!gameOver) showTurnPause(recapType.icon + ' ' + recapType.title, gains, recapDuration);
       }, wait);
       return;
     }
 
-    showTurnPause(recapType.icon + ' ' + recapType.title, gains);
+    showTurnPause(recapType.icon + ' ' + recapType.title, gains, recapDuration);
   }
 
   function isReservedRampZoneForDefender(defender, x, z) {
@@ -9601,11 +9945,11 @@ function spawnVictoryCelebration(report) {
     g.position.set(x, 0.1, z);
     if (player === 1) g.rotation.y = Math.PI;
 
-    const bodyMat = new THREE.MeshStandardMaterial({ color: 0xff315e, transparent: true, opacity: 0.48, roughness: 0.38, metalness: 0.34, emissive: 0x4a0011, emissiveIntensity: 0.34, depthWrite: false });
-    const darkMat = new THREE.MeshStandardMaterial({ color: 0x3b0b22, transparent: true, opacity: 0.46, roughness: 0.58, metalness: 0.12, emissive: 0x16000a, emissiveIntensity: 0.24, depthWrite: false });
-    const trimMat = new THREE.MeshStandardMaterial({ color: 0xffe36f, transparent: true, opacity: 0.72, roughness: 0.22, metalness: 0.82, emissive: 0x3a2200, emissiveIntensity: 0.46, depthWrite: false });
-    const reelMat = new THREE.MeshStandardMaterial({ color: 0xfff0a6, transparent: true, opacity: 0.66, roughness: 0.18, metalness: 0.10, emissive: 0x2a1a00, emissiveIntensity: 0.26, depthWrite: false });
-    const symbolMats = [0xff315e, 0xffd04b, 0x35f2ff].map(col => new THREE.MeshBasicMaterial({ color: col, transparent: true, opacity: 0.78, depthWrite: false }));
+    const bodyMat = new THREE.MeshStandardMaterial({ color: 0x2d211d, transparent: true, opacity: 0.50, roughness: 0.46, metalness: 0.18, emissive: 0x0c0705, emissiveIntensity: 0.20, depthWrite: false });
+    const darkMat = new THREE.MeshStandardMaterial({ color: 0x100b09, transparent: true, opacity: 0.50, roughness: 0.64, metalness: 0.10, emissive: 0x050303, emissiveIntensity: 0.16, depthWrite: false });
+    const trimMat = new THREE.MeshStandardMaterial({ color: 0xf0d27a, transparent: true, opacity: 0.76, roughness: 0.24, metalness: 0.72, emissive: 0x2a1800, emissiveIntensity: 0.34, depthWrite: false });
+    const reelMat = new THREE.MeshStandardMaterial({ color: 0xffedc2, transparent: true, opacity: 0.68, roughness: 0.20, metalness: 0.08, emissive: 0x201200, emissiveIntensity: 0.20, depthWrite: false });
+    const symbolMats = [0xd7b36a, 0x1f6b55, 0x8c5a2e].map(col => new THREE.MeshBasicMaterial({ color: col, transparent: true, opacity: 0.78, depthWrite: false }));
 
     addBox(4.8, 0.42, 4.8, 0, 0.21, 0, darkMat, g);
     addBox(3.6, 7.0, 3.2, 0, 3.75, 0, bodyMat, g);
@@ -9999,7 +10343,7 @@ function spawnVictoryCelebration(report) {
         const aimX = (active === 1 ? -dx : dx) * .014;
         velocity.x = aimX; velocity.z = dir(active) * Math.abs(dy) * .024;
         playSfx('launch', Math.min(2.2, Math.max(0.8, power / 115)));
-        canShoot = false; shotStarted = true; secondShotReady = false; pauseTurnTimer(); updateHUD();
+        canShoot = false; shotStarted = true; clearLiveResolutionTexts(); secondShotReady = false; pauseTurnTimer(); updateHUD();
       } else {
         showToast('Tir annulé<br>Glisse franchement vers l’arrière pour lancer');
       }
@@ -10498,7 +10842,7 @@ function spawnVictoryCelebration(report) {
         stopRollingSound(false);
         turnSummary.push('Grande fente jackpot : lancer perdu');
         impact(ball.position.clone().add(new THREE.Vector3(0, 0.25, 0)), 0xffd36a, 1.45);
-        bigMessage('LANCER PERDU', '🎰 La bille est tombée dans la grande fente jackpot.', 'danger', 1900);
+        bigMessage('LANCER PERDU', '🎰 La bille est tombée dans la grande fente jackpot.', 'jackpot', 1900);
         battleNotice('🎰 FENTE JACKPOT', 'Bille avalée · coup perdu', 'jackpot', 2600);
         scheduleFinishTurn('La bille est tombée dans la grande fente jackpot.', 950);
         return true;
